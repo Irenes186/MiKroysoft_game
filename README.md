@@ -3,7 +3,7 @@ Undestanding basic git and github
 Getting changes from github 
 
 --> Terminal :git pull
---> GitHub Deskptop : fetch origin button 
+--> GitHub Deskptop : fetch origin button git pull button 
 
 
 Pushing changes to github
