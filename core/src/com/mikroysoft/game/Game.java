@@ -9,19 +9,28 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+	CoreLogic coreLogic;
+	FireEngine[] fireEngines;
+	
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("logo.png");
+		coreLogic = new CoreLogic();
+		fireEngines = new FireEngine[5];
 	}
 
 	@Override
 	public void render () {
+		coreLogic.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img, 0, 0, 100, 100);
+		for (FireEngine engine: fireEngines) {
+			engine.draw(batch);
+		}
 		batch.end();
 	}
 	
