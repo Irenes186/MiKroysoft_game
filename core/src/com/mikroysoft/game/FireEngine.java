@@ -1,17 +1,35 @@
 package com.mikroysoft.game;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class FireEngine {
-	Texture texture;
-	Coordinate position;
+	public Texture texture;
+	public Coordinate position;
+	private int waterVolume;
+	private float speed;
+	private float range;
+	private float deliveryRate;
+	private int health;
+	public float direction;
+	
 	
 	public FireEngine() {
-		texture = new Texture("fireEngine.png");
-		position = new Coordinate(0,0);
+		texture = new Texture("fireengine.png");
+		position = new Coordinate(300,300);
+		direction = 0;
+		speed = 2;
 	}
-	public void draw(SpriteBatch batch) {
-		batch.draw(texture,position.x,position.y,16,16);
+	
+	
+	public void repair() {
+		health += 50;
+	}
+	
+	public void refill() {
+		waterVolume += 50;
+	}
+	
+	public void move(Coordinate input) {
+		//add some kind of moving rules.
 	}
 }

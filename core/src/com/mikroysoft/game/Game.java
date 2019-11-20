@@ -11,6 +11,7 @@ public class Game extends ApplicationAdapter {
 	Texture img;
 	CoreLogic coreLogic;
 	FireEngine[] fireEngines;
+	InputController inputController; 
 	
 	
 	@Override
@@ -18,7 +19,14 @@ public class Game extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture("logo.png");
 		coreLogic = new CoreLogic();
-		fireEngines = new FireEngine[5];
+		inputController = new InputController();
+		Gdx.input.setInputProcessor(inputController);
+		fireEngines = new FireEngine[1];
+		fireEngines[0] = new FireEngine();
+		//fireEngines[1] = new FireEngine();
+		//fireEngines[2] = new FireEngine();
+		//fireEngines[3] = new FireEngine();
+		//fireEngines[4] = new FireEngine();
 	}
 
 	@Override
@@ -28,8 +36,9 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img, 0, 0, 100, 100);
+		fireEngines[0].move(inputController.getLatestPosition());
 		for (FireEngine engine: fireEngines) {
-			engine.draw(batch);
+			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
 		batch.end();
 	}
