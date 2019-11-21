@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
 	CoreLogic coreLogic;
 	FireEngine[] fireEngines;
 	InputController inputController; 
@@ -24,7 +23,6 @@ public class Game extends ApplicationAdapter {
                     e.printStackTrace();
                 }
 		batch = new SpriteBatch();
-		img = new Texture("logo.png");
 		coreLogic = new CoreLogic();
 		inputController = new InputController();
 		Gdx.input.setInputProcessor(inputController);
@@ -44,9 +42,7 @@ public class Game extends ApplicationAdapter {
 		batch.begin();
                 map.render(batch);
                 
-		batch.draw(img, 0, 0, 100, 100);
 		fireEngines[0].move(inputController.getLatestPosition());
-                fireEngines[0].direction++;
 		for (FireEngine engine: fireEngines) {
 			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
@@ -56,6 +52,5 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }

@@ -23,7 +23,9 @@ public class InputController implements InputProcessor {
 	}
 
 	public boolean touchDown (int x, int y, int pointer, int button) {
-		return false;
+		position.x = x;
+		position.y = y;
+		return true;
 	}
 
 	public boolean touchUp (int x, int y, int pointer, int button) {

@@ -2,6 +2,7 @@ package com.mikroysoft.game;
 
 import java.io.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Gdx;
 
 public class Map {
 	
@@ -10,8 +11,8 @@ public class Map {
 	public Map() throws Exception{
 		int WIDTH = 20;
 		int HEIGHT = 20;
-                int TILEWIDTH = 50;
-                int TILEHEIGHT = 50;
+                int TILEWIDTH = Gdx.graphics.getWidth() / WIDTH;
+                int TILEHEIGHT = Gdx.graphics.getHeight() / HEIGHT;
 
 		grid = new IRenderable[WIDTH][HEIGHT];
 		
@@ -21,33 +22,33 @@ public class Map {
 		
 		String fileInput;
 		String[] items;
-                int col = 0;
+                int col = HEIGHT -1 ;
 		while ((fileInput = reader.readLine()) != null) {
 			items = fileInput.split("",WIDTH);
 
-                        for (int row = 0; row < items.length; row++) {
+                        for (int row = 0; row < WIDTH; row++) {
                             switch (items[row]) {
+                                case "0" :
+                                    grid[row][col] = new FireStation(10, new Coordinate(row * TILEWIDTH, col * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
+                                    break;
                                 case "1" :
-                                    grid[col][row] = new Road(new Coordinate(col * TILEWIDTH, row * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
+                                    grid[row][col] = new Road(new Coordinate(row * TILEWIDTH, col * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
                                     break;
                                 
-                                case "0" :
-                                    grid[col][row] = new FireStation(10);
-                                    break;
 
                             }
                         }
-                    col++;
+                    col--;
                 }
 		
 		reader.close();
-
 	}
 
         public void render(SpriteBatch batch) {
             for (int col = 0; col < grid.length; col++) {
                 for (int row = 0; row < grid[0].length; row++) {
-                    grid[col][row].render(batch);
+                    if (grid[row][col] != null)
+                        grid[row][col].render(batch);
                 }
             }
         }
