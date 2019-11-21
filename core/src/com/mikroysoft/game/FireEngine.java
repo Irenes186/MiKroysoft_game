@@ -32,4 +32,5 @@ public class FireEngine {
 	public void move(Coordinate input) {
 		//add some kind of moving rules.
 	}
+
 }

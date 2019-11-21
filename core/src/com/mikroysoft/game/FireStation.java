@@ -1,6 +1,8 @@
 package com.mikroysoft.game;
 
-public class FireStation {
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class FireStation implements IRenderable {
 	public boolean destroyed;
 	private int fillSpeed;
 	
@@ -13,5 +15,8 @@ public class FireStation {
 		destroyed = true;
 	}
 	
+        @Override
+        public void render(SpriteBatch batch) {
+        }
 	
 }
