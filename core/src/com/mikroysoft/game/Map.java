@@ -32,7 +32,7 @@ public class Map {
                                     grid[row][col] = new FireStation(10, new Coordinate(row * TILEWIDTH, col * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
                                     break;
                                 case "1" :
-                                    grid[row][col] = new Road(new Coordinate(row * TILEWIDTH, col * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
+                                    grid[row][col] = new Road(new Coordinate(row * TILEWIDTH, col * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "roadV");
                                     break;
                                 
 
