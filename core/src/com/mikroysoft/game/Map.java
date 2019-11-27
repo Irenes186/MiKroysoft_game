@@ -39,7 +39,6 @@ public class Map {
 		String fileName;
 		boolean u, d, l, r;
 		for (row = 0; row < HEIGHT; row++) {
-
             for (int col = 0; col < WIDTH; col++) {
                 switch (inGrid[row][col]) {
                     case "0" :
