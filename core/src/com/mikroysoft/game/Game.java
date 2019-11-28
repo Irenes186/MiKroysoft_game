@@ -11,8 +11,9 @@ public class Game extends ApplicationAdapter {
 	CoreLogic coreLogic;
 	FireEngine[] fireEngines;
 	InputController inputController; 
-        Map map;
-
+    Map map;
+    ProgressBar health;
+    Texture healthIcon;
 	
 	
 	@Override
@@ -26,12 +27,25 @@ public class Game extends ApplicationAdapter {
 		coreLogic = new CoreLogic();
 		inputController = new InputController();
 		Gdx.input.setInputProcessor(inputController);
+		
+		//Fire Engines:
 		fireEngines = new FireEngine[1];
 		fireEngines[0] = new FireEngine();
 		//fireEngines[1] = new FireEngine();
 		//fireEngines[2] = new FireEngine();
 		//fireEngines[3] = new FireEngine();
 		//fireEngines[4] = new FireEngine();
+		
+		//health progress bar:
+		health = new ProgressBar();
+		health.setPosition(20,10);
+		health.setDimensions(100,10);
+		health.setMax(100);
+		health.updateCurrent(100);
+
+		
+		//health icon - next to health progress bar.
+		healthIcon = new Texture("health.png");
 	}
 
 	@Override
@@ -46,7 +60,10 @@ public class Game extends ApplicationAdapter {
 		for (FireEngine engine: fireEngines) {
 			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
+		batch.draw(health.texture,health.position.x,health.position.y, health.getFill(), health.getHeight());
+		batch.draw(healthIcon,health.position.x - (5 + health.getHeight()), health.position.y, health.getHeight(), health.getHeight());
 		batch.end();
+		//System.out.println(health.getFill());
 	}
 	
 	@Override
