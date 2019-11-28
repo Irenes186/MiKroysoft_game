@@ -22,7 +22,7 @@ public class Map {
 		
 		String fileInput;
 		String[] items;
-                int col = HEIGHT -1 ;
+        int col = HEIGHT -1 ;
 		while ((fileInput = reader.readLine()) != null) {
 			items = fileInput.split("",WIDTH);
 

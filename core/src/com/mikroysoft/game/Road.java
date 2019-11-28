@@ -14,8 +14,6 @@ public class Road implements IRenderable {
         this.texture = new Texture(road_string + ".png");
         this.TILEWIDTH = TILEWIDTH;
         this.TILEHEIGHT = TILEHEIGHT;
-
-
     }
 
     @Override

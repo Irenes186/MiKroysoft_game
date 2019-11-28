@@ -10,24 +10,25 @@ public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
 	CoreLogic coreLogic;
 	FireEngine[] fireEngines;
-	InputController inputController; 
-        Map map;
-
-	
-	
+	Alien[] aliens;
+	InputController inputController;
+	Map map;
 	@Override
 	public void create () {
-                try {
-                    map = new Map();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+       try {
+            map = new Map();
+       } catch (Exception e) {
+             e.printStackTrace();
+       }
 		batch = new SpriteBatch();
 		coreLogic = new CoreLogic();
 		inputController = new InputController();
 		Gdx.input.setInputProcessor(inputController);
 		fireEngines = new FireEngine[1];
 		fireEngines[0] = new FireEngine();
+
+		aliens = new Alien[1];
+		aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
 		//fireEngines[1] = new FireEngine();
 		//fireEngines[2] = new FireEngine();
 		//fireEngines[3] = new FireEngine();
@@ -46,9 +47,11 @@ public class Game extends ApplicationAdapter {
 		for (FireEngine engine: fireEngines) {
 			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
+		for (Alien alien: aliens) {
+			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,80,80,1,1,alien.direction,0,0,16,16,false,false);
+		}
 		batch.end();
 	}
-	
 	@Override
 	public void dispose () {
 		batch.dispose();
