@@ -1,0 +1,12 @@
+/.metadata/
+.DS_Store
+.gradle/
+.idea/
+core/build/
+core/core.iml
+core/src/.project
+core/src/com/mikroysoft/game/.metadata/
+core/src/com/mikroysoft/game/.project
+desktop/build/
+desktop/desktop.iml
+out/
