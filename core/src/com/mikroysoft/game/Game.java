@@ -16,13 +16,17 @@ public class Game extends ApplicationAdapter {
     Texture healthIcon;
 	
 	
+=======
+	Alien[] aliens;
+	InputController inputController;
+	Map map;
 	@Override
 	public void create () {
-                try {
-                    map = new Map();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+       try {
+            map = new Map();
+       } catch (Exception e) {
+             e.printStackTrace();
+       }
 		batch = new SpriteBatch();
 		coreLogic = new CoreLogic();
 		inputController = new InputController();
@@ -31,6 +35,9 @@ public class Game extends ApplicationAdapter {
 		//Fire Engines:
 		fireEngines = new FireEngine[1];
 		fireEngines[0] = new FireEngine();
+
+		aliens = new Alien[1];
+		aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
 		//fireEngines[1] = new FireEngine();
 		//fireEngines[2] = new FireEngine();
 		//fireEngines[3] = new FireEngine();
@@ -62,10 +69,13 @@ public class Game extends ApplicationAdapter {
 		}
 		batch.draw(health.texture,health.position.x,health.position.y, health.getFill(), health.getHeight());
 		batch.draw(healthIcon,health.position.x - (5 + health.getHeight()), health.position.y, health.getHeight(), health.getHeight());
+=======
+		for (Alien alien: aliens) {
+			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,80,80,1,1,alien.direction,0,0,16,16,false,false);
+		}
 		batch.end();
 		//System.out.println(health.getFill());
 	}
-	
 	@Override
 	public void dispose () {
 		batch.dispose();

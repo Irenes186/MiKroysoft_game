@@ -23,7 +23,6 @@ public class Map {
 		int row = 0;
 		String fileInput;
 		String[] items;
-		
 		while ((fileInput = reader.readLine()) != null) {
 			items = fileInput.split("",WIDTH);
 			for (int col = 0; col < WIDTH; col++) {
