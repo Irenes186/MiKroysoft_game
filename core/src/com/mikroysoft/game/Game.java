@@ -58,7 +58,7 @@ public class Game extends ApplicationAdapter {
 		fuel.setDimensions(100,10);
 		fuel.setMax(100);
 		fuel.updateCurrent(100);
-		
+		//hiiii
 		//fuel icon - next to fuel progress bar.
 		fuelIcon = new Texture("fuel.png");
 	}
