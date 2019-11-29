@@ -63,10 +63,12 @@ public class Game extends ApplicationAdapter {
 		for (FireEngine engine: fireEngines) {
 			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
+
+		aliens[0].Run();
 		batch.draw(health.texture,health.position.x,health.position.y, health.getFill(), health.getHeight());
 		batch.draw(healthIcon,health.position.x - (5 + health.getHeight()), health.position.y, health.getHeight(), health.getHeight());
 		for (Alien alien: aliens) {
-			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,80,80,1,1,alien.direction,0,0,16,16,false,false);
+			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,40,40,1,1,alien.direction,0,0,16,16,false,false);
 		}
 		batch.end();
 		//System.out.println(health.getFill());

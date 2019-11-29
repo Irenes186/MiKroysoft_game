@@ -45,12 +45,7 @@ public class FireEngine {
                     direction = 0;
                     return;
                 }
-
-
-                
                 direction = (float) Math.toDegrees(Math.atan2((input.y - position.y + 40) * -1, input.x - position.x - 40)) - 90;
-
-
                 System.out.println(direction );
 	}
 
