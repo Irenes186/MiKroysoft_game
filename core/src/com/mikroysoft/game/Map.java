@@ -43,6 +43,12 @@ public class Map {
                     case "0" :
                         grid[row][col] = new FireStation(10, new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
                         break;
+                    
+                    case "2":
+                    	params = new AlienBaseParameters();
+                    	
+                    	grid[row][col] = new 
+                    	
                     case "1" :
                     	fileName = "roadV";
                     	u = false;
