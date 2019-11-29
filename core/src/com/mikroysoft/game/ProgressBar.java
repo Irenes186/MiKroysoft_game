@@ -12,8 +12,13 @@ public class ProgressBar {
 	private boolean visible;
 	private int barFill;
 	
-	public ProgressBar() {
-		texture = new Texture("bar.png");
+	public ProgressBar(int type) {
+		if (type == 1) {
+			texture = new Texture("bar_01.png");
+		}
+		else if (type == 2) {
+			texture = new Texture("bar_02.png");
+		}
 		height = 0;
 		width = 0;
 		maximum = 100;
