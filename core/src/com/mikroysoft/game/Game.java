@@ -47,8 +47,9 @@ public class Game extends ApplicationAdapter {
 		for (FireEngine engine: fireEngines) {
 			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
+		aliens[0].Run();
 		for (Alien alien: aliens) {
-			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,80,80,1,1,alien.direction,0,0,16,16,false,false);
+			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,40,40,1,1,alien.direction,0,0,16,16,false,false);
 		}
 		batch.end();
 	}
