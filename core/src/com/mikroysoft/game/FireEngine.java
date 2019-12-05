@@ -65,20 +65,6 @@ public class FireEngine {
         for (int i = 0; i < projectiles.size(); i++) {
             projectiles.get(i).render(batch);
         }
-
-
-        position.x += xSign * speed;
-        position.y += ySign * speed;
-
-        direction = (float) Math.toDegrees(Math.atan2((input.y - position.y + 40) * -1, input.x - position.x - 40)) - 90;
-    }
-
-    public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x,Gdx.graphics.getHeight()-position.y,40,40,80,80,1,1,direction,0,0,16,16,false,false);
-
-        for (int i = 0; i < projectiles.size(); i++) {
-            projectiles.get(i).render(batch);
-        }
     }
 
     public void shoot(Coordinate destination) {
