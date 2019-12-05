@@ -8,79 +8,83 @@ public class Map {
 	
 	IRenderable[][] grid;
 
-	public Map() throws Exception{
-		int WIDTH = 20;
-		int HEIGHT = 20;
-        int TILEWIDTH = Gdx.graphics.getWidth() / WIDTH;
-        int TILEHEIGHT = Gdx.graphics.getHeight() / HEIGHT;
+	public Map(int MAPWIDTH, int MAPHEIGHT) throws Exception{
+    int TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
+    int TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
 
-		grid = new IRenderable[WIDTH][HEIGHT];
-		String[][] inGrid = new String[WIDTH][HEIGHT];
-		
+		grid = new IRenderable[MAPWIDTH][MAPHEIGHT];
+		String[][] inGrid = new String[MAPWIDTH][MAPHEIGHT];		
 		File file = new File("map_information.txt");
 		
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		int row = 0;
 		String fileInput;
 		String[] items;
+  
 		while ((fileInput = reader.readLine()) != null) {
-			items = fileInput.split("",WIDTH);
-			for (int col = 0; col < WIDTH; col++) {
+			items = fileInput.split("",MAPWIDTH);
+			for (int col = 0; col < MAPWIDTH; col++) {
 				inGrid[row][col] = items[col];
-				System.out.print(items[col]);
+				// debug: print grid
+				//System.out.print(items[col]);
 			}
 			row++;
-			System.out.println();
+			// debug: print grid
+			//System.out.println();
 		}
 		
 		reader.close();
 		
 		String fileName;
-		boolean u, d, l, r;
-		for (row = 0; row < HEIGHT; row++) {
-            for (int col = 0; col < WIDTH; col++) {
+		boolean hasRoadAbove, hasRoadBelow, hasRoadLeft, hasRoadRight;
+		for (row = 0; row < MAPHEIGHT; row++) {
+            for (int col = 0; col < MAPWIDTH; col++) {
                 switch (inGrid[row][col]) {
                     case "0" :
-                        grid[row][col] = new FireStation(10, new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
+                        grid[row][col] = new FireStation(10, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
                         break;
+                    
+                    case "2":
+                    	AlienBaseParameters params = new AlienBaseParameters();
+                    	grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower"); 
+      	
                     case "1" :
                     	fileName = "roadV";
-                    	u = false;
-    					d = false;
-    					l = false;
-    					r = false;
+                    	hasRoadAbove = false;
+                    	hasRoadBelow = false;
+                    	hasRoadLeft = false;
+                    	hasRoadRight = false;
     					if (row > 0 && inGrid[row-1][col].equals("1")) {
-    						u = true;
+    						hasRoadAbove = true;
     					}
-    					if (col < (WIDTH - 1) && inGrid[row][col+1].equals("1")) {
-    						r = true;
+    					if (col < (MAPWIDTH - 1) && inGrid[row][col+1].equals("1")) {
+    						hasRoadRight = true;
     					}
-    					if (row < (HEIGHT - 1) && inGrid[row+1][col].equals("1")) {
-    						System.out.println("DOWN FOUND");
-    						d = true;
+    					if (row < (MAPHEIGHT - 1) && inGrid[row+1][col].equals("1")) {
+    						hasRoadBelow = true;
     					}
     					if (col > 0 && inGrid[row][col-1].equals("1")) {
-    						l = true;
+    						hasRoadLeft = true;
     					}
 
-    					if (u) {
-    						if (r) {
-    							if (l) {
-    								if (d) {
+    					if (hasRoadAbove) {
+    						if (hasRoadRight) {
+    							if (hasRoadLeft) {
+    								if (hasRoadBelow) {
     									fileName = "road-cross";
     								} else {
     									fileName = "road-TU";
     								}
     							} else {
-    								if (d) {
+    								if (hasRoadBelow) {
     									fileName = "road-TR";
     								} else {
     									fileName = "road-cornerTR";
     								}
     							}
     						} else {
-    							if (l) {
-    								if (d) {
+    							if (hasRoadLeft) {
+    								if (hasRoadBelow) {
     									fileName = "road-TL";
     								} else {
     									fileName = "road-cornerTL";
@@ -90,21 +94,21 @@ public class Map {
     							}
     						}
     					} else {
-    						if (d) {
-    							if (l) {
-    								if (r) {
+    						if (hasRoadBelow) {
+    							if (hasRoadLeft) {
+    								if (hasRoadRight) {
     									fileName = "road-TD";
     								} else {
-    									if (l) {
+    									if (hasRoadLeft) {
     										fileName = "road-cornerBL";
     									} else {
     										fileName = "roadH";
     									}
     								}
     							} else {
-    								if (r) {
+    								if (hasRoadRight) {
     									fileName = "road-cornerBR";
-    								} else if (l) {
+    								} else if (hasRoadLeft) {
     									fileName = "roadH";
     								} else {
     									fileName = "roadV";
@@ -114,10 +118,10 @@ public class Map {
     							fileName = "roadH";
     						}
     					}
-    					
-                        grid[row][col] = new Road(new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, fileName);
+                        grid[row][col] = new Road(new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, fileName);
                         break;
                      
+
                 }
             }
         }

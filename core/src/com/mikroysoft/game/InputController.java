@@ -3,10 +3,13 @@ package com.mikroysoft.game;
 import com.badlogic.gdx.InputProcessor;
 
 public class InputController implements InputProcessor {
-	Coordinate position;
+	public Coordinate position;
+        public boolean moving;
+        private boolean shotsFired;
 	
 	public InputController() {
 		position = new Coordinate(-1,-1);
+                shotsFired = false;
 	}
 	
 	
@@ -23,20 +26,30 @@ public class InputController implements InputProcessor {
 	}
 
 	public boolean touchDown (int x, int y, int pointer, int button) {
+                if (button == 1) {
+                    shotsFired = true;
+                } else {
+                    moving = true;
+                }
 		position.x = x;
 		position.y = y;
 		return true;
 	}
 
 	public boolean touchUp (int x, int y, int pointer, int button) {
-		position.x = -1;
-		position.y = -1;
+                if (!shotsFired) {
+		    position.x = -1;
+		    position.y = -1;
+                }
+                moving = false;
 		return false;
 	}
 
 	public boolean touchDragged (int x, int y, int pointer) {
-		position.x = x;
-		position.y = y;
+                if (moving) {
+		    position.x = x;
+		    position.y = y;
+                }
 		return true;
 	}
 
@@ -51,4 +64,12 @@ public class InputController implements InputProcessor {
 	public Coordinate getLatestPosition() {
 		return this.position;
 	}
+
+        public boolean getShotsFired() {
+                if (shotsFired) {
+                    shotsFired = false;
+                    return true;
+                }
+                return false;
+        }
 }
