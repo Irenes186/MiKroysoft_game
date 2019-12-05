@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 
 public class Map {
+	int WIDTH = 20;
+	int HEIGHT = 20;
 	IRenderable[][] grid;
 	public Map() throws Exception{
 		int WIDTH = 20;

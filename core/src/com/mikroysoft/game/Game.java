@@ -27,7 +27,7 @@ public class Game extends ApplicationAdapter {
 		coreLogic = new CoreLogic();
 		inputController = new InputController();
 		Gdx.input.setInputProcessor(inputController);
-		
+
 		//Fire Engines:
 		fireEngines = new FireEngine[1];
 		fireEngines[0] = new FireEngine();
@@ -64,7 +64,7 @@ public class Game extends ApplicationAdapter {
 			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
 
-		aliens[0].Run(20, 20);
+		aliens[0].Run(map.WIDTH, map.HEIGHT);
 		batch.draw(health.texture,health.position.x,health.position.y, health.getFill(), health.getHeight());
 		batch.draw(healthIcon,health.position.x - (5 + health.getHeight()), health.position.y, health.getHeight(), health.getHeight());
 		for (Alien alien: aliens) {
