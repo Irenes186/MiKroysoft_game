@@ -25,10 +25,12 @@ public class Map {
 			items = fileInput.split("",MAPWIDTH);
 			for (int col = 0; col < MAPWIDTH; col++) {
 				inGrid[row][col] = items[col];
-				System.out.print(items[col]);
+				// debug: print grid
+				//System.out.print(items[col]);
 			}
 			row++;
-			System.out.println();
+			// debug: print grid
+			//System.out.println();
 		}
 		
 		reader.close();
@@ -59,7 +61,6 @@ public class Map {
     						r = true;
     					}
     					if (row < (MAPHEIGHT - 1) && inGrid[row+1][col].equals("1")) {
-    						System.out.println("DOWN FOUND");
     						d = true;
     					}
     					if (col > 0 && inGrid[row][col-1].equals("1")) {
