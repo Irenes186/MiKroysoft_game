@@ -5,13 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 
 public class Map {
-	
 	IRenderable[][] grid;
-
 	public Map() throws Exception{
 		int WIDTH = 20;
 		int HEIGHT = 20;
-        int TILEWIDTH = Gdx.graphics.getWidth() / WIDTH;
+        int TILEWIDTH = Gdx.graphics.getWidth() /WIDTH;
         int TILEHEIGHT = Gdx.graphics.getHeight() / HEIGHT;
 
 		grid = new IRenderable[WIDTH][HEIGHT];
@@ -117,14 +115,11 @@ public class Map {
     					
                         grid[row][col] = new Road(new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, fileName);
                         break;
-                     
                 }
             }
         }
-		
 		reader.close();
 	}
-
         public void render(SpriteBatch batch) {
             for (int col = 0; col < grid.length; col++) {
                 for (int row = 0; row < grid[0].length; row++) {

@@ -10,6 +10,7 @@ public class Alien implements IRenderable {
     private int TILEWIDTH, TILEHEIGHT;
     public float direction;
     private float speed;
+    String x;
 
     public Alien(Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
         texture = new Texture("alien.png");
@@ -20,14 +21,20 @@ public class Alien implements IRenderable {
         speed = 2;
     }
 
-    public Coordinate getLatestPosition() {
-        return this.position;
-    }
-    public void Run(){
-        position.x += Integer.signum(position.y + (int)(Math.random()))*2;
+    public void Run(int tilewidth, int tileheight){
+       position.x += Integer.signum(position.y + (int)(Math.random()))*2;
+        //position.x = 3;
         position.y += Integer.signum(position.y + (int)(Math.random()))*2;
         direction = (float) Math.toDegrees(Math.atan2((position.y +(Math.random()* 10 + 1)) * -1,  position.x - (Math.random()* 10 + 1))) +45;
-        System.out.println(position.x);
+        if(  //position.x == 3
+            (position.x <=  0) || (position.y >= 33*tileheight)
+        )
+        {
+            x = ("Out of bounds");
+            System.out.println(position.y);
+
+        }
+
     }
 
     @Override

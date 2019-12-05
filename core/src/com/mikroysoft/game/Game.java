@@ -35,10 +35,10 @@ public class Game extends ApplicationAdapter {
 		//fireEngines[2] = new FireEngine();
 		//fireEngines[3] = new FireEngine();
 		//fireEngines[4] = new FireEngine();
-		
+
 		aliens = new Alien[1];
 		aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
-		
+
 		//health progress bar:
 		health = new ProgressBar();
 		health.setPosition(20,10);
@@ -46,7 +46,7 @@ public class Game extends ApplicationAdapter {
 		health.setMax(100);
 		health.updateCurrent(100);
 
-		
+
 		//health icon - next to health progress bar.
 		healthIcon = new Texture("health.png");
 	}
@@ -64,7 +64,7 @@ public class Game extends ApplicationAdapter {
 			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
 
-		aliens[0].Run();
+		aliens[0].Run(20, 20);
 		batch.draw(health.texture,health.position.x,health.position.y, health.getFill(), health.getHeight());
 		batch.draw(healthIcon,health.position.x - (5 + health.getHeight()), health.position.y, health.getHeight(), health.getHeight());
 		for (Alien alien: aliens) {
