@@ -1,3 +1,3 @@
 @echo off
-gradlew.bat Desktop:run
-wait
+CALL gradlew.bat Desktop:run
+pause
