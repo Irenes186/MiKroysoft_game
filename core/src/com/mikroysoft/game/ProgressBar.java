@@ -38,20 +38,6 @@ public class ProgressBar {
 		return this.width;
 	}
 	
-	public int getCurrent() {
-		return this.current;
-	}
-	
-	public void currentMinus(int toSubtract) {
-		int temp = this.current - toSubtract;
-		updateCurrent(temp);
-	}
-	
-	public void currentAdd(int toAdd) {
-		int temp = this.current + toAdd;
-		updateCurrent(temp);
-	}
-	
 	public void setDimensions(int w, int h) {
 		this.height = h;
 		this.width = w;
