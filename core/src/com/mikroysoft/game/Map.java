@@ -8,13 +8,11 @@ public class Map {
 	
 	IRenderable[][] grid;
 
-	public Map() throws Exception{
-		int WIDTH = 20;
-		int HEIGHT = 20;
-                int TILEWIDTH = Gdx.graphics.getWidth() / WIDTH;
-                int TILEHEIGHT = Gdx.graphics.getHeight() / HEIGHT;
+	public Map(int MAPWIDTH, int MAPHEIGHT) throws Exception{
+                int TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
+                int TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
 
-		grid = new IRenderable[WIDTH][HEIGHT];
+		grid = new IRenderable[MAPWIDTH][MAPHEIGHT];
 		
 		File file = new File("map_information.txt");
 		
@@ -22,11 +20,11 @@ public class Map {
 		
 		String fileInput;
 		String[] items;
-                int col = HEIGHT -1 ;
+                int col = MAPHEIGHT -1 ;
 		while ((fileInput = reader.readLine()) != null) {
-			items = fileInput.split("",WIDTH);
+			items = fileInput.split("",MAPWIDTH);
 
-                        for (int row = 0; row < WIDTH; row++) {
+                        for (int row = 0; row < MAPWIDTH; row++) {
                             switch (items[row]) {
                                 case "0" :
                                     grid[row][col] = new FireStation(10, new Coordinate(row * TILEWIDTH, col * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
