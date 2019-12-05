@@ -36,7 +36,7 @@ public class Map {
 		reader.close();
 		
 		String fileName;
-		boolean u, d, l, r;
+		boolean hasRoadAbove, hasRoadBelow, hasRoadLeft, hasRoadRight;
 		for (row = 0; row < MAPHEIGHT; row++) {
             for (int col = 0; col < MAPWIDTH; col++) {
                 switch (inGrid[row][col]) {
@@ -50,41 +50,41 @@ public class Map {
       	
                     case "1" :
                     	fileName = "roadV";
-                    	u = false;
-    					d = false;
-    					l = false;
-    					r = false;
+                    	hasRoadAbove = false;
+                    	hasRoadBelow = false;
+                    	hasRoadLeft = false;
+                    	hasRoadRight = false;
     					if (row > 0 && inGrid[row-1][col].equals("1")) {
-    						u = true;
+    						hasRoadAbove = true;
     					}
     					if (col < (MAPWIDTH - 1) && inGrid[row][col+1].equals("1")) {
-    						r = true;
+    						hasRoadRight = true;
     					}
     					if (row < (MAPHEIGHT - 1) && inGrid[row+1][col].equals("1")) {
-    						d = true;
+    						hasRoadBelow = true;
     					}
     					if (col > 0 && inGrid[row][col-1].equals("1")) {
-    						l = true;
+    						hasRoadLeft = true;
     					}
 
-    					if (u) {
-    						if (r) {
-    							if (l) {
-    								if (d) {
+    					if (hasRoadAbove) {
+    						if (hasRoadRight) {
+    							if (hasRoadLeft) {
+    								if (hasRoadBelow) {
     									fileName = "road-cross";
     								} else {
     									fileName = "road-TU";
     								}
     							} else {
-    								if (d) {
+    								if (hasRoadBelow) {
     									fileName = "road-TR";
     								} else {
     									fileName = "road-cornerTR";
     								}
     							}
     						} else {
-    							if (l) {
-    								if (d) {
+    							if (hasRoadLeft) {
+    								if (hasRoadBelow) {
     									fileName = "road-TL";
     								} else {
     									fileName = "road-cornerTL";
@@ -94,21 +94,21 @@ public class Map {
     							}
     						}
     					} else {
-    						if (d) {
-    							if (l) {
-    								if (r) {
+    						if (hasRoadBelow) {
+    							if (hasRoadLeft) {
+    								if (hasRoadRight) {
     									fileName = "road-TD";
     								} else {
-    									if (l) {
+    									if (hasRoadLeft) {
     										fileName = "road-cornerBL";
     									} else {
     										fileName = "roadH";
     									}
     								}
     							} else {
-    								if (r) {
+    								if (hasRoadRight) {
     									fileName = "road-cornerBR";
-    								} else if (l) {
+    								} else if (hasRoadLeft) {
     									fileName = "roadH";
     								} else {
     									fileName = "roadV";
