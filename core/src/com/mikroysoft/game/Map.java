@@ -43,7 +43,7 @@ public class Map {
 
                     case "2":
                         AlienBaseParameters params = new AlienBaseParameters();
-                        grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "clifford's tower"); 
+                        grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower"); 
 
                     case "1" :
                         fileName = "roadV";
