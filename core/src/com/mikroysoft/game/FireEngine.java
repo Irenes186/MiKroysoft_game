@@ -17,7 +17,7 @@ public class FireEngine {
 	private float range;
 	private float deliveryRate;
 	private int health;
-        private List < Projectile > projectiles;
+  private List < Projectile > projectiles;
 	public float direction;
 
 
@@ -70,5 +70,4 @@ public class FireEngine {
         public void shoot(Coordinate destination) {
             projectiles.add(new Projectile (position, destination));
         }
-
 }
