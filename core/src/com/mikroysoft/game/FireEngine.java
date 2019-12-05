@@ -19,6 +19,7 @@ public class FireEngine {
     private int health;
     private List < Projectile > projectiles;
     public float direction;
+    public Rectangle hitBox;
 
 
     public FireEngine(int MAPWIDTH, int MAPHEIGHT) {
@@ -43,11 +44,11 @@ public class FireEngine {
         if (input.x == -1)
             return;
 
-        double xSign = Integer.signum((int)input.x - (int)position.x - 40);
-        double ySign = Integer.signum((int)input.y - (int)position.y + 40);
+        double xSign = Integer.signum((int)input.x - (int)position.x);
+        double ySign = Integer.signum((int)input.y - (int)position.y);
 
-        boolean xThreshold = position.x - 45 <= input.x && position.x - 35 >= input.x;
-        boolean yThreshold = position.y + 35 <= input.y && position.y + 45 >= input.y;
+        boolean xThreshold = position.x - 5 <= input.x && position.x + 5 >= input.x;
+        boolean yThreshold = position.y - 5 <= input.y && position.y + 5 >= input.y;
 
         if (xThreshold && yThreshold) {
             return;
@@ -56,11 +57,11 @@ public class FireEngine {
         position.x += xSign * speed;
         position.y += ySign * speed;
 
-        direction = (float) Math.toDegrees(Math.atan2((input.y - position.y + 40) * -1, input.x - position.x - 40)) - 90;
+        direction = (float) Math.toDegrees(Math.atan2((input.y - position.y) * -1, input.x - position.x)) - 90;
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x,Gdx.graphics.getHeight()-position.y,40,40,80,80,1,1,direction,0,0,16,16,false,false);
+        batch.draw(texture, position.x - 40,Gdx.graphics.getHeight()-position.y - 40,40,40,80,80,1,1,direction,0,0,16,16,false,false);
 
         for (int i = 0; i < projectiles.size(); i++) {
             projectiles.get(i).render(batch);
