@@ -22,8 +22,8 @@ public class Map {
 		String[] items;
   
 		while ((fileInput = reader.readLine()) != null) {
-			items = fileInput.split("",WIDTH);
-			for (int col = 0; col < WIDTH; col++) {
+			items = fileInput.split("",MAPWIDTH);
+			for (int col = 0; col < MAPWIDTH; col++) {
 				inGrid[row][col] = items[col];
 				System.out.print(items[col]);
 			}
@@ -35,16 +35,16 @@ public class Map {
 		
 		String fileName;
 		boolean u, d, l, r;
-		for (row = 0; row < HEIGHT; row++) {
-            for (int col = 0; col < WIDTH; col++) {
+		for (row = 0; row < MAPHEIGHT; row++) {
+            for (int col = 0; col < MAPWIDTH; col++) {
                 switch (inGrid[row][col]) {
                     case "0" :
-                        grid[row][col] = new FireStation(10, new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
+                        grid[row][col] = new FireStation(10, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
                         break;
                     
                     case "2":
                     	AlienBaseParameters params = new AlienBaseParameters();
-                    	grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "clifford's tower"); 
+                    	grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower"); 
       	
                     case "1" :
                     	fileName = "roadV";
@@ -55,10 +55,10 @@ public class Map {
     					if (row > 0 && inGrid[row-1][col].equals("1")) {
     						u = true;
     					}
-    					if (col < (WIDTH - 1) && inGrid[row][col+1].equals("1")) {
+    					if (col < (MAPWIDTH - 1) && inGrid[row][col+1].equals("1")) {
     						r = true;
     					}
-    					if (row < (HEIGHT - 1) && inGrid[row+1][col].equals("1")) {
+    					if (row < (MAPHEIGHT - 1) && inGrid[row+1][col].equals("1")) {
     						System.out.println("DOWN FOUND");
     						d = true;
     					}
@@ -117,7 +117,7 @@ public class Map {
     							fileName = "roadH";
     						}
     					}
-                        grid[row][col] = new Road(new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, fileName);
+                        grid[row][col] = new Road(new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, fileName);
                         break;
                      
 
