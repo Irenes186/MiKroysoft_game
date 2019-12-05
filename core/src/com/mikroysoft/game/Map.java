@@ -48,6 +48,8 @@ public class Map {
 		String fileName;
 		// temp variables for configuring road gfx
 		boolean hasRoadAbove, hasRoadBelow, hasRoadLeft, hasRoadRight;
+		// config var for AlienBases
+		AlienBaseParameters params;
 		// iterate through inGrid
 		for (row = 0; row < MAPHEIGHT; row++) {
             for (int col = 0; col < MAPWIDTH; col++) {
@@ -57,14 +59,7 @@ public class Map {
                     case "0" :
                         grid[row][col] = new FireStation(10, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
                         break;
-                    
-                    // instance alien bases
-                    // clifford's tower
-                    case "2":
-                    	AlienBaseParameters params = new AlienBaseParameters();
-                    	grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower"); 
-                    	break;
-                   
+                        
                     // instance roads
                     case "1":
                     	// default to vertical road
@@ -146,6 +141,25 @@ public class Map {
     					// instance road with the required gfx
                         grid[row][col] = new Road(new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, fileName);
                         break;
+                    
+                    // instance alien bases
+                    // clifford's tower
+                    case "2":
+                    	params = new AlienBaseParameters();
+                    	grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower"); 
+                    	break;
+                    
+                	// Aldi
+                    case "3":
+                    	params = new AlienBaseParameters();
+                    	grid[row][col] = new AlienBase("Aldi", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Aldi"); 
+                    	break;
+                    	
+                	// Holgate Windmill
+                    case "4":
+                    	params = new AlienBaseParameters();
+                    	grid[row][col] = new AlienBase("Holgate Windmill", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Holgate-Windmill"); 
+                    	break;
                 }
             }
         }
