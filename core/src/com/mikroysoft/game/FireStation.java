@@ -20,6 +20,13 @@ public class FireStation implements IRenderable {
 
 	}
 	
+	public boolean engineNear(FireEngine f) {
+		if((this.position.x == f.position.x) && (this.position.y == f.position.y)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void destroy() {
 		destroyed = true;
 	}

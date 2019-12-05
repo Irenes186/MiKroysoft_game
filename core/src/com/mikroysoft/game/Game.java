@@ -58,7 +58,7 @@ public class Game extends ApplicationAdapter {
 		fuel.setDimensions(100,10);
 		fuel.setMax(100);
 		fuel.updateCurrent(100);
-		//hiiii
+	
 		//fuel icon - next to fuel progress bar.
 		fuelIcon = new Texture("fuel.png");
 	}
@@ -70,12 +70,12 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
                 map.render(batch);
-                
+        
 		fireEngines[0].move(inputController.getLatestPosition());
 		for (FireEngine engine: fireEngines) {
 			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
-
+		
 		aliens[0].Run();
 		//health
 		batch.draw(health.texture,health.position.x,health.position.y, health.getFill(), health.getHeight());
