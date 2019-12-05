@@ -3,6 +3,7 @@ package com.mikroysoft.game;
 import java.io.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 
 public class Map {
 	/* Container class for all map elements
@@ -12,12 +13,18 @@ public class Map {
 	
 	// actual array containing class instances
 	IRenderable[][] grid;
+	Texture bg;
+	private int MAPWIDTH, MAPHEIGHT;
 
 	// constructor: takes map dimensions
-	public Map(int MAPWIDTH, int MAPHEIGHT) throws Exception{
+	public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex) throws Exception {
+		this.bg = new Texture(bgtex + ".png");
 		// calculate tile dimensions
 		int TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
 		int TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
+		
+		this.MAPWIDTH = MAPWIDTH;
+		this.MAPHEIGHT = MAPHEIGHT;
 		
 		grid = new IRenderable[MAPWIDTH][MAPHEIGHT];
 		// Grid containing text description of map
@@ -169,6 +176,9 @@ public class Map {
 
 	// render map elements onto the screen
     public void render(SpriteBatch batch) {
+    	// batch.draw (this.bg, 0, 0, MAPWIDTH, MAPHEIGHT, 0, 0, this.bg.getWidth(), this.bg.getHeight(), false, false);
+    	batch.draw (this.bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
     	// iterate through grid, and call each object's render method
         for (int col = 0; col < grid.length; col++) {
             for (int row = 0; row < grid[0].length; row++) {
