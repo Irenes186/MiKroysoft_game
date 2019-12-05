@@ -17,14 +17,14 @@ public class FireEngine {
 	private float range;
 	private float deliveryRate;
 	private int health;
-  private List < Projectile > projectiles;
+	private List < Projectile > projectiles;
 	public float direction;
 
 
 	public FireEngine(int MAPWIDTH, int MAPHEIGHT) {
 		texture = new Texture("fireengine.png");
 		position = new Coordinate(300,300);
-                projectiles = new ArrayList < Projectile> ();
+        projectiles = new ArrayList < Projectile> ();
 		direction = 0;
 		speed = 2;
 	}
@@ -40,34 +40,34 @@ public class FireEngine {
 	
 	public void move(Coordinate input) {
 		//add some kind of moving rules.
-                if (input.x == -1)
-                    return;
+        if (input.x == -1)
+            return;
 
-                double xSign = Integer.signum(input.x - position.x - 40);
-                double ySign = Integer.signum(input.y - position.y + 40);
+        double xSign = Integer.signum(input.x - position.x - 40);
+        double ySign = Integer.signum(input.y - position.y + 40);
 
-                boolean xThreshold = position.x - 45 <= input.x && position.x - 35 >= input.x;
-                boolean yThreshold = position.y + 35 <= input.y && position.y + 45 >= input.y;
+        boolean xThreshold = position.x - 45 <= input.x && position.x - 35 >= input.x;
+        boolean yThreshold = position.y + 35 <= input.y && position.y + 45 >= input.y;
 
-                if (xThreshold && yThreshold) {
-                    return;
-                }
+        if (xThreshold && yThreshold) {
+            return;
+        }
 
-                position.x += xSign * speed;
-                position.y += ySign * speed;
+        position.x += xSign * speed;
+        position.y += ySign * speed;
 
-                direction = (float) Math.toDegrees(Math.atan2((input.y - position.y + 40) * -1, input.x - position.x - 40)) - 90;
+        direction = (float) Math.toDegrees(Math.atan2((input.y - position.y + 40) * -1, input.x - position.x - 40)) - 90;
 	}
 
-        public void render(SpriteBatch batch) {
-                batch.draw(texture, position.x,Gdx.graphics.getHeight()-position.y,40,40,80,80,1,1,direction,0,0,16,16,false,false);
+    public void render(SpriteBatch batch) {
+        batch.draw(texture, position.x,Gdx.graphics.getHeight()-position.y,40,40,80,80,1,1,direction,0,0,16,16,false,false);
 
-            for (int i = 0; i < projectiles.size(); i++) {
-                    projectiles.get(i).render(batch);
-            }
+        for (int i = 0; i < projectiles.size(); i++) {
+        	projectiles.get(i).render(batch);
         }
+    }
 
-        public void shoot(Coordinate destination) {
-            projectiles.add(new Projectile (position, destination));
-        }
+    public void shoot(Coordinate destination) {
+    	projectiles.add(new Projectile (position, destination));
+    }
 }
