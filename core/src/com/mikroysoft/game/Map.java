@@ -8,21 +8,19 @@ public class Map {
 	
 	IRenderable[][] grid;
 
-	public Map() throws Exception{
-		int WIDTH = 20;
-		int HEIGHT = 20;
-        int TILEWIDTH = Gdx.graphics.getWidth() / WIDTH;
-        int TILEHEIGHT = Gdx.graphics.getHeight() / HEIGHT;
+	public Map(int MAPWIDTH, int MAPHEIGHT) throws Exception{
+    int TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
+    int TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
 
-		grid = new IRenderable[WIDTH][HEIGHT];
-		String[][] inGrid = new String[WIDTH][HEIGHT];
-		
+		grid = new IRenderable[MAPWIDTH][MAPHEIGHT];
+		String[][] inGrid = new String[MAPWIDTH][MAPHEIGHT];		
 		File file = new File("map_information.txt");
 		
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		int row = 0;
 		String fileInput;
 		String[] items;
+  
 		while ((fileInput = reader.readLine()) != null) {
 			items = fileInput.split("",WIDTH);
 			for (int col = 0; col < WIDTH; col++) {
@@ -46,9 +44,8 @@ public class Map {
                     
                     case "2":
                     	AlienBaseParameters params = new AlienBaseParameters();
-                    	
-                    	grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "clifford's tower");
-                    	
+                    	grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "clifford's tower"); 
+      	
                     case "1" :
                     	fileName = "roadV";
                     	u = false;
@@ -120,10 +117,10 @@ public class Map {
     							fileName = "roadH";
     						}
     					}
-    					
                         grid[row][col] = new Road(new Coordinate(col * TILEWIDTH, (HEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, fileName);
                         break;
                      
+
                 }
             }
         }

@@ -11,20 +11,29 @@ public class Game extends ApplicationAdapter {
 	CoreLogic coreLogic;
 	FireEngine[] fireEngines;
 	InputController inputController; 
-    Map map;
-    ProgressBar health;
-    Texture healthIcon;
-    ProgressBar fuel;
-    Texture fuelIcon;
-	Alien[] aliens;
+
+  Map map;
+  int MAPWIDTH;
+  int MAPHEIGHT;
+
+  ProgressBar health;
+  Texture healthIcon;
+  ProgressBar fuel;
+  Texture fuelIcon;
+  Alien[] aliens;
 	
 	@Override
 	public void create () {
-       try {
-            map = new Map();
-       } catch (Exception e) {
-             e.printStackTrace();
-       }
+                MAPWIDTH = 20;
+                MAPHEIGHT = 20;
+
+                try {
+                    map = new Map(MAPWIDTH, MAPHEIGHT);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
 		batch = new SpriteBatch();
 		coreLogic = new CoreLogic();
 		inputController = new InputController();
@@ -32,7 +41,7 @@ public class Game extends ApplicationAdapter {
 		
 		//Fire Engines:
 		fireEngines = new FireEngine[1];
-		fireEngines[0] = new FireEngine();
+		fireEngines[0] = new FireEngine(MAPWIDTH, MAPHEIGHT);
 		//fireEngines[1] = new FireEngine();
 		//fireEngines[2] = new FireEngine();
 		//fireEngines[3] = new FireEngine();
@@ -70,10 +79,16 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
                 map.render(batch);
-                
-		fireEngines[0].move(inputController.getLatestPosition());
+
+                if (inputController.getShotsFired()) {
+                    fireEngines[0].shoot(inputController.getLatestPosition());
+                }
+                if (inputController.moving) {
+
+		    fireEngines[0].move(inputController.getLatestPosition());
+                }
 		for (FireEngine engine: fireEngines) {
-			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
+                    engine.render(batch);
 		}
 
 		aliens[0].Run();
