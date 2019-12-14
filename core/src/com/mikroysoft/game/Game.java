@@ -90,7 +90,8 @@ public class Game extends ApplicationAdapter {
 		for (FireEngine engine: fireEngines) {
                     engine.render(batch);
 		}
-
+		health.setPosition(fireEngines[0].position.x,Gdx.graphics.getHeight() - fireEngines[0].position.y - 10);
+		fuel.setPosition(fireEngines[0].position.x,Gdx.graphics.getHeight() - fireEngines[0].position.y - 25);
 		aliens[0].Run();
 		//health
 		batch.draw(health.texture,health.position.x,health.position.y, health.getFill(), health.getHeight());
