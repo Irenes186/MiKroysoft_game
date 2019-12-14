@@ -28,7 +28,7 @@ public class Game extends ApplicationAdapter {
                 MAPHEIGHT = 20;
 
                 try {
-                    map = new Map(MAPWIDTH, MAPHEIGHT);
+                    map = new Map(MAPWIDTH, MAPHEIGHT,"background");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
