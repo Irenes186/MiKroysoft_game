@@ -14,8 +14,9 @@ public class Map {
 	// actual array containing class instances
 	IRenderable[][] grid;
 	Texture bg;
+	public Coordinate c = new Coordinate(0, 0); 
 	private int MAPWIDTH, MAPHEIGHT;
-
+	
 	// constructor: takes map dimensions
 	public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex) throws Exception {
 		this.bg = new Texture(bgtex + ".png");
@@ -64,7 +65,8 @@ public class Map {
                 switch (inGrid[row][col]) {
                 	// instance fire stations
                     case "0" :
-                        grid[row][col] = new FireStation(10, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
+                    	c.setCoordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT);
+                        grid[row][col] = new FireStation(10, c, TILEWIDTH, TILEHEIGHT);
                         break;
                         
                     // instance roads
