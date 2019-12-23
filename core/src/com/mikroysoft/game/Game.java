@@ -11,17 +11,17 @@ public class Game extends ApplicationAdapter {
 	CoreLogic coreLogic;
 	FireEngine[] fireEngines;
 	InputController inputController; 
-
-  Map map;
-  int MAPWIDTH;
-  int MAPHEIGHT;
-
-  ProgressBar health;
-  Texture healthIcon;
-  ProgressBar fuel;
-  Texture fuelIcon;
-  Alien[] aliens;
 	
+	Map map;
+	int MAPWIDTH;
+	int MAPHEIGHT;
+	
+	ProgressBar health;
+	Texture healthIcon;
+	ProgressBar fuel;
+	Texture fuelIcon;
+	Alien[] aliens;
+
 	@Override
 	public void create () {
         MAPWIDTH = 20;
@@ -110,6 +110,7 @@ public class Game extends ApplicationAdapter {
 		batch.end();
 		//System.out.println(health.getFill());
 	}
+	
 	@Override
 	public void dispose () {
 		batch.dispose();
