@@ -24,14 +24,14 @@ public class Game extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-                MAPWIDTH = 20;
-                MAPHEIGHT = 20;
+        MAPWIDTH = 20;
+        MAPHEIGHT = 20;
 
-                try {
-                    map = new Map(MAPWIDTH, MAPHEIGHT,"background");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        try {
+            map = new Map(MAPWIDTH, MAPHEIGHT,"background");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
 		batch = new SpriteBatch();
@@ -47,8 +47,11 @@ public class Game extends ApplicationAdapter {
 		//fireEngines[3] = new FireEngine();
 		//fireEngines[4] = new FireEngine();
 		
+		// TODO: REMOVE. For testing only.
 		aliens = new Alien[1];
 		aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
+		
+		// TODO: Please move health and fuel bar/icon instantiation to within fire truck instantiation
 		
 		//health progress bar:
 		health = new ProgressBar(1);
@@ -78,20 +81,23 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-                map.render(batch);
+        map.render(batch);
 
-                if (inputController.getShotsFired()) {
-                    fireEngines[0].shoot(inputController.getLatestPosition());
-                }
-                if (inputController.moving) {
-
-		    fireEngines[0].move(inputController.getLatestPosition());
-                }
+        if (inputController.getShotsFired()) {
+            fireEngines[0].shoot(inputController.getLatestPosition());
+        }
+        if (inputController.moving) {
+        	fireEngines[0].move(inputController.getLatestPosition());
+        }
 		for (FireEngine engine: fireEngines) {
-                    engine.render(batch);
+            engine.render(batch);
 		}
-
+		
+		// TODO: REMOVE. For testing only.
 		aliens[0].Run();
+		// TODO: Please handle health and fuel bar rendering modularly.
+		// Drawing should be handled by ProgressBar.render(SpriteBatch batch).
+		// This should probably be called by the owner fire truck class.
 		//health
 		batch.draw(health.texture,health.position.x,health.position.y, health.getFill(), health.getHeight());
 		batch.draw(healthIcon,health.position.x - (5 + health.getHeight()), health.position.y, health.getHeight(), health.getHeight());
