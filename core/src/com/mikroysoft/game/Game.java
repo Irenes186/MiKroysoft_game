@@ -21,11 +21,15 @@ public class Game extends ApplicationAdapter {
 	ProgressBar fuel;
 	Texture fuelIcon;
 	Alien[] aliens;
+	// used to track the farthest-left empty cell in the aliens array.
+	int nextAlien;
+	AlienBase[] bases;
 
 	@Override
 	public void create () {
         MAPWIDTH = 20;
         MAPHEIGHT = 20;
+        nextAlien = 0;
 
         try {
             map = new Map(MAPWIDTH, MAPHEIGHT,"background");
@@ -49,7 +53,7 @@ public class Game extends ApplicationAdapter {
 		//fireEngines[3] = new FireEngine();
 		//fireEngines[4] = new FireEngine();
 		
-		// Set aliens array size to the sum of all maxAliens counts.
+		// initialise aliens array size to the sum of all maxAliens counts.
 		int totalMaxAliens = 0;
 		for (IRenderable[] row: this.map.grid) {
 			for (IRenderable cell: row) {
@@ -59,6 +63,7 @@ public class Game extends ApplicationAdapter {
 			}
 		}
 		aliens = new Alien[totalMaxAliens];
+		bases = this.map.getBases();
 		// TODO: REMOVE. For testing only.
 		// aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
 		
@@ -91,6 +96,17 @@ public class Game extends ApplicationAdapter {
 		coreLogic.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		// Handle Alien spawning
+		for (AlienBase base: this.bases) {
+			Alien newAlien = base.defend(this.fireEngines);
+			if (newAlien != null) {
+				aliens[nextAlien] = newAlien;
+				// Theoretically, this should never overflow due to the way i instantiated aliens.
+				nextAlien++;
+			}
+		}
+		
 		batch.begin();
         map.render(batch);
 

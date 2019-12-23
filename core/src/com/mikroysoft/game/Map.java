@@ -174,6 +174,34 @@ public class Map {
 		reader.close();
 	}
 
+	/* Returns all currently active alien bases
+	 * TODO: Inefficient! Runs in O(2n) time :/
+	 */
+	public AlienBase[] getBases() {
+		AlienBase[] bases;
+		int numBases = 0;
+		for (IRenderable[] row: this.grid) {
+			for (IRenderable cell: row) {
+				if (cell instanceof AlienBase) {
+					numBases++;
+				}
+			}
+		}
+		bases = new AlienBase[numBases];
+		int currentBase = 0;
+		
+		for (IRenderable[] row: this.grid) {
+			for (IRenderable cell: row) {
+				if (cell instanceof AlienBase) {
+					bases[currentBase] = (AlienBase) cell;
+					currentBase++;
+				}
+			}
+		}
+		
+		return bases;
+	}
+	
 	// render map elements onto the screen
     public void render(SpriteBatch batch) {
     	// batch.draw (this.bg, 0, 0, MAPWIDTH, MAPHEIGHT, 0, 0, this.bg.getWidth(), this.bg.getHeight(), false, false);

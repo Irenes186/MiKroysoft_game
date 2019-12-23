@@ -10,6 +10,7 @@ public class AlienBase implements IRenderable {
     public int maxAliens;
     public int currentAliens;
     public int alienSpawnCountDown;
+    public int maxAlienSpawnCountDown;
     //Changed from String[] as weapon type does not change.
     public String weaponType;
     public int floodLevel;
@@ -31,6 +32,12 @@ public class AlienBase implements IRenderable {
         this.attackTimeAfterFirst = params.attackTimeAfterFirst;
         this.TILEWIDTH = TILEWIDTH;
         this.TILEHEIGHT = TILEHEIGHT;
+        
+        // should this be in AlienBaseParameters?
+        // set aliens to spawn every 500 frames that a truck is in range
+        this.maxAlienSpawnCountDown = 500;
+        
+        this.randomGen = new Random();
     }
 
     public int increaseDefense () {
@@ -43,27 +50,27 @@ public class AlienBase implements IRenderable {
     }
     
     /* Test fire truck presence. Decrease alien spawning counter
-     * and spawn aliens as appropriate.
+     * and spawn aliens as appropriate. Returns the spawned alien instance
      * Alien spawning counter is only decreased while a fire truck is in range.
      */
-    public void defend(FireEngine[] fireEngines) {
+    public Alien defend(FireEngine[] fireEngines) {
     	if (this.alienSpawnCountDown == 0) {
     		for (FireEngine currentTruck: fireEngines) {
     			if (this.position.x - currentTruck.position.x <= this.weaponRange && 
     					this.position.y - currentTruck.position.y <= this.weaponRange) {
-    				this.spawnAlien();
-    				break;
+    				return this.spawnAlien();
     			}
     		}
     	}
     	this.alienSpawnCountDown--;
+    	return null;
     }
     
     // TODO: IMPLEMENT
     // spawns an alien, and resets this.alienSpawnCountDown to its max.
-    // should this max value be in AlienBaseParameters??
-    private void spawnAlien() {
-    	return;
+    private Alien spawnAlien() {
+    	this.alienSpawnCountDown = this.maxAlienSpawnCountDown;
+    	Float[] offset = Util.randomCoordOffset(-1.0f, 1.0f, 0.8f);
+    	return new Alien(new Coordinate(this.position.x + offset[0], this.position.y + offset[1]), this.TILEWIDTH, this.TILEHEIGHT);
     }
-
 }
