@@ -1,7 +1,8 @@
 package com.mikroysoft.game;
 
 public class AlienBaseParameters {
-	public float weaponRange;
+	// changed from float, since range can be handled on a per-cell basis
+	public int weaponRange;
 	// Renamed from aliensNumber
     public int maxAliens;
     //Changed from String[] as weapon type does not change.

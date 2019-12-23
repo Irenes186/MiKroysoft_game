@@ -5,10 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class AlienBase implements IRenderable {
     public Texture texture;
-    public float weaponRange;
+    public int weaponRange;
     public String name;
     public int maxAliens;
     public int currentAliens;
+    public int alienSpawnCountDown;
     //Changed from String[] as weapon type does not change.
     public String weaponType;
     public int floodLevel;
@@ -45,8 +46,24 @@ public class AlienBase implements IRenderable {
      * and spawn aliens as appropriate.
      * Alien spawning counter is only decreased while a fire truck is in range.
      */
-    public void defend() {
-    	
+    public void defend(FireEngine[] fireEngines) {
+    	if (this.alienSpawnCountDown == 0) {
+    		for (FireEngine currentTruck: fireEngines) {
+    			if (this.position.x - currentTruck.position.x <= this.weaponRange && 
+    					this.position.y - currentTruck.position.y <= this.weaponRange) {
+    				this.spawnAlien();
+    				break;
+    			}
+    		}
+    	}
+    	this.alienSpawnCountDown--;
+    }
+    
+    // TODO: IMPLEMENT
+    // spawns an alien, and resets this.alienSpawnCountDown to its max.
+    // should this max value be in AlienBaseParameters??
+    private void spawnAlien() {
+    	return;
     }
 
 }
