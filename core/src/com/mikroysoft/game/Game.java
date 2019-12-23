@@ -40,9 +40,11 @@ public class Game extends ApplicationAdapter {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
-                TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
-                fireStation = new FireStation(1, map.c, TILEWIDTH, TILEHEIGHT);
+                //TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
+                //TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
+                //System.out.println(map.c.x);
+                //System.out.println(map.c.y);
+                //fireStation.isInRange(fireEngines[i].getPosition())
 
 		batch = new SpriteBatch();
 		coreLogic = new CoreLogic();
@@ -109,7 +111,9 @@ public class Game extends ApplicationAdapter {
                 map.render(batch);
                 //refill and repair
                 for(int i = 0; i < AMOUNT; i = i + 1) {
-                	if(fireStation.isInRange(fireEngines[i].getPosition())) {
+                	boolean ifStatement = map.isInStationRange(fireEngines[i].getPosition());
+                	if(ifStatement) {
+                		System.out.println("hi");
                     	if(!fireEngines[i].isMaxHealth()) {
                     		fireEngines[i].repair();
                     	} else if (!fireEngines[i].isMaxFuel()) {
@@ -122,6 +126,7 @@ public class Game extends ApplicationAdapter {
                     fireEngines[engineSelected].shoot(inputController.getLatestPosition());
                 }
                 if (inputController.moving) {
+                	//For testing reasons:
                 	if(fireEngines[engineSelected].getFuel() == 0) {
                 		inputController.setMoveFalse();
                 		//Testing reasons - print statement:
@@ -158,6 +163,12 @@ public class Game extends ApplicationAdapter {
 		for (Alien alien: aliens) {
 			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,40,40,1,1,alien.direction,0,0,16,16,false,false);
 		}
+		
+		
+		//For testing:
+		batch.draw(fuelIcon,561,629);
+		
+		//ends batch.
 		batch.end();
 		//System.out.println(health[i].getFill());
 	}

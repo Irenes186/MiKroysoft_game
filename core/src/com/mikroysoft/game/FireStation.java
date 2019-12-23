@@ -20,22 +20,6 @@ public class FireStation implements IRenderable {
 
 	}
 	
-	public boolean isInRange(Coordinate engineCoordinates) {
-		int tempX = engineCoordinates.x - this.position.x;
-		int tempY = engineCoordinates.y - this.position.y;
-		if(tempX < 0) {
-			tempX = tempX * -1;
-		}
-		if (tempY < 0) {
-			tempY = tempY * -1;
-		}
-		if((tempX < TILEWIDTH) && (tempY < TILEHEIGHT)) {
-			return true;
-		} else { 
-			return false;
-		}
-		
-	}
 	
 	public Coordinate getPosition() {
 		return position;
