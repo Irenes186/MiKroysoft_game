@@ -39,6 +39,8 @@ public class Game extends ApplicationAdapter {
 		inputController = new InputController();
 		Gdx.input.setInputProcessor(inputController);
 		
+		// TODO: After implementing control switching, fix fire engine instantiation here!
+		
 		//Fire Engines:
 		fireEngines = new FireEngine[1];
 		fireEngines[0] = new FireEngine(MAPWIDTH, MAPHEIGHT);
@@ -47,9 +49,18 @@ public class Game extends ApplicationAdapter {
 		//fireEngines[3] = new FireEngine();
 		//fireEngines[4] = new FireEngine();
 		
+		// Set aliens array size to the sum of all maxAliens counts.
+		int totalMaxAliens = 0;
+		for (IRenderable[] row: this.map.grid) {
+			for (IRenderable cell: row) {
+				if (cell instanceof AlienBase) {
+					totalMaxAliens += ((AlienBase) cell).maxAliens;
+				}
+			}
+		}
+		aliens = new Alien[totalMaxAliens];
 		// TODO: REMOVE. For testing only.
-		aliens = new Alien[1];
-		aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
+		// aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
 		
 		// TODO: Please move health and fuel bar/icon instantiation to within fire truck instantiation
 		
@@ -94,7 +105,10 @@ public class Game extends ApplicationAdapter {
 		}
 		
 		// TODO: REMOVE. For testing only.
-		aliens[0].Run();
+		// TODO: Implement alien shooting.
+		// aliens[0].Run();
+		
+		
 		// TODO: Please handle health and fuel bar rendering modularly.
 		// Drawing should be handled by ProgressBar.render(SpriteBatch batch).
 		// This should probably be called by the owner fire truck class.
