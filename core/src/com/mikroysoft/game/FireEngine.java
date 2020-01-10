@@ -74,7 +74,7 @@ public class FireEngine {
 		distanceTravelled = distanceTravelled + 1;
 	}
 	public void fuelReduce() {
-		if(distanceTravelled % 2 == 0) {
+		if(distanceTravelled % 5 == 0) {
 			fuel -= 1;
 		}
 	}
