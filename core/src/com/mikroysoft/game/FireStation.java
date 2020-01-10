@@ -20,6 +20,10 @@ public class FireStation implements IRenderable {
 
     }
 
+    public Coordinate getPosition() {
+	return position;
+    }
+
     public void destroy() {
         destroyed = true;
     }
