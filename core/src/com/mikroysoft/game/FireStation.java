@@ -21,7 +21,7 @@ public class FireStation implements IRenderable {
     }
 
     public Coordinate getPosition() {
-	return position;
+        return position;
     }
 
     public void destroy() {

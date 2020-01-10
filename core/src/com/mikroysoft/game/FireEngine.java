@@ -32,16 +32,16 @@ public class FireEngine {
         projectiles = new ArrayList < Projectile> ();
         direction = 0;
         speed = 2;
-	health = 100;
-	fuel = 100;
-	distanceTravelled = 0;
-	maxFuel = 100;
-	maxHealth = 100;
+        health = 100;
+        fuel = 100;
+        distanceTravelled = 0;
+        maxFuel = 100;
+        maxHealth = 100;
     }
 
     public void setPosition(int x, int y) {
-	position.x = x;
-	position.y = y;
+        position.x = x;
+        position.y = y;
     }
 
     public void repair() {
@@ -50,45 +50,45 @@ public class FireEngine {
 
     public void refill() {
         waterVolume += 50;
-	fuel += 1;
+        fuel += 1;
     }
 
     public boolean isMaxHealth() {
-	if(this.health == this.maxHealth) {
-	    return true;
-	} else {
-	    return false;
-	}
+        if(this.health == this.maxHealth) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean isMaxFuel() {
-	if(this.fuel == this.maxFuel) {
-	    return true;
-	} else {
-	    return false;
-	}
+        if(this.fuel == this.maxFuel) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getFuel() {
-	return this.fuel;
+        return this.fuel;
     }
 
     public void distanceIncreased() {
-	distanceTravelled = distanceTravelled + 1;
+        distanceTravelled = distanceTravelled + 1;
     }
 
     public void fuelReduce() {
-	if(distanceTravelled % 5 == 0) {
-	    fuel -= 1;
-	}
+        if(distanceTravelled % 5 == 0) {
+            fuel -= 1;
+        }
     }
 
     public Coordinate getPosition() {
-	return position;
+        return position;
     }
 
     public void damage(int amount) {
-	health -= amount;
+        health -= amount;
     }
 
     public void move(Coordinate input) {
