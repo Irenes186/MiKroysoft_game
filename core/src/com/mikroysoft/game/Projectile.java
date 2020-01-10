@@ -21,8 +21,8 @@ public class Projectile {
 
         directionX = (destination.x - source.x)/length; 
         directionY = (destination.y - source.y)/length;
-        positionX = source.x + 40;
-        positionY = source.y - 40;
+        positionX = source.x;
+        positionY = source.y;
     }
 
     public void render(SpriteBatch batch) {

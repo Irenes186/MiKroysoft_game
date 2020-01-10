@@ -7,51 +7,47 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Game extends ApplicationAdapter {
-	SpriteBatch batch;
-	CoreLogic coreLogic;
-	FireEngine[] fireEngines;
-	InputController inputController; 
-	ProgressBar[] health;
-	ProgressBar[] fuel;
-	int engineSelected;
-	
-	
-  Map map;
-  
-  int MAPWIDTH;
-  int MAPHEIGHT;
-  int TILEWIDTH;
-  int TILEHEIGHT;
-  int AMOUNT;
-  FireStation fireStation;
+    SpriteBatch batch;
+    CoreLogic coreLogic;
+    FireEngine[] fireEngines;
+    InputController inputController;
+    ProgressBar[] health;
+    ProgressBar[] fuel;
+    int engineSelected;
 
-  Texture healthIcon;
-  Texture fuelIcon;
-  Alien[] aliens;
-	
-	@Override
-	public void create () {
-                MAPWIDTH = 20;
-                MAPHEIGHT = 20;
-                AMOUNT = 4;
-                engineSelected = 1;
-                try {
-                    map = new Map(MAPWIDTH, MAPHEIGHT,"background");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
-                //TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
-                //System.out.println(map.c.x);
-                //System.out.println(map.c.y);
-                //fireStation.isInRange(fireEngines[i].getPosition())
+    Map map;
+    int MAPWIDTH;
+    int MAPHEIGHT;
+    int TILEWIDTH;
+    int TILEHEIGHT;
+    int AMOUNT;
+    FireStation fireStation;
 
-		batch = new SpriteBatch();
-		coreLogic = new CoreLogic();
-		inputController = new InputController();
-		Gdx.input.setInputProcessor(inputController);
+    ProgressBar health;
+    Texture healthIcon;
+    ProgressBar fuel;
+    Texture fuelIcon;
+    Alien[] aliens;
+
+    @Override
+    public void create () {
+        MAPWIDTH = 20;
+        MAPHEIGHT = 20;
+        AMOUNT = 4;
+        engineSelected = 1;
+
+        try {
+            map = new Map(MAPWIDTH, MAPHEIGHT,"background");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        batch = new SpriteBatch();
+        coreLogic = new CoreLogic();
+        inputController = new InputController();
+        Gdx.input.setInputProcessor(inputController););
 		
-		//Fire Engines:
+	//Fire Engines:
 		fireEngines = new FireEngine[AMOUNT];
 		//health:
 		health = new ProgressBar[AMOUNT];
@@ -80,26 +76,31 @@ public class Game extends ApplicationAdapter {
 		//fireEngines[3] = new FireEngine();
 		//fireEngines[4] = new FireEngine();
 		
+
+		
 		aliens = new Alien[1];
 		aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
 		
-		//health progress bar - old stuff just in case - fuel just change top one from 1 to 2 and should work hopefully.:
-		//health = new ProgressBar(1);
-		//health[i].setPosition(20,10);
-		//health[i].setDimensions(100,10);
-		//health[i].setMax(100);
-		//health[i].updateCurrent(100);
+		//health progress bar:
+		health = new ProgressBar(1);
+		health.setPosition(20,10);
+		health.setDimensions(100,10);
+		health.setMax(100);
+		health.updateCurrent(100);
 		
 		//health icon - next to health progress bar.
 		healthIcon = new Texture("health.png");
 		
 		
-		//hiiii
+		//fuel progress bar:
+		fuel = new ProgressBar(2);
+		fuel.setPosition(20, 25);
+		fuel.setDimensions(100,10);
+		fuel.setMax(100);
+		fuel.updateCurrent(100);
+		
 		//fuel icon - next to fuel progress bar.
 		fuelIcon = new Texture("fuel.png");
-		fireEngines[1].setPosition(500,500);
-		fireEngines[2].setPosition(0,0);
-		fireEngines[3].setPosition(30,30);
 	}
 
 	@Override
@@ -123,7 +124,7 @@ public class Game extends ApplicationAdapter {
                 }
                 
                 if (inputController.getShotsFired()) {
-                    fireEngines[engineSelected].shoot(inputController.getLatestPosition());
+                    fireEngines[0].shoot(inputController.getLatestPosition());
                 }
                 if (inputController.moving) {
                 	//For testing reasons:

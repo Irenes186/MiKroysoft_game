@@ -15,8 +15,6 @@ public class Map {
 	IRenderable[][] grid;
 	Texture bg;
 	public Coordinate c = new Coordinate(0, 0); 
-	private int MAPWIDTH, MAPHEIGHT;
-	private int TILEWIDTH, TILEHEIGHT;
 	
 	// constructor: takes map dimensions
 	public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex) throws Exception {
@@ -31,15 +29,15 @@ public class Map {
 		grid = new IRenderable[MAPWIDTH][MAPHEIGHT];
 		// Grid containing text description of map
 		String[][] inGrid = new String[MAPWIDTH][MAPHEIGHT];
-		
+
 		// import map info
-		File file = new File("map_information.txt");
+		File file = new File("map_information.txt");		
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		int row = 0;
 		String fileInput;
 		String[] items;
-		
-		// read map info into inGrid where each character is a cell
+
+  		// read map info into inGrid where each character is a cell
 		while ((fileInput = reader.readLine()) != null) {
 			items = fileInput.split("",MAPWIDTH);
 			for (int col = 0; col < MAPWIDTH; col++) {
@@ -51,6 +49,7 @@ public class Map {
 			// debug: print grid
 			//System.out.println();
 		}
+		
 		reader.close();
 		
 		// populate grid with class instances as described in map_information
@@ -69,18 +68,17 @@ public class Map {
                     	c.setCoordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT);
                         grid[row][col] = new FireStation(10, c, 10, 10);
                         break;
-                        
-                    // instance roads
-                    case "1":
-                    	// default to vertical road
+                    
+                    case "2":
+                    	AlienBaseParameters params = new AlienBaseParameters();
+                    	grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower"); 
+      	
+                    case "1" :
                     	fileName = "roadV";
-                    	// reset config vars for current cell
                     	hasRoadAbove = false;
                     	hasRoadBelow = false;
                     	hasRoadLeft = false;
                     	hasRoadRight = false;
-                    	
-                    	// decide which of the surrounding cells are roads
     					if (row > 0 && inGrid[row-1][col].equals("1")) {
     						hasRoadAbove = true;
     					}
@@ -173,20 +171,17 @@ public class Map {
                 }
             }
         }
-		
-		reader.close();
-	}
 
-	// render map elements onto the screen
-    public void render(SpriteBatch batch) {
-    	// batch.draw (this.bg, 0, 0, MAPWIDTH, MAPHEIGHT, 0, 0, this.bg.getWidth(), this.bg.getHeight(), false, false);
+        public void render(SpriteBatch batch) {
+   	// batch.draw (this.bg, 0, 0, MAPWIDTH, MAPHEIGHT, 0, 0, this.bg.getWidth(), this.bg.getHeight(), false, false);
     	batch.draw (this.bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     	// iterate through grid, and call each object's render method
-        for (int col = 0; col < grid.length; col++) {
-            for (int row = 0; row < grid[0].length; row++) {
-                if (grid[row][col] != null)
-                    grid[row][col].render(batch);
+            for (int col = 0; col < grid.length; col++) {
+                for (int row = 0; row < grid[0].length; row++) {
+                    if (grid[row][col] != null)
+                        grid[row][col].render(batch);
+                }
             }
         }
     }
