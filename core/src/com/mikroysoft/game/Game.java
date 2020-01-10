@@ -128,15 +128,11 @@ public class Game extends ApplicationAdapter {
         }
         if (inputController.moving) {
             //For testing reasons:
-            if(fireEngines[engineSelected].getFuel() == 0) {
-                inputController.setMoveFalse();
-                //Testing reasons - print statement:
-                System.out.println("not enough fuel to travel.");
-            } else {
+            if(fireEngines[engineSelected].getFuel() > 0) {
                 fireEngines[engineSelected].distanceIncreased();
-                fireEngines[engineSelected].move(inputController.getLatestPosition());
                 fireEngines[engineSelected].fuelReduce();
             }
+            fireEngines[engineSelected].move(inputController.getLatestPosition());
         }
         // if(false)) {
         //	if(engineSelected >= AMOUNT - 1) {
