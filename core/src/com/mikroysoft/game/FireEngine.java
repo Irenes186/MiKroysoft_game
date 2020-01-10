@@ -92,6 +92,13 @@ public class FireEngine {
     }
 
     public void move(Coordinate input) {
+        float tempspeed = speed;
+
+        if (fuel == 0) {
+            tempspeed = speed;
+            this.speed = 1;
+        }
+
         //add some kind of moving rules.
         if (input.x == -1)
             return;
@@ -110,6 +117,8 @@ public class FireEngine {
         position.y += ySign * speed;
 
         direction = (float) Math.toDegrees(Math.atan2((input.y - position.y) * -1, input.x - position.x)) - 90;
+
+        this.speed = tempspeed;
     }
 
     public void render(SpriteBatch batch) {
