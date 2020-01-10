@@ -33,6 +33,12 @@ public class Game extends ApplicationAdapter {
                     e.printStackTrace();
                 }
 
+                //TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
+                //TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
+                //System.out.println(map.c.x); !
+                //System.out.println(map.c.y);
+                //fireStation.isInRange(fireEngines[i].getPosition())
+
 
 		batch = new SpriteBatch();
 		coreLogic = new CoreLogic();
@@ -101,6 +107,14 @@ public class Game extends ApplicationAdapter {
 		for (Alien alien: aliens) {
 			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,40,40,1,1,alien.direction,0,0,16,16,false,false);
 		}
+
+		
+		
+		//For testing:
+		//batch.draw(fuelIcon,561,629);
+		
+		//ends batch.
+
 		batch.end();
 		//System.out.println(health.getFill());
 	}

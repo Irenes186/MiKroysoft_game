@@ -159,7 +159,7 @@ public class Map {
                 	// Aldi
                     case "3":
                     	params = new AlienBaseParameters();
-                    	grid[row][col] = new AlienBase("Aldi", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Aldi"); 
+                    	grid[row][col] = new AlienBase("Aldi", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "aldi"); 
                     	break;
                     	
                 	// Holgate Windmill
