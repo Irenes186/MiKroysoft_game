@@ -7,7 +7,7 @@ public class FireStation implements IRenderable {
 	public boolean destroyed;
 	private int fillSpeed;
 	public Texture texture;
-	private Coordinate position;
+	public Coordinate position;
 	private int TILEWIDTH, TILEHEIGHT;
 	
 	public FireStation(int fillSpeed, Coordinate position, int TILEWIDTH, int TILEHEIGHT){
@@ -20,6 +20,10 @@ public class FireStation implements IRenderable {
 
 	}
 	
+	
+	public Coordinate getPosition() {
+		return position;
+	}
 	public void destroy() {
 		destroyed = true;
 	}

@@ -7,4 +7,9 @@ public class Coordinate {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public void setCoordinate(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 }

@@ -16,7 +16,11 @@ public class FireEngine {
 	private float speed;
 	private float range;
 	private float deliveryRate;
-	private int health;
+	public int health;
+	public int fuel;
+	public int maxHealth;
+	public int maxFuel;
+	public int distanceTravelled;
 	private List < Projectile > projectiles;
 	public float direction;
 
@@ -27,16 +31,62 @@ public class FireEngine {
         projectiles = new ArrayList < Projectile> ();
 		direction = 0;
 		speed = 2;
+		health = 100;
+		fuel = 100;
+		distanceTravelled = 0;
+		maxFuel = 100;
+		maxHealth = 100;
 	}
 	
+	public void setPosition(int x, int y) {
+		position.x = x;
+		position.y = y;
+	}
 	
 	public void repair() {
-		health += 50;
+		health += 1;
 	}
 	
 	public void refill() {
-		waterVolume += 50;
+		fuel += 1;
 	}
+	
+	public boolean isMaxHealth() {
+		if(this.health == this.maxHealth) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isMaxFuel() {
+		if(this.fuel == this.maxFuel) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public int getFuel() {
+		return this.fuel;
+	}
+	public void distanceIncreased() {
+		distanceTravelled = distanceTravelled + 1;
+	}
+	public void fuelReduce() {
+		if(distanceTravelled % 5 == 0) {
+			fuel -= 1;
+		}
+	}
+	
+	public Coordinate getPosition() {
+		return position;
+	}
+	
+	public void damage(int amount) {
+		health -= amount;
+	}
+	
 	
 	public void move(Coordinate input) {
 		//add some kind of moving rules.

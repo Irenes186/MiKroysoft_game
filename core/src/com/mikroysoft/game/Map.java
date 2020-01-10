@@ -14,14 +14,16 @@ public class Map {
 	// actual array containing class instances
 	IRenderable[][] grid;
 	Texture bg;
+	public Coordinate c = new Coordinate(0, 0); 
 	private int MAPWIDTH, MAPHEIGHT;
-
+	private int TILEWIDTH, TILEHEIGHT;
+	
 	// constructor: takes map dimensions
 	public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex) throws Exception {
 		this.bg = new Texture(bgtex + ".png");
 		// calculate tile dimensions
-		int TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
-		int TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
+		TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
+		TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
 		
 		this.MAPWIDTH = MAPWIDTH;
 		this.MAPHEIGHT = MAPHEIGHT;
@@ -64,7 +66,8 @@ public class Map {
                 switch (inGrid[row][col]) {
                 	// instance fire stations
                     case "0" :
-                        grid[row][col] = new FireStation(10, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT);
+                    	c.setCoordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT);
+                        grid[row][col] = new FireStation(10, c, 10, 10);
                         break;
                         
                     // instance roads
@@ -187,4 +190,22 @@ public class Map {
             }
         }
     }
+    
+    public boolean isInStationRange(Coordinate engineCoordinates) {
+		int tempX = engineCoordinates.x - c.x;
+		int tempY = engineCoordinates.y - c.y;
+		System.out.println(tempY);
+		if(tempX < 0) {
+			tempX = tempX * -1;
+		}
+		if (tempY < 0) {
+			tempY = tempY * -1;
+		}
+		if((tempX < this.TILEWIDTH) && (tempY < this.TILEHEIGHT)) {
+			return true;
+		} else { 
+			return false;
+		}
+		
+	}
 }

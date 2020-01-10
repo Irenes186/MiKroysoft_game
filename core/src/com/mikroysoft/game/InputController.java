@@ -12,7 +12,9 @@ public class InputController implements InputProcessor {
                 shotsFired = false;
 	}
 	
-	
+	public void setMoveFalse() {
+		this.moving = false;
+	}
 	public boolean keyDown (int keycode) {
 		return false;
 	}
