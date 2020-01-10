@@ -164,9 +164,8 @@ public class Game extends ApplicationAdapter {
 			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,40,40,1,1,alien.direction,0,0,16,16,false,false);
 		}
 		
-		
 		//For testing:
-		batch.draw(fuelIcon,561,629);
+		//batch.draw(fuelIcon,561,629);
 		
 		//ends batch.
 		batch.end();

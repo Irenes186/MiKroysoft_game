@@ -37,7 +37,7 @@ public class ProgressBar {
 	public int getWidth () {
 		return this.width;
 	}
-	
+
 	public void setDimensions(int w, int h) {
 		this.height = h;
 		this.width = w;
