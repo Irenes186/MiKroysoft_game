@@ -188,7 +188,7 @@ public class Map {
     public boolean isInStationRange(Coordinate engineCoordinates) {
         int tempX = engineCoordinates.x - c.x;
         int tempY = engineCoordinates.y - c.y;
-        System.out.println(tempY);
+        //System.out.println(tempY);
         if(tempX < 0) {
             tempX = tempX * -1;
         }
