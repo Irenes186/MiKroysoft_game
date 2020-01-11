@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+// TODO: Add health bars
 public class AlienBase implements IRenderable {
     public Texture texture;
     public int weaponRange;
@@ -54,6 +55,8 @@ public class AlienBase implements IRenderable {
     /* Test fire truck presence. Decrease alien spawning counter
      * and spawn aliens as appropriate. Returns the spawned alien instance
      * Alien spawning counter is only decreased while a fire truck is in range.
+     * 
+     * TODO: Add progress bars for alien spawning
      */
     public Alien defend(FireEngine[] fireEngines) {
     	// Debug: # of frames until this base spawns a new alien.
