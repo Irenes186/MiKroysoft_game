@@ -110,10 +110,19 @@ public class Game extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         map.render(batch);
+        if (inputController.moving) {
+            for (int engineIndex=0; engineIndex<AMOUNT; engineIndex++) {
+                double distance = Math.sqrt(Math.pow(inputController.position.x-fireEngines[engineIndex].position.x,2)+Math.pow(inputController.position.y-fireEngines[engineIndex].position.y,2));
+                if (distance<40) {
+                    engineSelected = engineIndex;
+                    break;
+                }
+            }
+        }
+        
         //refill and repair
-        for(int i = 0; i < AMOUNT; i = i + 1) {
-            boolean ifStatement = map.isInStationRange(fireEngines[i].getPosition());
-            if(ifStatement) {
+        for(int i = 0; i < AMOUNT; i++) {
+            if(map.isInStationRange(fireEngines[i].getPosition())) {
                 System.out.println("hi");
                 if(!fireEngines[i].isMaxHealth()) {
                     fireEngines[i].repair();
@@ -124,7 +133,7 @@ public class Game extends ApplicationAdapter {
         }
 
         if (inputController.getShotsFired()) {
-            fireEngines[0].shoot(inputController.getLatestPosition());
+            fireEngines[engineSelected].shoot(inputController.getLatestPosition());
         }
         if (inputController.moving) {
             //For testing reasons:

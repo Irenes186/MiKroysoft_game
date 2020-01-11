@@ -60,7 +60,7 @@ public class Alien implements IRenderable {
         boolean inRange = Math.sqrt(Math.pow(position.x - destination.x, 2) + Math.pow(position.y - destination.y, 2)) <= shootRange;
 
         if (currentFireCount >= countToFire && inRange) {
-            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination));
+            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination, true));
             currentFireCount = 0;
         } else {
             currentFireCount++;
