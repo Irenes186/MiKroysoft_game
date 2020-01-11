@@ -40,11 +40,13 @@ public class FireEngine {
 	
 	public void move(Coordinate input) {
 		//add some kind of moving rules.
+		// TODO: Should this be in curly braces?
         if (input.x == -1)
             return;
 
-        double xSign = Integer.signum(input.x - position.x - 40);
-        double ySign = Integer.signum(input.y - position.y + 40);
+        // TODO: I thought we agreed to use floats?
+        double xSign = java.lang.Math.signum(input.x - position.x - 40);
+        double ySign = java.lang.Math.signum(input.y - position.y + 40);
 
         boolean xThreshold = position.x - 45 <= input.x && position.x - 35 >= input.x;
         boolean yThreshold = position.y + 35 <= input.y && position.y + 45 >= input.y;

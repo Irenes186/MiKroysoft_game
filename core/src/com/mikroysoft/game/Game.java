@@ -134,9 +134,17 @@ public class Game extends ApplicationAdapter {
 		//fuel
 		batch.draw(fuel.texture,fuel.position.x,fuel.position.y, fuel.getFill(), fuel.getHeight());
 		batch.draw(fuelIcon,fuel.position.x - (5 + fuel.getHeight()), fuel.position.y, fuel.getHeight(), fuel.getHeight());
-		for (Alien alien: aliens) {
-			batch.draw(alien.texture,alien.position.x,Gdx.graphics.getHeight()-alien.position.y,40,40,40,40,1,1,alien.direction,0,0,16,16,false,false);
+		for (int i = 0; i < nextAlien; i++) {
+			Alien alien = aliens[i];
+			batch.draw(alien.texture,alien.position.x,alien.position.y,40,40,40,40,1,1,alien.direction,0,0,16,16,false,false);
+			// Gdx.graphics.getHeight()-alien.position.y
 		}
+//		for (Alien alien: aliens) {
+//			if (alien == null) {
+//				System.out.println("NULL ALIEN");
+//			}
+//			
+//		}
 		batch.end();
 		//System.out.println(health.getFill());
 	}

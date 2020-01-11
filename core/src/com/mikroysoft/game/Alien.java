@@ -24,10 +24,10 @@ public class Alien implements IRenderable {
         return this.position;
     }
     public void Run(){
-        position.x += Integer.signum(position.y + (int)(Math.random()))*2;
-        position.y += Integer.signum(position.y + (int)(Math.random()))*2;
+//        position.x += Integer.signum(position.y + (int)(Math.random()))*2;
+//        position.y += Integer.signum(position.y + (int)(Math.random()))*2;
         direction = (float) Math.toDegrees(Math.atan2((position.y +(Math.random()* 10 + 1)) * -1,  position.x - (Math.random()* 10 + 1))) +45;
-        System.out.println(position.x);
+//        System.out.println(position.x);
     }
 
     @Override

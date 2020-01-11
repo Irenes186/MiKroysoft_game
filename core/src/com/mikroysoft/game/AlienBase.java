@@ -1,5 +1,6 @@
 package com.mikroysoft.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -36,8 +37,9 @@ public class AlienBase implements IRenderable {
         // should this be in AlienBaseParameters?
         // set aliens to spawn every 500 frames that a truck is in range
         this.maxAlienSpawnCountDown = 500;
+        this.alienSpawnCountDown = this.maxAlienSpawnCountDown;
         
-        this.randomGen = new Random();
+//        this.randomGen = new Random();
     }
 
     public int increaseDefense () {
@@ -54,15 +56,21 @@ public class AlienBase implements IRenderable {
      * Alien spawning counter is only decreased while a fire truck is in range.
      */
     public Alien defend(FireEngine[] fireEngines) {
-    	if (this.alienSpawnCountDown == 0) {
-    		for (FireEngine currentTruck: fireEngines) {
-    			if (this.position.x - currentTruck.position.x <= this.weaponRange && 
-    					this.position.y - currentTruck.position.y <= this.weaponRange) {
-    				return this.spawnAlien();
-    			}
-    		}
+    	// Debug: # of frames until this base spawns a new alien.
+    	// System.out.println("Alien cooldown " + this.name + ": " + this.alienSpawnCountDown);
+    	boolean truckInRange = false;
+    	for (FireEngine currentTruck: fireEngines) {
+			if (java.lang.Math.abs(this.position.x - currentTruck.position.x) <= (this.weaponRange * TILEWIDTH) && 
+					java.lang.Math.abs(this.position.y - (Gdx.graphics.getHeight()-currentTruck.position.y)) <= (this.weaponRange * TILEHEIGHT)) {
+				if (this.alienSpawnCountDown == 0) {
+					return this.spawnAlien();
+				}
+				truckInRange = true;
+			}
+		}
+    	if (truckInRange) {
+    		this.alienSpawnCountDown--;
     	}
-    	this.alienSpawnCountDown--;
     	return null;
     }
     
@@ -70,7 +78,7 @@ public class AlienBase implements IRenderable {
     // spawns an alien, and resets this.alienSpawnCountDown to its max.
     private Alien spawnAlien() {
     	this.alienSpawnCountDown = this.maxAlienSpawnCountDown;
-    	Float[] offset = Util.randomCoordOffset(-1.0f, 1.0f, 0.8f);
-    	return new Alien(new Coordinate(this.position.x + offset[0], this.position.y + offset[1]), this.TILEWIDTH, this.TILEHEIGHT);
+    	Float[] offset = Util.randomCoordOffset(-((float)TILEWIDTH/2), ((float)TILEWIDTH/2), 0.8f);
+    	return new Alien(new Coordinate(this.position.x + (TILEWIDTH/2) + offset[0], this.position.y + (TILEHEIGHT/2) + offset[1]), this.TILEWIDTH, this.TILEHEIGHT);
     }
 }
