@@ -1,6 +1,9 @@
 package com.mikroysoft.game;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,7 +19,8 @@ public class Map {
     Texture bg;
     int TILEWIDTH, TILEHEIGHT;
     int MAPWIDTH, MAPHEIGHT;
-    public Coordinate c = new Coordinate(0, 0); 
+    public Coordinate c = new Coordinate(0, 0);
+    List <Coordinate> baseCoordinates;
 
     // constructor: takes map dimensions
     public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex) throws Exception {
@@ -31,7 +35,7 @@ public class Map {
         grid = new IRenderable[MAPWIDTH][MAPHEIGHT];
         // Grid containing text description of map
         String[][] inGrid = new String[MAPWIDTH][MAPHEIGHT];
-
+        baseCoordinates = new ArrayList<Coordinate>();
         // import map info
         File file = new File("map_information.txt");		
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -152,19 +156,22 @@ public class Map {
                         // clifford's tower
                     case "2":
                         params = new AlienBaseParameters();
-                        grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower"); 
+                        grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower");
+                        this.baseCoordinates.add(new Coordinate(row,col));
                         break;
 
                         // Aldi
                     case "3":
                         params = new AlienBaseParameters();
-                        grid[row][col] = new AlienBase("Aldi", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "aldi"); 
+                        grid[row][col] = new AlienBase("Aldi", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "aldi");
+                        this.baseCoordinates.add(new Coordinate(row,col));
                         break;
 
                         // Holgate Windmill
                     case "4":
                         params = new AlienBaseParameters();
-                        grid[row][col] = new AlienBase("Holgate Windmill", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Holgate-Windmill"); 
+                        grid[row][col] = new AlienBase("Holgate Windmill", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Holgate-Windmill");
+                        this.baseCoordinates.add(new Coordinate(row,col));
                         break;
                 }
             }
@@ -202,4 +209,11 @@ public class Map {
         }
 
     }
+    
+    public void updateBases() {
+        for (Coordinate base : baseCoordinates) {
+            grid[base.x][base.y].update();
+        }
+    }
+    
 }

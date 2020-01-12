@@ -130,6 +130,6 @@ public class FireEngine {
     }
 
     public void shoot(Coordinate destination) {
-        projectiles.add(new Projectile (position, destination));
+        projectiles.add(new Projectile (position, destination, false));
     }
 }

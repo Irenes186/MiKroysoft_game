@@ -27,7 +27,7 @@ public class Game extends ApplicationAdapter {
     Texture healthIcon;
     //ProgressBar fuel;
     Texture fuelIcon;
-    Alien[] aliens;
+    //Alien[] aliens;
 
     @Override
     public void create () {
@@ -78,8 +78,8 @@ public class Game extends ApplicationAdapter {
 
 
 
-        aliens = new Alien[1];
-        aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
+        //aliens = new Alien[1];
+        //aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
 
         //health progress bar:
         //health = new ProgressBar(1);
@@ -110,10 +110,19 @@ public class Game extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         map.render(batch);
+        if (inputController.moving) {
+            for (int engineIndex=0; engineIndex<AMOUNT; engineIndex++) {
+                double distance = Math.sqrt(Math.pow(inputController.position.x-fireEngines[engineIndex].position.x,2)+Math.pow(inputController.position.y-fireEngines[engineIndex].position.y,2));
+                if (distance<40) {
+                    engineSelected = engineIndex;
+                    break;
+                }
+            }
+        }
+        
         //refill and repair
-        for(int i = 0; i < AMOUNT; i = i + 1) {
-            boolean ifStatement = map.isInStationRange(fireEngines[i].getPosition());
-            if(ifStatement) {
+        for(int i = 0; i < AMOUNT; i++) {
+            if(map.isInStationRange(fireEngines[i].getPosition())) {
                 System.out.println("hi");
                 if(!fireEngines[i].isMaxHealth()) {
                     fireEngines[i].repair();
@@ -124,7 +133,7 @@ public class Game extends ApplicationAdapter {
         }
 
         if (inputController.getShotsFired()) {
-            fireEngines[0].shoot(inputController.getLatestPosition());
+            fireEngines[engineSelected].shoot(inputController.getLatestPosition());
         }
         if (inputController.moving) {
             //For testing reasons:
@@ -156,12 +165,16 @@ public class Game extends ApplicationAdapter {
             batch.draw(fuel[i].texture,fuel[i].position.x,fuel[i].position.y, fuel[i].getFill(), fuel[i].getHeight());
             batch.draw(fuelIcon,fuel[i].position.x - (5 + fuel[i].getHeight()), fuel[i].position.y, fuel[i].getHeight(), fuel[i].getHeight());
         }
+        
+        map.updateBases();
+        
+        /*this is old
         aliens[0].Run();
         for (Alien alien: aliens) {
             alien.render(batch);
             alien.shoot(fireEngines[engineSelected].getPosition());
         }
-
+        */
         //For testing:
         //batch.draw(fuelIcon,561,629);
 

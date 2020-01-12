@@ -15,7 +15,7 @@ public class Alien implements IRenderable {
     private int TILEWIDTH, TILEHEIGHT;
     public float direction;
     private float speed;
-
+    private Coordinate basePosition;
     private int countToFire;
     private int currentFireCount;
     private int shootOffset;
@@ -24,9 +24,10 @@ public class Alien implements IRenderable {
 
     public Alien(Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
         texture = new Texture("alien.png");
-        this.position = position;
+        this.position = new Coordinate(position.x,position.y);
         this.TILEHEIGHT = TILEHEIGHT;
         this.TILEWIDTH = TILEWIDTH;
+        this.basePosition = position;
         direction = 0;
         speed = 2;
 
@@ -40,16 +41,25 @@ public class Alien implements IRenderable {
     public Coordinate getLatestPosition() {
         return this.position;
     }
-    public void Run(){
-    //    position.x += Integer.signum((int)position.y + (int)(Math.random()))*2;
-    //    position.y += Integer.signum((int)position.y + (int)(Math.random()))*2;
+    public void move(){
+        
+        position.x += (int)((Math.random()*10)-5); 
+        position.y += (int)((Math.random()*10)-5);
+        if (position.x>basePosition.x+100)
+            position.x-=5;
+        if (position.x<basePosition.x-100)
+            position.x+=5;
+        if (position.y>basePosition.y+100)
+            position.y-=5;
+        if (position.y<basePosition.y-100)
+            position.y+=5;
     //    direction = (float) Math.toDegrees(Math.atan2((position.y +(Math.random()* 10 + 1)) * -1,  position.x - (Math.random()* 10 + 1))) +45;
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture,position.x,Gdx.graphics.getHeight()-position.y,TILEWIDTH*20,TILEHEIGHT*20);
-
+        batch.draw(texture,position.x,position.y,TILEWIDTH/2,TILEHEIGHT/2);
+        System.out.println(position.x+position.y);
         for (int i = 0; i < projectiles.size(); i++) {
             projectiles.get(i).render(batch);
         }
@@ -60,10 +70,14 @@ public class Alien implements IRenderable {
         boolean inRange = Math.sqrt(Math.pow(position.x - destination.x, 2) + Math.pow(position.y - destination.y, 2)) <= shootRange;
 
         if (currentFireCount >= countToFire && inRange) {
-            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination));
+            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination, true));
             currentFireCount = 0;
         } else {
             currentFireCount++;
         }
     }
+    
+    public void update() {
+        
+    };
 }
