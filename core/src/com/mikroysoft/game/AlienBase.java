@@ -63,8 +63,8 @@ public class AlienBase implements IRenderable {
     	System.out.println("Alien cooldown " + this.name + ": " + this.alienSpawnCountDown);
     	boolean truckInRange = false;
     	for (FireEngine currentTruck: fireEngines) {
-			if (java.lang.Math.abs(this.position.x - currentTruck.position.x) <= (this.weaponRange * TILEWIDTH) && 
-					java.lang.Math.abs(this.position.y - (Gdx.graphics.getHeight()-currentTruck.position.y)) <= (this.weaponRange * TILEHEIGHT)) {
+			if (java.lang.Math.abs(this.position.x - currentTruck.position.x) <= ((this.weaponRange+1) * TILEWIDTH) && 
+					java.lang.Math.abs(this.position.y - (Gdx.graphics.getHeight()-currentTruck.position.y)) <= ((this.weaponRange+1) * TILEHEIGHT)) {
 				if (this.alienSpawnCountDown == 0) {
 					return this.spawnAlien();
 				}
