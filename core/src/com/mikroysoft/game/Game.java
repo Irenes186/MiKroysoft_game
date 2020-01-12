@@ -27,7 +27,7 @@ public class Game extends ApplicationAdapter {
     Texture healthIcon;
     //ProgressBar fuel;
     Texture fuelIcon;
-    Alien[] aliens;
+    //Alien[] aliens;
 
     @Override
     public void create () {
@@ -78,8 +78,8 @@ public class Game extends ApplicationAdapter {
 
 
 
-        aliens = new Alien[1];
-        aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
+        //aliens = new Alien[1];
+        //aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
 
         //health progress bar:
         //health = new ProgressBar(1);
@@ -165,12 +165,16 @@ public class Game extends ApplicationAdapter {
             batch.draw(fuel[i].texture,fuel[i].position.x,fuel[i].position.y, fuel[i].getFill(), fuel[i].getHeight());
             batch.draw(fuelIcon,fuel[i].position.x - (5 + fuel[i].getHeight()), fuel[i].position.y, fuel[i].getHeight(), fuel[i].getHeight());
         }
+        
+        map.updateBases();
+        
+        /*this is old
         aliens[0].Run();
         for (Alien alien: aliens) {
             alien.render(batch);
             alien.shoot(fireEngines[engineSelected].getPosition());
         }
-
+        */
         //For testing:
         //batch.draw(fuelIcon,561,629);
 

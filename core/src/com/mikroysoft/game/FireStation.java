@@ -32,5 +32,9 @@ public class FireStation implements IRenderable {
     public void render(SpriteBatch batch) {
         batch.draw (texture, position.x, position.y, TILEWIDTH * 8, TILEHEIGHT * 3);
     }
+    
+    public void update() {
+        
+    }
 
 }
