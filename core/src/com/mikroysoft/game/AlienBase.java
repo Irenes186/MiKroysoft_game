@@ -46,7 +46,7 @@ public class AlienBase implements IRenderable {
     public int increaseDefense () {
         return 3;
     }
-    
+
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x, position.y, TILEWIDTH, TILEHEIGHT);
