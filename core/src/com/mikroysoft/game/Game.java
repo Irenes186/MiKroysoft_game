@@ -28,6 +28,9 @@ public class Game extends ApplicationAdapter {
     //ProgressBar fuel;
     Texture fuelIcon;
     Alien[] aliens;
+    // used to track the farthest-left empty cell in the aliens array.
+    int nextAlien;
+    AlienBase[] bases;
 
     @Override
     public void create () {
@@ -35,13 +38,14 @@ public class Game extends ApplicationAdapter {
         MAPHEIGHT = 20;
         AMOUNT = 4;
         engineSelected = 1;
+        nextAlien = 0;
 
         try {
             map = new Map(MAPWIDTH, MAPHEIGHT,"background");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+  
         batch = new SpriteBatch();
         coreLogic = new CoreLogic();
         inputController = new InputController();
@@ -55,7 +59,7 @@ public class Game extends ApplicationAdapter {
         fuel = new ProgressBar[AMOUNT];
 
         //looping from 0 to amount of fire engines.
-        for(int i = 0; i < AMOUNT; i = i + 1) {
+        for (int i = 0; i < AMOUNT; i = i + 1) {
             //setting fire engine position.
             fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT);
 
@@ -71,36 +75,24 @@ public class Game extends ApplicationAdapter {
             fuel[i].setMax(fireEngines[i].maxFuel);
             fuel[i].updateCurrent(100);
         }
-        //fireEngines[1] = new FireEngine();
-        //fireEngines[2] = new FireEngine();
-        //fireEngines[3] = new FireEngine();
-        //fireEngines[4] = new FireEngine();
-
-
-
-        aliens = new Alien[1];
-        aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
-
-        //health progress bar:
-        //health = new ProgressBar(1);
-        //health.setPosition(20,10);
-        //health.setDimensions(100,10);
-        //health.setMax(100);
-        //health.updateCurrent(100);
 
         //health icon - next to health progress bar.
         healthIcon = new Texture("health.png");
 
-
-        //fuel progress bar:
-        //fuel = new ProgressBar(2);
-        //fuel.setPosition(20, 25);
-        //fuel.setDimensions(100,10);
-        //fuel.setMax(100);
-        //fuel.updateCurrent(100);
-
         //fuel icon - next to fuel progress bar.
         fuelIcon = new Texture("fuel.png");
+		
+        // initialise aliens array size to the sum of all maxAliens counts.
+        int totalMaxAliens = 0;
+        for (IRenderable[] row: this.map.grid) {
+            for (IRenderable cell: row) {
+                if (cell instanceof AlienBase) {
+                    totalMaxAliens += ((AlienBase) cell).maxAliens;
+                }
+            }
+        }
+        aliens = new Alien[totalMaxAliens];
+        bases = this.map.getBases();
     }
 
     @Override
@@ -108,8 +100,20 @@ public class Game extends ApplicationAdapter {
         coreLogic.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+  
+        // Handle Alien spawning
+        for (AlienBase base: this.bases) {
+            Alien newAlien = base.defend(this.fireEngines);
+            if (newAlien != null) {
+                aliens[nextAlien] = newAlien;
+                // Theoretically, this should never overflow due to the way i instantiated aliens.
+                nextAlien++;
+            }
+        }
+  
         batch.begin();
         map.render(batch);
+  
         if (inputController.moving) {
             for (int engineIndex=0; engineIndex<AMOUNT; engineIndex++) {
                 double distance = Math.sqrt(Math.pow(inputController.position.x-fireEngines[engineIndex].position.x,2)+Math.pow(inputController.position.y-fireEngines[engineIndex].position.y,2));
@@ -143,6 +147,8 @@ public class Game extends ApplicationAdapter {
             }
             fireEngines[engineSelected].move(inputController.getLatestPosition());
         }
+        
+        // TODO: Remove
         // if(false)) {
         //	if(engineSelected >= AMOUNT - 1) {
         //	engineSelected = 0;
@@ -165,14 +171,14 @@ public class Game extends ApplicationAdapter {
             batch.draw(fuel[i].texture,fuel[i].position.x,fuel[i].position.y, fuel[i].getFill(), fuel[i].getHeight());
             batch.draw(fuelIcon,fuel[i].position.x - (5 + fuel[i].getHeight()), fuel[i].position.y, fuel[i].getHeight(), fuel[i].getHeight());
         }
-        aliens[0].Run();
-        for (Alien alien: aliens) {
-            alien.render(batch);
-            alien.shoot(fireEngines[engineSelected].getPosition());
+        
+        map.updateBases();
+        
+        // render aliens
+        for (int i = 0; i < nextAlien; i++) {
+            Alien alien = aliens[i];
+            batch.draw(alien.texture,alien.position.x,alien.position.y,40,40,40,40,1,1,alien.direction,0,0,16,16,false,false);
         }
-
-        //For testing:
-        //batch.draw(fuelIcon,561,629);
 
         //ends batch.
         batch.end();
