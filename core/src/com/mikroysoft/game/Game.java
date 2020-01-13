@@ -188,7 +188,10 @@ public class Game extends ApplicationAdapter {
             batch.draw(fuelIcon,fuel[i].position.x - (5 + fuel[i].getHeight()), fuel[i].position.y, fuel[i].getHeight(), fuel[i].getHeight());
         }
 
-        map.updateBases();
+        // Update AlienBases
+        for (AlienBase currentBase: this.bases) {
+        	currentBase.update();
+        }
 
         // render aliens
         for (int i = 0; i < nextAlien; i++) {

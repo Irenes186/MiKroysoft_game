@@ -25,7 +25,6 @@ public class AlienBase implements IRenderable {
     public List <Alien> aliens;
     public boolean destroyed;
     private int spawnRate;
-    private int maxAliens;
 
     // [!] Is it really necessary to store the name of the base? I dont think so.
     public AlienBase(String name, AlienBaseParameters params, Coordinate position, int TILEWIDTH, int TILEHEIGHT, String tex) {
@@ -65,13 +64,13 @@ public class AlienBase implements IRenderable {
         }
     }
 
-    public void spawnAlien() {
-        if ((int)(Math.random()*this.spawnRate) != 1 || aliens.size()>=maxAliens) {
-            return;
-        }
-        aliens.add(new Alien(this.position,this.TILEWIDTH,this.TILEHEIGHT));
-        System.out.println(aliens);
-    }
+//    public void spawnAlien() {
+//        if ((int)(Math.random()*this.spawnRate) != 1 || aliens.size()>=maxAliens) {
+//            return;
+//        }
+//        aliens.add(new Alien(this.position,this.TILEWIDTH,this.TILEHEIGHT));
+//        System.out.println(aliens);
+//    }
 
     public void update() {
         this.spawnAlien();

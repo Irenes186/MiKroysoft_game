@@ -20,7 +20,6 @@ public class Map {
     int TILEWIDTH, TILEHEIGHT;
     int MAPWIDTH, MAPHEIGHT;
     public Coordinate c = new Coordinate(0, 0);
-    List <Coordinate> baseCoordinates;
 
     // constructor: takes map dimensions
     public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex) throws Exception {
@@ -35,7 +34,7 @@ public class Map {
         grid = new IRenderable[MAPWIDTH][MAPHEIGHT];
         // Grid containing text description of map
         String[][] inGrid = new String[MAPWIDTH][MAPHEIGHT];
-        baseCoordinates = new ArrayList<Coordinate>();
+        
         // import map info
         File file = new File("map_information.txt");
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -64,6 +63,7 @@ public class Map {
         boolean hasRoadAbove, hasRoadBelow, hasRoadLeft, hasRoadRight;
         // config var for AlienBases
         AlienBaseParameters params;
+        
         // iterate through inGrid
         for (row = 0; row < MAPHEIGHT; row++) {
             for (int col = 0; col < MAPWIDTH; col++) {
@@ -157,21 +157,18 @@ public class Map {
                     case "2":
                         params = new AlienBaseParameters();
                         grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower");
-                        this.baseCoordinates.add(new Coordinate(row,col));
                         break;
 
                         // Aldi
                     case "3":
                         params = new AlienBaseParameters();
                         grid[row][col] = new AlienBase("Aldi", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "aldi");
-                        this.baseCoordinates.add(new Coordinate(row,col));
                         break;
 
                         // Holgate Windmill
                     case "4":
                         params = new AlienBaseParameters();
                         grid[row][col] = new AlienBase("Holgate Windmill", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Holgate-Windmill");
-                        this.baseCoordinates.add(new Coordinate(row,col));
                         break;
                 }
             }
@@ -222,8 +219,8 @@ public class Map {
 
 
     public boolean isInStationRange(Coordinate engineCoordinates) {
-        int tempX = engineCoordinates.x - c.x;
-        int tempY = engineCoordinates.y - c.y;
+        float tempX = engineCoordinates.x - c.x;
+        float tempY = engineCoordinates.y - c.y;
         //System.out.println(tempY);
         if(tempX < 0) {
             tempX = tempX * -1;
@@ -238,11 +235,4 @@ public class Map {
         }
 
     }
-
-    public void updateBases() {
-        for (Coordinate base : baseCoordinates) {
-            grid[base.x][base.y].update();
-        }
-    }
-
 }

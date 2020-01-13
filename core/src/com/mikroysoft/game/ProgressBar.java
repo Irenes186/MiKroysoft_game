@@ -43,7 +43,7 @@ public class ProgressBar {
         this.width = w;
     }
 
-    public void setPosition(int x, int y) {
+    public void setPosition(float x, float y) {
         this.position = new Coordinate(x, y);
     }
 
