@@ -33,7 +33,7 @@ public class Game extends ApplicationAdapter {
     AlienBase[] bases;
 
     @Override
-    public void create () {
+    public void create() {
         MAPWIDTH = 20;
         MAPHEIGHT = 20;
         AMOUNT = 4;
@@ -41,7 +41,7 @@ public class Game extends ApplicationAdapter {
         nextAlien = 0;
 
         try {
-            map = new Map(MAPWIDTH, MAPHEIGHT,"background");
+            map = new Map(MAPWIDTH, MAPHEIGHT, "background");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,13 +65,13 @@ public class Game extends ApplicationAdapter {
 
             //setting health stuff.
             health[i] = new ProgressBar(1);
-            health[i].setDimensions(100,10);
+            health[i].setDimensions(100, 10);
             health[i].setMax(fireEngines[i].maxHealth);
             health[i].updateCurrent(100);
 
             //setting fuel stuff.
             fuel[i] = new ProgressBar(2);
-            fuel[i].setDimensions(100,10);
+            fuel[i].setDimensions(100, 10);
             fuel[i].setMax(fireEngines[i].maxFuel);
             fuel[i].updateCurrent(100);
         }
@@ -79,7 +79,6 @@ public class Game extends ApplicationAdapter {
         //fireEngines[2] = new FireEngine();
         //fireEngines[3] = new FireEngine();
         //fireEngines[4] = new FireEngine();
-
 
 
         //aliens = new Alien[1];
@@ -100,8 +99,8 @@ public class Game extends ApplicationAdapter {
 
         // initialise aliens array size to the sum of all maxAliens counts.
         int totalMaxAliens = 0;
-        for (IRenderable[] row: this.map.grid) {
-            for (IRenderable cell: row) {
+        for (IRenderable[] row : this.map.grid) {
+            for (IRenderable cell : row) {
                 if (cell instanceof AlienBase) {
                     totalMaxAliens += ((AlienBase) cell).maxAliens;
                 }
@@ -112,13 +111,13 @@ public class Game extends ApplicationAdapter {
     }
 
     @Override
-    public void render () {
+    public void render() {
         coreLogic.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Handle Alien spawning
-        for (AlienBase base: this.bases) {
+        for (AlienBase base : this.bases) {
             Alien newAlien = base.defend(this.fireEngines);
             if (newAlien != null) {
                 aliens[nextAlien] = newAlien;
@@ -131,9 +130,9 @@ public class Game extends ApplicationAdapter {
         map.render(batch);
 
         if (inputController.moving) {
-            for (int engineIndex=0; engineIndex<AMOUNT; engineIndex++) {
-                double distance = Math.sqrt(Math.pow(inputController.position.x-fireEngines[engineIndex].position.x,2)+Math.pow(inputController.position.y-fireEngines[engineIndex].position.y,2));
-                if (distance<40) {
+            for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {
+                double distance = Math.sqrt(Math.pow(inputController.position.x - fireEngines[engineIndex].position.x, 2) + Math.pow(inputController.position.y - fireEngines[engineIndex].position.y, 2));
+                if (distance < 40) {
                     engineSelected = engineIndex;
                     break;
                 }
@@ -141,10 +140,10 @@ public class Game extends ApplicationAdapter {
         }
 
         //refill and repair
-        for(int i = 0; i < AMOUNT; i++) {
-            if(map.isInStationRange(fireEngines[i].getPosition())) {
+        for (int i = 0; i < AMOUNT; i++) {
+            if (map.isInStationRange(fireEngines[i].getPosition())) {
                 System.out.println("hi");
-                if(!fireEngines[i].isMaxHealth()) {
+                if (!fireEngines[i].isMaxHealth()) {
                     fireEngines[i].repair();
                 } else if (!fireEngines[i].isMaxFuel()) {
                     fireEngines[i].refill();
@@ -157,7 +156,7 @@ public class Game extends ApplicationAdapter {
         }
         if (inputController.moving) {
             //For testing reasons:
-            if(fireEngines[engineSelected].getFuel() > 0) {
+            if (fireEngines[engineSelected].getFuel() > 0) {
                 fireEngines[engineSelected].distanceIncreased();
                 fireEngines[engineSelected].fuelReduce();
             }
@@ -172,31 +171,30 @@ public class Game extends ApplicationAdapter {
         //engineSelected = engineSelected + 1;
         //}
         //}
-        for (FireEngine engine: fireEngines) {
+        for (FireEngine engine : fireEngines) {
             engine.render(batch);
         }
         //health and fuel drawing.
-        for(int i = 0; i < AMOUNT; i = i + 1)
-        {
+        for (int i = 0; i < AMOUNT; i = i + 1) {
             health[i].updateCurrent(fireEngines[i].health);
             fuel[i].updateCurrent(fireEngines[i].fuel);
-            health[i].setPosition(fireEngines[i].position.x,Gdx.graphics.getHeight() - fireEngines[i].position.y - 10);
-            fuel[i].setPosition(fireEngines[i].position.x,Gdx.graphics.getHeight() - fireEngines[i].position.y - 25);
-            batch.draw(health[i].texture,health[i].position.x,health[i].position.y, health[i].getFill(), health[i].getHeight());
-            batch.draw(healthIcon,health[i].position.x - (5 + health[i].getHeight()), health[i].position.y, health[i].getHeight(), health[i].getHeight());
-            batch.draw(fuel[i].texture,fuel[i].position.x,fuel[i].position.y, fuel[i].getFill(), fuel[i].getHeight());
-            batch.draw(fuelIcon,fuel[i].position.x - (5 + fuel[i].getHeight()), fuel[i].position.y, fuel[i].getHeight(), fuel[i].getHeight());
+            health[i].setPosition(fireEngines[i].position.x, Gdx.graphics.getHeight() - fireEngines[i].position.y - 10);
+            fuel[i].setPosition(fireEngines[i].position.x, Gdx.graphics.getHeight() - fireEngines[i].position.y - 25);
+            batch.draw(health[i].texture, health[i].position.x, health[i].position.y, health[i].getFill(), health[i].getHeight());
+            batch.draw(healthIcon, health[i].position.x - (5 + health[i].getHeight()), health[i].position.y, health[i].getHeight(), health[i].getHeight());
+            batch.draw(fuel[i].texture, fuel[i].position.x, fuel[i].position.y, fuel[i].getFill(), fuel[i].getHeight());
+            batch.draw(fuelIcon, fuel[i].position.x - (5 + fuel[i].getHeight()), fuel[i].position.y, fuel[i].getHeight(), fuel[i].getHeight());
         }
 
         // Update AlienBases
         for (AlienBase currentBase: this.bases) {
-        	currentBase.update();
+    	    currentBase.update();
         }
 
         // render aliens
         for (int i = 0; i < nextAlien; i++) {
             Alien alien = aliens[i];
-            batch.draw(alien.texture,alien.position.x,alien.position.y,40,40,40,40,1,1,alien.direction,0,0,16,16,false,false);
+            batch.draw(alien.texture, alien.position.x, alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
         }
 
         //ends batch.
@@ -204,7 +202,8 @@ public class Game extends ApplicationAdapter {
     }
 
     @Override
-    public void dispose () {
+    public void dispose() {
         batch.dispose();
+
     }
 }
