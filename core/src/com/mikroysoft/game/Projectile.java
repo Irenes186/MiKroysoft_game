@@ -10,19 +10,26 @@ public class Projectile {
     private float directionX, directionY;
     private float positionX, positionY;
     private int speed;
+    public int damage;
+    public boolean ally;
 
-    public Projectile (Coordinate source, Coordinate destination) {
+    public Projectile (Coordinate source, Coordinate destination, boolean friendly) {
         float length = (float) Math.sqrt(Math.pow(destination.y - source.y, 2) + Math.pow(destination.x - source.x, 2));
 
         speed = 5;
-
+        
         length /= speed;
-        texture = new Texture("water_drop.png");
+        if (friendly) {
+            texture = new Texture("water_drop.png");
+        }else {
+            texture = new Texture("water_drop.png");
+        }
 
         directionX = (destination.x - source.x)/length; 
         directionY = (destination.y - source.y)/length;
-        positionX = source.x + 40;
-        positionY = source.y - 40;
+        positionX = source.x;
+        positionY = source.y;
+        ally = friendly;
     }
 
     public void render(SpriteBatch batch) {
