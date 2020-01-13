@@ -1,7 +1,7 @@
 nnnnnnnnnnnnnnnnnnnn
 nnn11111111111111111
 n111nnnnnn1nnn1nnn1n
-n1n1nnnnnn1nnn1nnn1n
+n1n1nnnnnn10nn1nnn1n
 n1n1nnnnnn11111nnn1n
 n111nnnnnn1nnnnnnn1n
 nnn1nnnnnn1nnnnnnn1n
@@ -17,4 +17,4 @@ nn31nnnn111nnnnnnnnn
 nnn1nnnnnn1nnnnnnnnn
 nnn1nnnnnn1nnnnnnnnn
 nnn11111111111111111
-nnnnnn0nnnnnnnnnnnnn
+nnnnnnnnnnnnnnnnnnnn
