@@ -38,7 +38,7 @@ public class FireEngine {
         maxFuel = 100;
         maxHealth = 100;
     }
-
+	
     public void setPosition(int x, int y) {
         position.x = x;
         position.y = y;
@@ -100,11 +100,13 @@ public class FireEngine {
         }
 
         //add some kind of moving rules.
+        // TODO: Should this be in curly braces?
         if (input.x == -1)
             return;
 
-        double xSign = Integer.signum((int)input.x - (int)position.x);
-        double ySign = Integer.signum((int)input.y - (int)position.y);
+        // TODO: I thought we agreed to use floats?
+        double xSign = java.lang.Math.signum(input.x - position.x - 40);
+        double ySign = java.lang.Math.signum(input.y - position.y + 40);
 
         boolean xThreshold = position.x - 5 <= input.x && position.x + 5 >= input.x;
         boolean yThreshold = position.y - 5 <= input.y && position.y + 5 >= input.y;

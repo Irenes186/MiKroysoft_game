@@ -37,7 +37,7 @@ public class Map {
         String[][] inGrid = new String[MAPWIDTH][MAPHEIGHT];
         baseCoordinates = new ArrayList<Coordinate>();
         // import map info
-        File file = new File("map_information.txt");		
+        File file = new File("map_information.txt");
         BufferedReader reader = new BufferedReader(new FileReader(file));
         int row = 0;
         String fileInput;
@@ -178,6 +178,35 @@ public class Map {
         }
     }
 
+    /* Returns all currently active alien bases
+    * TODO: Inefficient! Runs in O(2n) time :/
+    */
+    public AlienBase[] getBases() {
+        AlienBase[] bases;
+        int numBases = 0;
+        for (IRenderable[] row: this.grid) {
+            for (IRenderable cell: row) {
+                if (cell instanceof AlienBase) {
+                    numBases++;
+                }
+            }
+        }
+        bases = new AlienBase[numBases];
+        int currentBase = 0;
+
+        for (IRenderable[] row: this.grid) {
+            for (IRenderable cell: row) {
+                if (cell instanceof AlienBase) {
+                    bases[currentBase] = (AlienBase) cell;
+                    currentBase++;
+                }
+            }
+        }
+
+        return bases;
+    }
+
+    // render map elements onto the screen
     public void render(SpriteBatch batch) {
         // batch.draw (this.bg, 0, 0, MAPWIDTH, MAPHEIGHT, 0, 0, this.bg.getWidth(), this.bg.getHeight(), false, false);
         batch.draw (this.bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -204,16 +233,16 @@ public class Map {
         }
         if((tempX < this.TILEWIDTH) && (tempY < this.TILEHEIGHT)) {
             return true;
-        } else { 
+        } else {
             return false;
         }
 
     }
-    
+
     public void updateBases() {
         for (Coordinate base : baseCoordinates) {
             grid[base.x][base.y].update();
         }
     }
-    
+
 }
