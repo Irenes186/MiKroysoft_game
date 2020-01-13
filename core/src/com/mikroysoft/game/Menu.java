@@ -14,11 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 public class Menu implements Screen {
 
     SpriteBatch batch;
-    Button play;
+    //Button play;
     CoreLogic coreLogic;
     InputController inputController;
     Game game;
-    Texture playButtonTexture;
+   // Texture playButtonTexture;
 
 
     public Menu(Game game){
@@ -35,7 +35,7 @@ public class Menu implements Screen {
         //Gdx.input.setInputProcessor((InputProcessor) this);
         //this.game.setScreen(new GameScreen(this.game));
 
-         play = new Button(50, 50, new Coordinate(50,50), "Play");
+
 
     }
 

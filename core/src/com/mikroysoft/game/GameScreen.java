@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
 		
 		//Fire Engines:
 		fireEngines = new FireEngine[1];
-		fireEngines[0] = new FireEngine();
+		//fireEngines[0] = new FireEngine();
 		//fireEngines[1] = new FireEngine();
 		//fireEngines[2] = new FireEngine();
 		//fireEngines[3] = new FireEngine();
@@ -86,7 +86,7 @@ public class GameScreen implements Screen {
 			batch.draw(engine.texture,engine.position.x,Gdx.graphics.getHeight()-engine.position.y,40,40,80,80,1,1,engine.direction,0,0,16,16,false,false);
 		}
 
-		aliens[0].Run();
+		//aliens[0].Run();
 		//health
 		batch.draw(health.texture,health.position.x,health.position.y, health.getFill(), health.getHeight());
 		batch.draw(healthIcon,health.position.x - (5 + health.getHeight()), health.position.y, health.getHeight(), health.getHeight());
