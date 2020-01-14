@@ -108,6 +108,7 @@ public class Game extends ApplicationAdapter {
         }
         aliens = new Alien[totalMaxAliens];
         bases = this.map.getBases();
+        fireStation = this.map.getFireStation();
     }
 
     @Override
@@ -116,6 +117,10 @@ public class Game extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        
+        //Update fireStation timer
+        this.fireStation.checkDestruction();
+        
         // Handle Alien spawning
         for (AlienBase base : this.bases) {
             Alien newAlien = base.defend(this.fireEngines);
@@ -163,6 +168,9 @@ public class Game extends ApplicationAdapter {
             fireEngines[engineSelected].move(inputController.getLatestPosition());
         }
 
+        
+        
+   
         // TODO: Remove
         // if(false)) {
         //	if(engineSelected >= AMOUNT - 1) {

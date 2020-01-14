@@ -254,4 +254,19 @@ public class Map {
         }
 
     }
+    
+    public boolean isOffroad(Coordinate enginePosition) {
+    	return this.grid[(int)(enginePosition.x/this.TILEWIDTH)][(int)(enginePosition.x/this.TILEHEIGHT)] instanceof Road;
+    }
+    
+    public FireStation getFireStation() {
+    	for (int col = 0; col < grid.length; col++) {
+            for (int row = 0; row < grid[0].length; row++) {
+            	if (grid[row][col] instanceof FireStation){
+            		return (FireStation) grid[row][col];
+            	}
+            }
+    	}
+    	return null;
+    }
 }

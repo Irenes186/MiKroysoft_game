@@ -9,6 +9,8 @@ public class FireStation implements IRenderable {
     public Texture texture;
     private Coordinate position;
     private int TILEWIDTH, TILEHEIGHT;
+    private int destructionTimer;
+    private int secondsUntilDestruction;
 
     public FireStation(int fillSpeed, Coordinate position, int TILEWIDTH, int TILEHEIGHT){
         destroyed = false;
@@ -25,6 +27,7 @@ public class FireStation implements IRenderable {
     }
 
     public void destroy() {
+    	System.out.println("BOOOM!");
         destroyed = true;
     }
 
@@ -35,6 +38,19 @@ public class FireStation implements IRenderable {
     
     public void update() {
         
+    }
+    
+    public void checkDestruction() {
+    	
+    	if (destructionTimer>secondsUntilDestruction*60) {
+    		return;
+    	}
+    	if (destructionTimer<secondsUntilDestruction*60) {
+    		destructionTimer++;
+    		return;
+    	}
+    	this.destroy();
+    	return;
     }
 
 }
