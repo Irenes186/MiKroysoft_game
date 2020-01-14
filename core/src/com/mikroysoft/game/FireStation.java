@@ -19,6 +19,8 @@ public class FireStation implements IRenderable {
         texture = new Texture("station.png");
         this.TILEHEIGHT = TILEHEIGHT;
         this.TILEWIDTH = TILEWIDTH;
+        this.secondsUntilDestruction = 5; 
+        //not very accurate
 
     }
 
@@ -50,6 +52,7 @@ public class FireStation implements IRenderable {
     		return;
     	}
     	this.destroy();
+    	this.destructionTimer++;
     	return;
     }
 
