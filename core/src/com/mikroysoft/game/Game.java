@@ -142,7 +142,8 @@ public class Game extends ApplicationAdapter {
         //refill and repair
         for (int i = 0; i < AMOUNT; i++) {
             if (map.isInStationRange(fireEngines[i].getPosition())) {
-                System.out.println("hi");
+                System.out.println(fireEngines[i].position.x);
+                System.out.println(fireEngines[i].position.y);
                 if (!fireEngines[i].isMaxHealth()) {
                     fireEngines[i].repair();
                 } else if (!fireEngines[i].isMaxFuel()) {
