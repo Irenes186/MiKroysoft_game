@@ -59,18 +59,15 @@ public class Alien implements IRenderable {
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(texture,position.x,position.y,TILEWIDTH/2,TILEHEIGHT/2);
-        System.out.println(position.x+position.y);
         for (int i = 0; i < projectiles.size(); i++) {
             projectiles.get(i).render(batch);
         }
     }
 
     public void shoot(Coordinate destination) {
-
-        boolean inRange = Math.sqrt(Math.pow(position.x - destination.x, 2) + Math.pow(position.y - destination.y, 2)) <= shootRange;
-
-        if (currentFireCount >= countToFire && inRange) {
-            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination, true));
+        if (currentFireCount >= countToFire) {
+            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, Gdx.graphics.getHeight() - position.y), destination, true));
+            
             currentFireCount = 0;
         } else {
             currentFireCount++;

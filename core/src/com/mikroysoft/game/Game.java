@@ -317,7 +317,8 @@ public class Game extends ApplicationAdapter {
         // render aliens
         for (int i = 0; i < nextAlien; i++) {
             Alien alien = aliens[i];
-            batch.draw(alien.texture, alien.position.x, alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
+            //batch.draw(alien.texture, alien.position.x, alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
+            alien.render(batch);
         }
         
         // MAKE ALIEN SHOOT

@@ -46,7 +46,7 @@ public class AlienBase implements IRenderable {
 
         // should this be in AlienBaseParameters?
         // set aliens to spawn every 500 frames that a truck is in range
-        this.maxAlienSpawnCountDown = 500;
+        this.maxAlienSpawnCountDown = 200;
         this.alienSpawnCountDown = this.maxAlienSpawnCountDown;
 
 //        this.randomGen = new Random();
