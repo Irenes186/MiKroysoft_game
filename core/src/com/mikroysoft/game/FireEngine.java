@@ -20,6 +20,7 @@ public class FireEngine {
     public int fuel;
     public int maxHealth;
     public int maxFuel;
+    public int maxVolume;
     public int distanceTravelled;
     private List < Projectile > projectiles;
     public float direction;
@@ -37,20 +38,45 @@ public class FireEngine {
         distanceTravelled = 0;
         maxFuel = 100;
         maxHealth = 100;
+        maxVolume = 100;
+        waterVolume = 100;
     }
 	
     public void setPosition(int x, int y) {
         position.x = x;
         position.y = y;
     }
-
+    
+    public void setMaxVolume(int v) {
+    	maxVolume = v;
+    }
+    
+    public void setVolume(int v) {
+    	this.waterVolume = v;
+    }
+    
+    public int getMaxVolume() {
+    	return this.maxVolume;
+    }
+    
+    public int getVolume() {
+    	return this.waterVolume;
+    }
+    
+    public void reduceVolume() {
+    	this.waterVolume = this.waterVolume - 1;
+    }
+    
     public void repair() {
-        health += 1;
+        this.health += 1;
     }
 
-    public void refill() {
-        waterVolume += 50;
-        fuel += 1;
+    public void refillFuel() {
+        this.fuel += 1;
+    }
+    
+    public void refillVolume() {
+    	this.waterVolume += 1;
     }
 
     public boolean isMaxHealth() {
@@ -67,6 +93,14 @@ public class FireEngine {
         } else {
             return false;
         }
+    }
+    
+    public boolean isMaxVolume() {
+    	if(this.waterVolume == this.maxVolume) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     public int getFuel() {

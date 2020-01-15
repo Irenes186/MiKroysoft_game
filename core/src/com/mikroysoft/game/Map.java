@@ -256,4 +256,13 @@ public class Map {
         }
 
     }
+    
+    public int getStationX() {
+    	return (int)c.x;
+    	
+    }
+    
+    public int getStationY() {
+    	return (MAPHEIGHT * TILEHEIGHT) - (int)c.y;
+    }
 }
