@@ -1,14 +1,19 @@
 package com.mikroysoft.game;
 
+// LibGDX Imports
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
-
+// Java Imports
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.lang.Math;
 
+/* This class represents the player-controlled Fire Engines.
+ * FireEngines can be moved by dragging with the mouse along a road. TODO: Constrain momement to roads
+ * FireEngines have finite fuel, health, and water supplies. All are refilled over time when within range of a FireStation.
+ */
 public class FireEngine {
     public Texture texture;
     public Coordinate position;

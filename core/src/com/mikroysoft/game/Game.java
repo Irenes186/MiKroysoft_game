@@ -118,13 +118,13 @@ public class Game extends ApplicationAdapter {
             //fireEngines[i].setmaxPosition(); <-- what is this for?!
             
             //setting health stuff.
-            health[i] = new ProgressBar(1);
+            health[i] = new ProgressBar(BarColour.YELLOW);
             health[i].setDimensions(100, 10);
             health[i].setMax(fireEngines[i].maxHealth);
             health[i].updateCurrent(100);
 
             //setting fuel stuff.
-            fuel[i] = new ProgressBar(3);
+            fuel[i] = new ProgressBar(BarColour.PINK);
             fuel[i].setDimensions(100, 10);
             fuel[i].setMax(fireEngines[i].maxFuel);
             fuel[i].updateCurrent(100);
@@ -180,26 +180,11 @@ public class Game extends ApplicationAdapter {
             //Setting volume attributes to the fire engine.
         	fireEngines[i].setMaxVolume(maxVolume);
         	fireEngines[i].setVolume(fireEngines[i].getMaxVolume());
-        	volume[i] = new ProgressBar(2);
+        	volume[i] = new ProgressBar(BarColour.BLUE);
         	volume[i].setDimensions(100,10);
         	volume[i].setMax(maxVolume);
         	volume[i].updateCurrent(fireEngines[i].getVolume());
         }
-        //fireEngines[1] = new FireEngine();
-        //fireEngines[2] = new FireEngine();
-        //fireEngines[3] = new FireEngine();
-        //fireEngines[4] = new FireEngine();
-
-
-        //aliens = new Alien[1];
-        //aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
-
-        //health progress bar:
-        //health = new ProgressBar(1);
-        //health.setPosition(20,10);
-        //health.setDimensions(100,10);
-        //health.setMax(100);
-        //health.updateCurrent(100);
 
         //health icon - next to health progress bar.
         healthIcon = new Texture("health.png");
@@ -286,14 +271,6 @@ public class Game extends ApplicationAdapter {
         	}
         }
 
-        // TODO: Remove
-        // if(false)) {
-        //	if(engineSelected >= AMOUNT - 1) {
-        //	engineSelected = 0;
-        //} else {
-        //engineSelected = engineSelected + 1;
-        //}
-        //}
         for (FireEngine engine : fireEngines) {
             engine.render(batch);
         }
@@ -314,11 +291,10 @@ public class Game extends ApplicationAdapter {
         }
 
         
-        // render aliens
+        // render and update aliens
         for (int i = 0; i < nextAlien; i++) {
-            Alien alien = aliens[i];
-            //batch.draw(alien.texture, alien.position.x, alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
-            alien.render(batch);
+            aliens[i].update();;
+            aliens[i].render(batch);
         }
         
         // MAKE ALIEN SHOOT

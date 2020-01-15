@@ -11,6 +11,8 @@ public class AlienBaseParameters {
     public int attackRange;
     // shouldn't this be handled in game??
     public int attackTimeAfterFirst;
+    // Number of frames to wait between spawning Aliens
+    public int spawnRate;
 
     // DEFAULTS
     // UPDATE AS NEEDED
@@ -21,5 +23,6 @@ public class AlienBaseParameters {
         floodLevel = 20;
         attackRange = 1;
         attackTimeAfterFirst = 300;
+        spawnRate = 500;
     }
 }

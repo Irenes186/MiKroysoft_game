@@ -171,19 +171,19 @@ public class Map {
                         grid[row][col] = new AlienBase("Holgate Windmill", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Holgate-Windmill");
                         break;
                         
-                        //Jorvick Viking Centre
+                        // Jorvik Viking Centre
                     case "5":    
                         params = new AlienBaseParameters();
-                        grid[row][col] = new AlienBase("Jorvick Viking Centre", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "viking");
+                        grid[row][col] = new AlienBase("Jorvik Viking Centre", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "viking");
                         break;
                     
-                        //York train station
+                        // York train station
                     case "6":
                     	params = new AlienBaseParameters();
                     	grid[row][col] = new AlienBase("York Station", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "york_station");
                     	break;
                     	
-                    	//York City FC stadium
+                    	// York City FC stadium
                     case "7":
                     	params = new AlienBaseParameters();
                     	grid[row][col] = new AlienBase("York City FC", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "york_city_fc");

@@ -11,6 +11,8 @@ import java.util.List;
 
 /* This class represents the small, walking and shooting aliens
  * that are spawned by AlienBases.
+ * Aliens can move in a random direction, and fire towards the nearest fire engine when it is in range.
+ * Aliens will die in one hit from a fire engine projectile TODO: To be implemented
  */
 public class Alien implements IRenderable {
 	// Does This Alien know where the FireStation is?
