@@ -21,19 +21,9 @@ public class InputController implements InputProcessor {
         return false;
     }
     public boolean keyTyped (char character) { return false; }
-    public boolean mouseMoved (int x, int y) {
-        return false;
-    }
-    public boolean scrolled (int amount) {
-        return false;
-    }
-    public boolean mouseMoved (int x, int y) {
-         return false;
-     }
-    
-    public Coordinate getLatestPosition() {
-        return this.position;
-    }
+    public boolean mouseMoved (int x, int y) { return false; }
+    public boolean scrolled (int amount) { return false; }
+    public Coordinate getLatestPosition() { return this.position; }
 
     public boolean touchDown (int x, int y, int pointer, int button) {
         if (button == 1) {
