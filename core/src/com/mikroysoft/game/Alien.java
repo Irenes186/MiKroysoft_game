@@ -1,25 +1,40 @@
 package com.mikroysoft.game;
 
+// LibGDX Imports
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+// Java Imports
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
 
+/* This class represents the small, walking and shooting aliens
+ * that are spawned by AlienBases.
+ */
 public class Alien implements IRenderable {
+	// Does This Alien know where the FireStation is?
+	// TODO: Shouldn't this be handled in Game?
     public boolean LocationKnowlegde;
+    // The rendered Alien texture
     public Texture texture;
+    // Position of Alien on the screen
     public Coordinate position;
+    // Game grid cell dimensions
     private int TILEWIDTH, TILEHEIGHT;
+    // Direction the alien is currently moving
     public float direction;
     private float speed;
+    // Point of reference for movement
     private Coordinate basePosition;
+    //This is a factor of how much slower alien will shoot compared to fireengine
     private int countToFire;
+    // How many times the alien has shot
     private int currentFireCount;
     private int shootOffset;
+    // List of spawned Projectile objects - i.e bullets - to be used in collision detection
     private List < Projectile > projectiles;
+    // The maximum distance a fireengine can be from the alien before alien begins firing at it
     private int shootRange;
 
     public Alien(Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
@@ -31,7 +46,7 @@ public class Alien implements IRenderable {
         direction = 0;
         speed = 2;
 
-        countToFire = 50; //This is a factor of how much slower alien will shoot compared to fireengine
+        countToFire = 50;
         currentFireCount = 0;
         shootOffset = 10;
         shootRange = 200;
