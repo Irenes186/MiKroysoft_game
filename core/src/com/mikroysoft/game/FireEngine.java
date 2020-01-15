@@ -61,8 +61,12 @@ public class FireEngine {
     public void resetSpeed() {
     	this.speed = 0;
     }
-    public void setSpeedAndAcceleration(float s, float a) {
+    
+    public void setSpeed(float s) {
     	this.maxSpeed = s;
+    }
+    
+    public void setAcceleration(float a) {
     	this.acceleration = a;
     }
     public void setPosition(int x, int y) {

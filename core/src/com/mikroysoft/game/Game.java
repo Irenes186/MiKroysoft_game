@@ -113,7 +113,8 @@ public class Game extends ApplicationAdapter {
             }
             
             
-            fireEngines[i].setSpeedAndAcceleration(maxSpeed, acceleration);
+            fireEngines[i].setSpeed(maxSpeed);
+            fireEngines[i].setAcceleration(acceleration);
             //fireEngines[i].setmaxPosition(); <-- what is this for?!
             
             //setting health stuff.
