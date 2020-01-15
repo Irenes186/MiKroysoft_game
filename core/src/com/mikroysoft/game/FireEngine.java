@@ -44,6 +44,7 @@ public class FireEngine {
         maxHealth = 100;
         maxVolume = 100;
         waterVolume = 100;
+        range = 100;
     }
 	
     public boolean isMaxSpeed() {
