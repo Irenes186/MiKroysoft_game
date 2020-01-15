@@ -1,42 +1,11 @@
 package com.mikroysoft.game;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import java.util.Random;
 
-public class Game extends ApplicationAdapter {
-    SpriteBatch batch;
-    CoreLogic coreLogic;
-    FireEngine[] fireEngines;
-    InputController inputController;
-    ProgressBar[] health;
-    ProgressBar[] fuel;
-    ProgressBar[] volume;
-    int engineSelected;
-
-    Map map;
-    int MAPWIDTH;
-    int MAPHEIGHT;
-    int TILEWIDTH;
-    int TILEHEIGHT;
-    int AMOUNT;
-    FireStation fireStation;
-
-    //ProgressBar icon health;
-    Texture healthIcon;
-    //ProgressBar icon fuel;
-    Texture fuelIcon;
-    //ProgressBar icon volume;
-    Texture volumeIcon;
-    Alien[] aliens;
-    // used to track the farthest-left empty cell in the aliens array.
-    int nextAlien;
-    AlienBase[] bases;
-
-    @Override
+public class Game extends com.badlogic.gdx.Game {
     public void create() {
         MAPWIDTH = 20;
         MAPHEIGHT = 20;
@@ -220,9 +189,11 @@ public class Game extends ApplicationAdapter {
         }
         aliens = new Alien[totalMaxAliens];
         bases = this.map.getBases();
+
+        //this.setScreen(new Menu(this));
+        this.setScreen(new GameScreen(this));
     }
 
-    @Override
     public void render() {
         coreLogic.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -343,6 +314,6 @@ public class Game extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
-
+        super.render();
     }
 }

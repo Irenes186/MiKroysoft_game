@@ -8,7 +8,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.Random;
+
 public class GameScreen implements Screen {
+
     SpriteBatch batch;
     BitmapFont font;
     CoreLogic coreLogic;
