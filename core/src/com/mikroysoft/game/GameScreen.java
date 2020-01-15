@@ -51,7 +51,7 @@ public class GameScreen implements Screen {
 		aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
 		
 		//health progress bar:
-		health = new ProgressBar(1);
+		health = new ProgressBar(BarColour.YELLOW);
 		health.setPosition(20,10);
 		health.setDimensions(100,10);
 		health.setMax(100);
@@ -62,7 +62,7 @@ public class GameScreen implements Screen {
 		
 		
 		//fuel progress bar:
-		fuel = new ProgressBar(2);
+		fuel = new ProgressBar(BarColour.BLUE);
 		fuel.setPosition(20, 25);
 		fuel.setDimensions(100,10);
 		fuel.setMax(100);
