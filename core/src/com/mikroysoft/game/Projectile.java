@@ -13,16 +13,27 @@ public class Projectile {
     public int damage;
     public boolean ally;
 
-    public Projectile (Coordinate source, Coordinate destination, boolean friendly) {
+    public Projectile (Coordinate source, Coordinate destination, boolean friendly, ProjectileType type) {
         float length = (float) Math.sqrt(Math.pow(destination.y - source.y, 2) + Math.pow(destination.x - source.x, 2));
 
         speed = 5;
         
         length /= speed;
-        if (friendly) {
-            texture = new Texture("water_drop.png");
-        }else {
-            texture = new Texture("water_drop.png");
+//        if (friendly) {
+//            texture = new Texture("water_drop.png");
+//        }else {
+//            texture = new Texture("water_drop.png");
+//        }
+        
+        switch (type) {
+        	case WATER:
+        		texture = new Texture("water_drop.png");
+        		break;
+        	case BULLET:
+        		texture = new Texture("bullet.png");
+        		break;
+        	default:
+        		throw new IllegalArgumentException("Requested projectile type '" + type + "' which has not yet been implemeneted");
         }
 
         directionX = (destination.x - source.x)/length; 

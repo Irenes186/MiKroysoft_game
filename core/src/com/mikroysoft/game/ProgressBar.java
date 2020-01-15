@@ -12,14 +12,14 @@ public class ProgressBar {
     private boolean visible;
     private int barFill;
 
-    public ProgressBar(int type) {
-        if (type == 1) {
+    public ProgressBar(BarColour colour) {
+        if (colour == BarColour.YELLOW) {
             texture = new Texture("bar_01.png");
         }
-        else if (type == 2) {
+        else if (colour == BarColour.BLUE) {
             texture = new Texture("bar_02.png");
         }
-        else if (type == 3) {
+        else if (colour == BarColour.PINK) {
         	texture = new Texture("bar_03.png");
         }
         height = 0;
@@ -68,8 +68,4 @@ public class ProgressBar {
             this.visible = false;
         }
     }
-
-
-
-
 }
