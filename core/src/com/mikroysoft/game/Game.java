@@ -313,11 +313,7 @@ public class Game extends ApplicationAdapter {
             batch.draw(volumeIcon, volume[i].position.x - (5 + volume[i].getHeight()), volume[i].position.y, volume[i].getHeight(), volume[i].getHeight());
         }
 
-        // Update AlienBases
-        for (AlienBase currentBase: this.bases) {
-    	    currentBase.update();
-        }
-
+        
         // render aliens
         for (int i = 0; i < nextAlien; i++) {
             Alien alien = aliens[i];

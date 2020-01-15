@@ -19,7 +19,7 @@ public class Map {
     Texture bg;
     int TILEWIDTH, TILEHEIGHT;
     int MAPWIDTH, MAPHEIGHT;
-    public Coordinate c = new Coordinate(0, 0);
+    public Coordinate fireStation = new Coordinate(0, 0);
 
     // constructor: takes map dimensions
     public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex) throws Exception {
@@ -71,8 +71,8 @@ public class Map {
                 switch (inGrid[row][col]) {
                     // instance fire stations
                     case "0" :
-                        c.setCoordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT);
-                        grid[row][col] = new FireStation(10, c, 10, 10);
+                        fireStation.setCoordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT);
+                        grid[row][col] = new FireStation(10, fireStation, 10, 10);
                         break;
 
                     case "1" :
@@ -238,10 +238,8 @@ public class Map {
 
 
     public boolean isInStationRange(Coordinate engineCoordinates) {
-        float tempX = engineCoordinates.x - c.x;
-        float tempY = engineCoordinates.y - ((MAPHEIGHT * TILEHEIGHT) - c.y);
-        //System.out.println(c.x);
-        //System.out.println((MAPHEIGHT * TILEHEIGHT) - c.y);
+        float tempX = engineCoordinates.x - fireStation.x;
+        float tempY = engineCoordinates.y - fireStation.y;
         //System.out.println(tempY);
         if(tempX < 0) {
             tempX = tempX * -1;
@@ -258,11 +256,12 @@ public class Map {
     }
     
     public int getStationX() {
-    	return (int)c.x;
+    	return (int)fireStation.x;
     	
     }
     
     public int getStationY() {
-    	return (MAPHEIGHT * TILEHEIGHT) - (int)c.y;
+    	return (MAPHEIGHT * TILEHEIGHT) - (int)fireStation.y;
     }
 }
+
