@@ -87,7 +87,7 @@ public class AlienBase implements IRenderable {
      */
     public Alien defend(FireEngine[] fireEngines) {
     	// Debug: # of frames until this base spawns a new alien.
-    	System.out.println("Alien cooldown " + this.name + ": " + this.alienSpawnCountDown);
+    	//System.out.println("Alien cooldown " + this.name + ": " + this.alienSpawnCountDown);
     	boolean truckInRange = false;
     	for (FireEngine currentTruck: fireEngines) {
 			if (java.lang.Math.abs(this.position.x - currentTruck.position.x) <= ((this.weaponRange+1) * TILEWIDTH) &&

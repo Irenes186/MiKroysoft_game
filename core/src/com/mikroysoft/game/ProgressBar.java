@@ -19,6 +19,9 @@ public class ProgressBar {
         else if (type == 2) {
             texture = new Texture("bar_02.png");
         }
+        else if (type == 3) {
+        	texture = new Texture("bar_03.png");
+        }
         height = 0;
         width = 0;
         maximum = 100;
@@ -53,8 +56,9 @@ public class ProgressBar {
 
     public void updateCurrent (int c) {
         this.current = c;
-        float fraction = this.width/this.maximum;
-        this.barFill = (int) (fraction * this.current);
+        int fraction = this.width/this.maximum;
+        int multiplication = fraction * this.current;
+        this.barFill = multiplication;
     }
 
     public void toggleVis () {
