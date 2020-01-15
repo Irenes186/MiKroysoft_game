@@ -70,53 +70,53 @@ public class Game extends ApplicationAdapter {
         int[] takenValuesOne = new int[AMOUNT];
         int[] takenValuesTwo = new int[AMOUNT];
         for (int i = 0; i < AMOUNT; i = i + 1) {
-        	
-        	int index = -1;
-        	boolean valueTaken = true;
-        	while(valueTaken == true) {
-            	valueTaken = false;
-            	randomValueOne = randomGenerator.nextInt(3);
-            	for(int j = 0; j < AMOUNT; j = j + 1) {
-            		if(takenValuesOne[j] == randomValueOne) {
-            			valueTaken = true;
-            			break;
-            		}
-            	}
-            	if(valueTaken == false) {
-            		index = index + 1;
-            	}
+
+            int index = -1;
+            boolean valueTaken = true;
+            while(valueTaken == true) {
+                valueTaken = false;
+                randomValueOne = randomGenerator.nextInt(3);
+                for(int j = 0; j < AMOUNT; j = j + 1) {
+                    if(takenValuesOne[j] == randomValueOne) {
+                        valueTaken = true;
+                        break;
+                    }
+                }
+                if(valueTaken == false) {
+                    index = index + 1;
+                }
             }
-        	takenValuesOne[index] = randomValueOne;
-        	
+            takenValuesOne[index] = randomValueOne;
+
             fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT);
             fireEngines[i].setPosition(map.getStationX() + 50, map.getStationY() + 50);
             float acceleration = 0.00f;
             float maxSpeed = 0.00f;
             switch(randomValueOne) {
                 case 0:
-                	acceleration = 0.10f;
-                	maxSpeed = 1.00f;
-            	    break;
+                    acceleration = 0.10f;
+                    maxSpeed = 1.00f;
+                    break;
                 case 1:
-                	acceleration = 0.50f;
-                	maxSpeed = 2.00f;
-                	break;
-                case 2:
-                	acceleration = 0.01f;
-                	maxSpeed = 0.05f;
-                	break;
-                default:
-                	acceleration = 0.10f;
+                    acceleration = 0.50f;
                     maxSpeed = 2.00f;
                     break;
-            	
+                case 2:
+                    acceleration = 0.01f;
+                    maxSpeed = 0.05f;
+                    break;
+                default:
+                    acceleration = 0.10f;
+                    maxSpeed = 2.00f;
+                    break;
+
             }
-            
-            
+
+
             fireEngines[i].setSpeed(maxSpeed);
             fireEngines[i].setAcceleration(acceleration);
             //fireEngines[i].setmaxPosition(); <-- what is this for?!
-            
+
             //setting health stuff.
             health[i] = new ProgressBar(1);
             health[i].setDimensions(100, 10);
@@ -128,62 +128,62 @@ public class Game extends ApplicationAdapter {
             fuel[i].setDimensions(100, 10);
             fuel[i].setMax(fireEngines[i].maxFuel);
             fuel[i].updateCurrent(100);
-            
-            
+
+
             //Getting max volume value for fireEngines[i].
             valueTaken = true;
             index = -1;
             while(valueTaken == true) {
-            	valueTaken = false;
-            	randomValueTwo = randomGenerator.nextInt(10);
-            	for(int j = 0; j < AMOUNT; j = j + 1) {
-            		if(takenValuesTwo[j] == randomValueTwo) {
-            			valueTaken = true;
-            			break;
-            		}
-            	}
+                valueTaken = false;
+                randomValueTwo = randomGenerator.nextInt(10);
+                for(int j = 0; j < AMOUNT; j = j + 1) {
+                    if(takenValuesTwo[j] == randomValueTwo) {
+                        valueTaken = true;
+                        break;
+                    }
+                }
                 if(valueTaken == false) {
-            	    index = index + 1;
-            	}
+                    index = index + 1;
+                }
             }
-           takenValuesTwo[index] = randomValueTwo;
-            
+            takenValuesTwo[index] = randomValueTwo;
+
             int maxVolume = 0;
             switch (randomValueTwo) {
                 case 0:
-                	maxVolume = 1;
-                	break;
+                    maxVolume = 1;
+                    break;
                 case 1:
-                	maxVolume = 2;
-                	break;
+                    maxVolume = 2;
+                    break;
                 case 2:
-                	maxVolume = 5;
-                	break;
+                    maxVolume = 5;
+                    break;
                 case 3:
-                	maxVolume = 10;
-                	break;
+                    maxVolume = 10;
+                    break;
                 case 4:
-                	maxVolume = 20;
-                	break;
+                    maxVolume = 20;
+                    break;
                 case 5:
-                	maxVolume = 25;
-                	break;
+                    maxVolume = 25;
+                    break;
                 case 6:
-                	maxVolume = 50;
-                	break;
+                    maxVolume = 50;
+                    break;
                 default:
-                	maxVolume = 100;
-                	break;
-            
+                    maxVolume = 100;
+                    break;
+
             }
-            
+
             //Setting volume attributes to the fire engine.
-        	fireEngines[i].setMaxVolume(maxVolume);
-        	fireEngines[i].setVolume(fireEngines[i].getMaxVolume());
-        	volume[i] = new ProgressBar(2);
-        	volume[i].setDimensions(100,10);
-        	volume[i].setMax(maxVolume);
-        	volume[i].updateCurrent(fireEngines[i].getVolume());
+            fireEngines[i].setMaxVolume(maxVolume);
+            fireEngines[i].setVolume(fireEngines[i].getMaxVolume());
+            volume[i] = new ProgressBar(2);
+            volume[i].setDimensions(100,10);
+            volume[i].setMax(maxVolume);
+            volume[i].updateCurrent(fireEngines[i].getVolume());
         }
         //fireEngines[1] = new FireEngine();
         //fireEngines[2] = new FireEngine();
@@ -206,7 +206,7 @@ public class Game extends ApplicationAdapter {
 
         //fuel icon - next to fuel progress bar.
         fuelIcon = new Texture("fuel.png");
-        
+
         //volume icon - next to volume progress bar.
         volumeIcon = new Texture("water_drop.png");
         // initialise aliens array size to the sum of all maxAliens counts.
@@ -259,16 +259,16 @@ public class Game extends ApplicationAdapter {
                 } else if (!fireEngines[i].isMaxFuel()) {
                     fireEngines[i].refillFuel();
                 } else if (!fireEngines[i].isMaxVolume()) {
-                	fireEngines[i].refillVolume();
+                    fireEngines[i].refillVolume();
                 }
             }
         }
 
         if (inputController.getShotsFired()) {
-        	if(fireEngines[engineSelected].getVolume() > 0) {
-        	    fireEngines[engineSelected].shoot(inputController.getLatestPosition());
+            if(fireEngines[engineSelected].getVolume() > 0) {
+                fireEngines[engineSelected].shoot(inputController.getLatestPosition());
                 fireEngines[engineSelected].reduceVolume();
-        	}
+            }
         }
         if (inputController.moving) {
             //For testing reasons:
@@ -277,13 +277,13 @@ public class Game extends ApplicationAdapter {
                 fireEngines[engineSelected].fuelReduce();
             }
             if(!fireEngines[engineSelected].isMaxSpeed()) {
-            	fireEngines[engineSelected].increaseSpeed();
+                fireEngines[engineSelected].increaseSpeed();
             }
             fireEngines[engineSelected].move(inputController.getLatestPosition());
         } else {
-        	for(int z = 0; z < AMOUNT; z = z + 1) {
-        		fireEngines[z].resetSpeed();
-        	}
+            for(int z = 0; z < AMOUNT; z = z + 1) {
+                fireEngines[z].resetSpeed();
+            }
         }
 
         // TODO: Remove
@@ -313,27 +313,27 @@ public class Game extends ApplicationAdapter {
             batch.draw(volumeIcon, volume[i].position.x - (5 + volume[i].getHeight()), volume[i].position.y, volume[i].getHeight(), volume[i].getHeight());
         }
 
-        
+
         // render aliens
         for (int i = 0; i < nextAlien; i++) {
             Alien alien = aliens[i];
             batch.draw(alien.texture, alien.position.x, alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
         }
-        
+
         // MAKE ALIEN SHOOT
         for (int alienIndex = 0; alienIndex<nextAlien; alienIndex++) {
-        	float minimumDistance = 1000;
-        	int minimumIndex = -1;
-        	float distance;
-        	for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {
-        		distance = fireEngines[engineIndex].position.distanceTo(aliens[alienIndex].position);
-        		if (distance<minimumDistance) {
-        			minimumDistance = distance;
-        			minimumIndex = engineIndex;
-        		}
-        	}
-        	aliens[alienIndex].shoot(fireEngines[minimumIndex].position);
-        	
+            float minimumDistance = 1000;
+            int minimumIndex = -1;
+            float distance;
+            for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {
+                distance = fireEngines[engineIndex].position.distanceTo(aliens[alienIndex].position);
+                if (distance<minimumDistance) {
+                    minimumDistance = distance;
+                    minimumIndex = engineIndex;
+                }
+            }
+            aliens[alienIndex].shoot(fireEngines[minimumIndex].position);
+
         }
 
         //ends batch.
