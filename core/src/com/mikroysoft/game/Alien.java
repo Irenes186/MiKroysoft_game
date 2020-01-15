@@ -21,6 +21,7 @@ public class Alien implements IRenderable {
     private int shootOffset;
     private List < Projectile > projectiles;
     private int shootRange;
+    public float range;
 
     public Alien(Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
         texture = new Texture("alien.png");
@@ -70,7 +71,7 @@ public class Alien implements IRenderable {
         boolean inRange = Math.sqrt(Math.pow(position.x - destination.x, 2) + Math.pow(position.y - destination.y, 2)) <= shootRange;
 
         if (currentFireCount >= countToFire && inRange) {
-            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination, true));
+            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination, true,range));
             currentFireCount = 0;
         } else {
             currentFireCount++;

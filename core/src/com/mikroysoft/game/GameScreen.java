@@ -48,7 +48,7 @@ public class GameScreen implements Screen {
 	public void create() {
 		MAPWIDTH = 20;
 		MAPHEIGHT = 20;
-		AMOUNT = 4;
+		AMOUNT = 2;
 		engineSelected = 1;
 		nextAlien = 0;
 		this.game = game;

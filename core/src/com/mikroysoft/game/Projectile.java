@@ -12,8 +12,11 @@ public class Projectile {
     private int speed;
     public int damage;
     public boolean ally;
+    Coordinate source;
+    float range;
 
-    public Projectile (Coordinate source, Coordinate destination, boolean friendly) {
+    public Projectile (Coordinate source, Coordinate destination, boolean friendly, float range) {
+    	this.source = new Coordinate(source.x,source.y);
         float length = (float) Math.sqrt(Math.pow(destination.y - source.y, 2) + Math.pow(destination.x - source.x, 2));
 
         speed = 5;
@@ -37,5 +40,8 @@ public class Projectile {
         this.positionY += directionY;
 
         batch.draw(texture, this.positionX,Gdx.graphics.getHeight()-this.positionY);
+    }
+    public boolean isProjectileInRange() {
+    	return source.distanceTo(new Coordinate(positionX,positionY))<range;
     }
 }
