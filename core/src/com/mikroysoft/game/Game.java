@@ -172,8 +172,6 @@ public class Game extends ApplicationAdapter {
             batch.draw(fuelIcon,fuel[i].position.x - (5 + fuel[i].getHeight()), fuel[i].position.y, fuel[i].getHeight(), fuel[i].getHeight());
         }
         
-        map.updateBases();
-        
         // render aliens
         for (int i = 0; i < nextAlien; i++) {
             Alien alien = aliens[i];

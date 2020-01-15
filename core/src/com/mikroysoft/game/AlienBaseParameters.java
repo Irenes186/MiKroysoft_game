@@ -16,7 +16,7 @@ public class AlienBaseParameters {
     // UPDATE AS NEEDED
     public AlienBaseParameters() {
         weaponRange = 1;
-        aliensNumber = 3;
+        maxAliens = 3;
         weaponType = "laser";
         floodLevel = 20;
         attackRange = 1;

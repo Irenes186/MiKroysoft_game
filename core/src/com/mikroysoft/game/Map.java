@@ -222,8 +222,8 @@ public class Map {
 
 
     public boolean isInStationRange(Coordinate engineCoordinates) {
-        int tempX = engineCoordinates.x - c.x;
-        int tempY = engineCoordinates.y - c.y;
+        float tempX = engineCoordinates.x - c.x;
+        float tempY = engineCoordinates.y - c.y;
         //System.out.println(tempY);
         if(tempX < 0) {
             tempX = tempX * -1;
@@ -237,11 +237,5 @@ public class Map {
             return false;
         }
 
-    }
-    
-    public void updateBases() {
-        for (Coordinate base : baseCoordinates) {
-            grid[base.x][base.y].update();
-        }
     }
 }
