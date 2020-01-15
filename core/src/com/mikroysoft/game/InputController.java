@@ -1,5 +1,4 @@
 package com.mikroysoft.game;
-
 import com.badlogic.gdx.InputProcessor;
 
 public class InputController implements InputProcessor {
@@ -18,13 +17,18 @@ public class InputController implements InputProcessor {
     public boolean keyDown (int keycode) {
         return false;
     }
-
     public boolean keyUp (int keycode) {
         return false;
     }
-
-    public boolean keyTyped (char character) {
+    public boolean keyTyped (char character) { return false; }
+    public boolean mouseMoved (int x, int y) {
         return false;
+    }
+    public boolean scrolled (int amount) {
+        return false;
+    }
+    public Coordinate getLatestPosition() {
+        return this.position;
     }
 
     public boolean touchDown (int x, int y, int pointer, int button) {
@@ -53,18 +57,6 @@ public class InputController implements InputProcessor {
             position.y = y;
         }
         return true;
-    }
-
-    public boolean mouseMoved (int x, int y) {
-        return false;
-    }
-
-    public boolean scrolled (int amount) {
-        return false;
-    }
-
-    public Coordinate getLatestPosition() {
-        return this.position;
     }
 
     public boolean getShotsFired() {
