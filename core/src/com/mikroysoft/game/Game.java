@@ -232,7 +232,7 @@ public class Game extends ApplicationAdapter {
         for (AlienBase base : this.bases) {
             Alien newAlien = base.defend(this.fireEngines);
             if (newAlien != null) {
-                aliens[nextAlien] = newAlien;
+                this.aliens[nextAlien] = newAlien;
                 // Theoretically, this should never overflow due to the way i instantiated aliens.
                 nextAlien++;
             }
@@ -313,15 +313,27 @@ public class Game extends ApplicationAdapter {
             batch.draw(volumeIcon, volume[i].position.x - (5 + volume[i].getHeight()), volume[i].position.y, volume[i].getHeight(), volume[i].getHeight());
         }
 
-        // Update AlienBases
-        for (AlienBase currentBase: this.bases) {
-    	    currentBase.update();
-        }
-
+        
         // render aliens
         for (int i = 0; i < nextAlien; i++) {
             Alien alien = aliens[i];
             batch.draw(alien.texture, alien.position.x, alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
+        }
+        
+        // MAKE ALIEN SHOOT
+        for (int alienIndex = 0; alienIndex<nextAlien; alienIndex++) {
+        	float minimumDistance = 1000;
+        	int minimumIndex = -1;
+        	float distance;
+        	for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {
+        		distance = fireEngines[engineIndex].position.distanceTo(aliens[alienIndex].position);
+        		if (distance<minimumDistance) {
+        			minimumDistance = distance;
+        			minimumIndex = engineIndex;
+        		}
+        	}
+        	aliens[alienIndex].shoot(fireEngines[minimumIndex].position);
+        	
         }
 
         //ends batch.

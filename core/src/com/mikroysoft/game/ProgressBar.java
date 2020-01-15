@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class ProgressBar {
     public Texture texture;
-    private int height;
-    private int width;
+    private float height;
+    private float width;
     public Coordinate position;
     private int maximum;
     private int current;
@@ -30,18 +30,18 @@ public class ProgressBar {
         barFill = 0;
     }
 
-    public int getHeight () {
+    public float getHeight () {
         return this.height;
     }
 
     public int getFill() {
         return this.barFill;
     }
-    public int getWidth () {
+    public float getWidth () {
         return this.width;
     }
 
-    public void setDimensions(int w, int h) {
+    public void setDimensions(float w, float h) {
         this.height = h;
         this.width = w;
     }
@@ -56,8 +56,8 @@ public class ProgressBar {
 
     public void updateCurrent (int c) {
         this.current = c;
-        int fraction = this.width/this.maximum;
-        int multiplication = fraction * this.current;
+        float fraction = this.width/this.maximum;
+        int multiplication = Math.round(fraction * this.current);
         this.barFill = multiplication;
     }
 
