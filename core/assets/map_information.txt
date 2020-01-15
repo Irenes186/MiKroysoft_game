@@ -15,6 +15,6 @@ nnn1nn11nn1nnnnn1nnn
 nnn1nnn11n1nnnnn4nnn
 nn31nnnn111nnnnnnnnn
 nnn1nnnnnn1nnnnnnnnn
-nnn1n7nnnn1nnnnn5nnn
+nnn1n6n6nn1nnnnn5nnn
 nnn11111111111111111
 nnnnnnnnnnnnnnnnnnnn
