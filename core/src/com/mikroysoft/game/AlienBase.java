@@ -128,11 +128,14 @@ public class AlienBase implements IRenderable {
 				this.framesLeftUntilSpawn--;
 				return null;
 			}
-			
-			if (this.framesLeftUntilSpawn > 0) {
-				this.framesLeftUntilSpawn--;
-			}
 		}
+    	
+    	// If no FireEngines were found in range, cooldown will not have been reduced.
+    	// Handle that, and dont't spawn anything.
+    	if (this.framesLeftUntilSpawn > 0) {
+			this.framesLeftUntilSpawn--;
+		}
+    	return null;
     }
 
     /* spawns an alien around the base (but not on top of it)
