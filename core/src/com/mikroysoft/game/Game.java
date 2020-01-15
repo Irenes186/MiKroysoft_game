@@ -54,14 +54,9 @@ public class Game extends ApplicationAdapter {
         coreLogic = new CoreLogic();
         inputController = new InputController();
         Gdx.input.setInputProcessor(inputController);
-
-        //Fire Engines:
         fireEngines = new FireEngine[AMOUNT];
-        ////health:
         health = new ProgressBar[AMOUNT];
-        ////fuel:
         fuel = new ProgressBar[AMOUNT];
-        ///volume:
         volume = new ProgressBar[AMOUNT];
         Random randomGenerator = new Random();
         int randomValueOne = 0;
@@ -116,20 +111,16 @@ public class Game extends ApplicationAdapter {
             fireEngines[i].setSpeed(maxSpeed);
             fireEngines[i].setAcceleration(acceleration);
             //fireEngines[i].setmaxPosition(); <-- what is this for?!
-            
-            //setting health stuff.
+
             health[i] = new ProgressBar(1);
             health[i].setDimensions(100, 10);
             health[i].setMax(fireEngines[i].maxHealth);
             health[i].updateCurrent(100);
-
-            //setting fuel stuff.
             fuel[i] = new ProgressBar(3);
             fuel[i].setDimensions(100, 10);
             fuel[i].setMax(fireEngines[i].maxFuel);
             fuel[i].updateCurrent(100);
-            
-            
+
             //Getting max volume value for fireEngines[i].
             valueTaken = true;
             index = -1;
@@ -185,31 +176,12 @@ public class Game extends ApplicationAdapter {
         	volume[i].setMax(maxVolume);
         	volume[i].updateCurrent(fireEngines[i].getVolume());
         }
-        //fireEngines[1] = new FireEngine();
-        //fireEngines[2] = new FireEngine();
-        //fireEngines[3] = new FireEngine();
-        //fireEngines[4] = new FireEngine();
 
-
-        //aliens = new Alien[1];
-        //aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
-
-        //health progress bar:
-        //health = new ProgressBar(1);
-        //health.setPosition(20,10);
-        //health.setDimensions(100,10);
-        //health.setMax(100);
-        //health.updateCurrent(100);
-
-        //health icon - next to health progress bar.
         healthIcon = new Texture("health.png");
-
-        //fuel icon - next to fuel progress bar.
         fuelIcon = new Texture("fuel.png");
-        
-        //volume icon - next to volume progress bar.
         volumeIcon = new Texture("water_drop.png");
-        // initialise aliens array size to the sum of all maxAliens counts.
+
+        //Initialise aliens array size to the sum of all maxAliens counts.
         int totalMaxAliens = 0;
         for (IRenderable[] row : this.map.grid) {
             for (IRenderable cell : row) {
@@ -223,20 +195,19 @@ public class Game extends ApplicationAdapter {
     }
 
     @Override
-    public void render() {
-        coreLogic.update();
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        // Handle Alien spawning
-        for (AlienBase base : this.bases) {
-            Alien newAlien = base.defend(this.fireEngines);
-            if (newAlien != null) {
-                aliens[nextAlien] = newAlien;
-                // Theoretically, this should never overflow due to the way i instantiated aliens.
-                nextAlien++;
+        public void render() {
+            coreLogic.update();
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            // Handle Alien spawning
+            for (AlienBase base : this.bases) {
+                Alien newAlien = base.defend(this.fireEngines);
+                if (newAlien != null) {
+                    aliens[nextAlien] = newAlien;
+                    // Theoretically, this should never overflow due to the way i instantiated aliens.
+                    nextAlien++;
+                }
             }
-        }
 
         batch.begin();
         map.render(batch);
@@ -251,7 +222,7 @@ public class Game extends ApplicationAdapter {
             }
         }
 
-        //refill and repair
+        //Refill and Repair
         for (int i = 0; i < AMOUNT; i++) {
             if (map.isInStationRange(fireEngines[i].getPosition())) {
                 if (!fireEngines[i].isMaxHealth()) {
