@@ -64,15 +64,58 @@ public class Game extends ApplicationAdapter {
         ///volume:
         volume = new ProgressBar[AMOUNT];
         Random randomGenerator = new Random();
-        int randomValue = 0;
+        int randomValueOne = 0;
+        int randomValueTwo = 0;
         //looping from 0 to amount of fire engines.
-        int[] takenValues = new int[AMOUNT];
+        int[] takenValuesOne = new int[AMOUNT];
+        int[] takenValuesTwo = new int[AMOUNT];
         for (int i = 0; i < AMOUNT; i = i + 1) {
-            //setting fire engine position.
         	
+        	int index = -1;
+        	boolean valueTaken = true;
+        	while(valueTaken == true) {
+            	valueTaken = false;
+            	randomValueOne = randomGenerator.nextInt(3);
+            	for(int j = 0; j < AMOUNT; j = j + 1) {
+            		if(takenValuesOne[j] == randomValueOne) {
+            			valueTaken = true;
+            			break;
+            		}
+            	}
+            	if(valueTaken == false) {
+            		index = index + 1;
+            	}
+            }
+        	takenValuesOne[index] = randomValueOne;
         	
             fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT);
             fireEngines[i].setPosition(map.getStationX() + 50, map.getStationY() + 50);
+            float acceleration = 0.00f;
+            float maxSpeed = 0.00f;
+            switch(randomValueOne) {
+                case 0:
+                	acceleration = 0.10f;
+                	maxSpeed = 1.00f;
+            	    break;
+                case 1:
+                	acceleration = 0.50f;
+                	maxSpeed = 2.00f;
+                	break;
+                case 2:
+                	acceleration = 0.01f;
+                	maxSpeed = 0.05f;
+                	break;
+                default:
+                	acceleration = 0.10f;
+                    maxSpeed = 2.00f;
+                    break;
+            	
+            }
+            
+            
+            fireEngines[i].setSpeedAndAcceleration(maxSpeed, acceleration);
+            //fireEngines[i].setmaxPosition(); <-- what is this for?!
+            
             //setting health stuff.
             health[i] = new ProgressBar(1);
             health[i].setDimensions(100, 10);
@@ -87,24 +130,25 @@ public class Game extends ApplicationAdapter {
             
             
             //Getting max volume value for fireEngines[i].
-            boolean valueTaken = true;
-            int index = -1;
+            valueTaken = true;
+            index = -1;
             while(valueTaken == true) {
             	valueTaken = false;
-            	randomValue = randomGenerator.nextInt(10);
+            	randomValueTwo = randomGenerator.nextInt(10);
             	for(int j = 0; j < AMOUNT; j = j + 1) {
-            		if(takenValues[j] == randomValue) {
+            		if(takenValuesTwo[j] == randomValueTwo) {
             			valueTaken = true;
-            			System.out.println("hi");
             			break;
             		}
             	}
-            	index = index + 1;
+                if(valueTaken == false) {
+            	    index = index + 1;
+            	}
             }
-           takenValues[index] = randomValue;
+           takenValuesTwo[index] = randomValueTwo;
             
             int maxVolume = 0;
-            switch (randomValue) {
+            switch (randomValueTwo) {
                 case 0:
                 	maxVolume = 1;
                 	break;
@@ -231,7 +275,14 @@ public class Game extends ApplicationAdapter {
                 fireEngines[engineSelected].distanceIncreased();
                 fireEngines[engineSelected].fuelReduce();
             }
+            if(!fireEngines[engineSelected].isMaxSpeed()) {
+            	fireEngines[engineSelected].increaseSpeed();
+            }
             fireEngines[engineSelected].move(inputController.getLatestPosition());
+        } else {
+        	for(int z = 0; z < AMOUNT; z = z + 1) {
+        		fireEngines[z].resetSpeed();
+        	}
         }
 
         // TODO: Remove

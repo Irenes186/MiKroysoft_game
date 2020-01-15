@@ -14,6 +14,8 @@ public class FireEngine {
     public Coordinate position;
     private int waterVolume;
     private float speed;
+    private float maxSpeed;
+    private float acceleration;
     private float range;
     private float deliveryRate;
     public int health;
@@ -32,7 +34,9 @@ public class FireEngine {
         position = new Coordinate(300,300);
         projectiles = new ArrayList < Projectile> ();
         direction = 0;
-        speed = 2;
+        speed = 0;
+        maxSpeed = 0;
+        acceleration = 0;
         health = 100;
         fuel = 100;
         distanceTravelled = 0;
@@ -42,6 +46,25 @@ public class FireEngine {
         waterVolume = 100;
     }
 	
+    public boolean isMaxSpeed() {
+    	if(this.speed == this.maxSpeed) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    public void increaseSpeed() {
+    	this.speed = this.speed + this.acceleration;
+    }
+    
+    public void resetSpeed() {
+    	this.speed = 0;
+    }
+    public void setSpeedAndAcceleration(float s, float a) {
+    	this.maxSpeed = s;
+    	this.acceleration = a;
+    }
     public void setPosition(int x, int y) {
         position.x = x;
         position.y = y;
