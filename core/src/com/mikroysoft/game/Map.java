@@ -239,7 +239,7 @@ public class Map {
 
     public boolean isInStationRange(Coordinate engineCoordinates) {
         float tempX = engineCoordinates.x - fireStation.x;
-        float tempY = engineCoordinates.y - fireStation.y;
+        float tempY = engineCoordinates.y - ((MAPHEIGHT * TILEHEIGHT) - fireStation.y);
         //System.out.println(tempY);
         if(tempX < 0) {
             tempX = tempX * -1;
