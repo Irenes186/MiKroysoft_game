@@ -186,9 +186,17 @@ public class FireEngine {
 
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x - 40,Gdx.graphics.getHeight()-position.y - 40,40,40,80,80,1,1,direction,0,0,16,16,false,false);
-
+        List<Integer> remove = new ArrayList<Integer>();
         for (int i = 0; i < projectiles.size(); i++) {
             projectiles.get(i).render(batch);
+        }
+        for (int i = 0; i < projectiles.size(); i++) {
+        	if (! projectiles.get(i).isProjectileInRange()) {
+        		remove.add(i);
+        	}
+        }
+        for (int index: remove) {
+        	projectiles.remove(index);
         }
     }
 
