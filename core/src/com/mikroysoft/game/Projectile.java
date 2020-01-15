@@ -15,10 +15,9 @@ public class Projectile {
 
     public Projectile (Coordinate source, Coordinate destination, boolean friendly) {
         float length = (float) Math.sqrt(Math.pow(destination.y - source.y, 2) + Math.pow(destination.x - source.x, 2));
-
         speed = 5;
-        
         length /= speed;
+
         if (friendly) {
             texture = new Texture("water_drop.png");
         }else {
@@ -35,7 +34,6 @@ public class Projectile {
     public void render(SpriteBatch batch) {
         this.positionX += directionX;
         this.positionY += directionY;
-
         batch.draw(texture, this.positionX,Gdx.graphics.getHeight()-this.positionY);
     }
 }
