@@ -27,6 +27,7 @@ public class InputController implements InputProcessor {
     public boolean scrolled (int amount) {
         return false;
     }
+    
     public Coordinate getLatestPosition() {
         return this.position;
     }
