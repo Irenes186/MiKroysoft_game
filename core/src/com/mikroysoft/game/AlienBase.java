@@ -1,13 +1,20 @@
 package com.mikroysoft.game;
 
+import java.util.ArrayList;
+import java.util.List;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+// TODO: Add health bars
 public class AlienBase implements IRenderable {
     public Texture texture;
-    public float weaponRange;
+    public int weaponRange;
     public String name;
-    public int aliensNumber;
+    public int maxAliens;
+    public int currentAliens;
+    public int alienSpawnCountDown;
+    public int maxAlienSpawnCountDown;
     //Changed from String[] as weapon type does not change.
     public String weaponType;
     public int floodLevel;
@@ -15,29 +22,93 @@ public class AlienBase implements IRenderable {
     public int attackTimeAfterFirst;
     public Coordinate position;
     private int TILEWIDTH, TILEHEIGHT;
+    public List <Alien> aliens;
+    public boolean destroyed;
+    private int spawnRate;
 
-    // [!] Is it really necessary to store the name of the base? I dont think so...
+    // [!] Is it really necessary to store the name of the base? I dont think so.
     public AlienBase(String name, AlienBaseParameters params, Coordinate position, int TILEWIDTH, int TILEHEIGHT, String tex) {
         texture = new Texture(tex + ".png");
         this.name = name;
         this.position = position;
         this.weaponRange = params.weaponRange;
-        this.aliensNumber = params.aliensNumber;
+        this.maxAliens = params.maxAliens;
         this.weaponType = params.weaponType;
         this.floodLevel = params.floodLevel;
         this.attackRange = params.attackRange;
         this.attackTimeAfterFirst = params.attackTimeAfterFirst;
         this.TILEWIDTH = TILEWIDTH;
         this.TILEHEIGHT = TILEHEIGHT;
+
+        this.spawnRate = 50;
+        this.aliens = new ArrayList<Alien>();
+        this.maxAliens=5;
+
+        // should this be in AlienBaseParameters?
+        // set aliens to spawn every 500 frames that a truck is in range
+        this.maxAlienSpawnCountDown = 500;
+        this.alienSpawnCountDown = this.maxAlienSpawnCountDown;
+
+//        this.randomGen = new Random();
     }
 
     public int increaseDefense () {
         return 3;
     }
-    
+
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x, position.y, TILEWIDTH, TILEHEIGHT);
+        for (Alien alien:this.aliens) {
+            alien.render(batch);
+        }
     }
 
+//    public void spawnAlien() {
+//        if ((int)(Math.random()*this.spawnRate) != 1 || aliens.size()>=maxAliens) {
+//            return;
+//        }
+//        aliens.add(new Alien(this.position,this.TILEWIDTH,this.TILEHEIGHT));
+//        System.out.println(aliens);
+//    }
+
+    public void update() {
+        this.spawnAlien();
+        for (Alien alien:this.aliens) {
+            alien.move();
+        }
+    }
+
+    /* Test fire truck presence. Decrease alien spawning counter
+     * and spawn aliens as appropriate. Returns the spawned alien instance
+     * Alien spawning counter is only decreased while a fire truck is in range.
+     *
+     * TODO: Add progress bars for alien spawning
+     */
+    public Alien defend(FireEngine[] fireEngines) {
+    	// Debug: # of frames until this base spawns a new alien.
+    	// System.out.println("Alien cooldown " + this.name + ": " + this.alienSpawnCountDown);
+    	boolean truckInRange = false;
+    	for (FireEngine currentTruck: fireEngines) {
+			if (java.lang.Math.abs(this.position.x - currentTruck.position.x) <= ((this.weaponRange+1) * TILEWIDTH) &&
+					java.lang.Math.abs(this.position.y - (Gdx.graphics.getHeight()-currentTruck.position.y)) <= ((this.weaponRange+1) * TILEHEIGHT)) {
+				if (this.alienSpawnCountDown == 0) {
+					return this.spawnAlien();
+				}
+				truckInRange = true;
+			}
+		}
+    	if (truckInRange) {
+    		this.alienSpawnCountDown--;
+    	}
+    	return null;
+    }
+
+    // TODO: IMPLEMENT
+    // spawns an alien, and resets this.alienSpawnCountDown to its max.
+    private Alien spawnAlien() {
+    	this.alienSpawnCountDown = this.maxAlienSpawnCountDown;
+    	Float[] offset = Util.randomCoordOffset(-((float)TILEWIDTH/2), ((float)TILEWIDTH/2), 0.8f);
+    	return new Alien(new Coordinate(this.position.x + (TILEWIDTH/2) + offset[0], this.position.y + (TILEHEIGHT/2) + offset[1]), this.TILEWIDTH, this.TILEHEIGHT);
+    }
 }

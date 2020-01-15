@@ -22,7 +22,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class Menu implements Screen {
 
     SpriteBatch batch;
-    Button play;
+    //Button play;
     CoreLogic coreLogic;
     InputController inputController;
     Game game;
@@ -115,8 +115,6 @@ public class Menu implements Screen {
     public void show() {
         //Gdx.input.setInputProcessor((InputProcessor) this);
         //this.game.setScreen(new GameScreen(this.game));
-         play = new Button(50, 50, new Coordinate(50,50), "Play");
-
     }
 
     @Override

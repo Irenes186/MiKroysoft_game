@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 .gradle/
 .metadata/
 .project
 .settings/
-=======
 /.metadata/
 .DS_Store
 .gradle/
@@ -15,5 +13,7 @@ core/src/com/mikroysoft/game/.metadata/
 core/src/com/mikroysoft/game/.project
 desktop/build/
 desktop/desktop.iml
+core/build/libs/core-1.0.jar
+core/build/libs/core-1.0.jar
 out/
->>>>>>> b5ac9ba06a59d0fed4cc4783a7b8f631d3940914
+
