@@ -320,10 +320,6 @@ public class Game extends ApplicationAdapter {
             batch.draw(alien.texture, alien.position.x, alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
         }
         
-        if (this.nextAlien == 0) {
-        	System.out.println("NO ALIENS");
-        }
-        
         // MAKE ALIEN SHOOT
         for (int alienIndex = 0; alienIndex<nextAlien; alienIndex++) {
         	float minimumDistance = 1000;
