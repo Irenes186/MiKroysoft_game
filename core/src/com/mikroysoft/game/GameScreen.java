@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.Random;
 
 public class GameScreen implements Screen {
+	Game game;
 	SpriteBatch batch;
 	CoreLogic coreLogic;
 	FireEngine[] fireEngines;
@@ -34,13 +35,14 @@ public class GameScreen implements Screen {
 	Texture fuelIcon;
 	//ProgressBar icon volume;
 	Texture volumeIcon;
+
 	Alien[] aliens;
 	// used to track the farthest-left empty cell in the aliens array.
 	int nextAlien;
 	AlienBase[] bases;
 
 	public GameScreen(Game game) {
-		this.create();
+		create();
 	}
 
 	public void create() {
@@ -49,6 +51,7 @@ public class GameScreen implements Screen {
 		AMOUNT = 4;
 		engineSelected = 1;
 		nextAlien = 0;
+		this.game = game;
 
 		try {
 			map = new Map(MAPWIDTH, MAPHEIGHT, "background");
@@ -75,7 +78,7 @@ public class GameScreen implements Screen {
 		//looping from 0 to amount of fire engines.
 		int[] takenValuesOne = new int[AMOUNT];
 		int[] takenValuesTwo = new int[AMOUNT];
-		for (int i = 0; i < AMOUNT; i = i + 1) {
+		for (int i = 0; i < AMOUNT; i++) {
 
 			int index = -1;
 			boolean valueTaken = true;
@@ -123,6 +126,7 @@ public class GameScreen implements Screen {
 			fireEngines[i].setAcceleration(acceleration);
 			//fireEngines[i].setmaxPosition(); <-- what is this for?!
 
+			System.out.println(i);
 			//setting health stuff.
 			health[i] = new ProgressBar(1);
 			health[i].setDimensions(100, 10);
@@ -257,6 +261,28 @@ public class GameScreen implements Screen {
 			}
 		}
 
+		for (int barIndex = 0; barIndex < AMOUNT; barIndex++) {
+
+			health[barIndex].updateCurrent(fireEngines[barIndex].health);
+			fuel[barIndex].updateCurrent(fireEngines[barIndex].fuel);
+			volume[barIndex].updateCurrent(fireEngines[barIndex].getVolume());
+			health[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 10);
+			fuel[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 25);
+			volume[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 40);
+
+			System.out.println(health[0].position);
+			//health
+			batch.draw(health[barIndex].texture, health[barIndex].position.x, health[barIndex].position.y, health[barIndex].getFill(), health[barIndex].getHeight());
+			batch.draw(healthIcon, health[barIndex].position.x - (5 + health[barIndex].getHeight()), health[barIndex].position.y, health[barIndex].getHeight(), health[barIndex].getHeight());
+			//fuel
+			batch.draw(fuel[barIndex].texture, fuel[barIndex].position.x, fuel[barIndex].position.y, fuel[barIndex].getFill(), fuel[barIndex].getHeight());
+			batch.draw(fuelIcon, fuel[barIndex].position.x - (5 + fuel[barIndex].getHeight()), fuel[barIndex].position.y, fuel[barIndex].getHeight(), fuel[barIndex].getHeight());
+		}
+
+		for (Alien alien: aliens) {
+			//batch.draw(alien.texture, alien.position.x, Gdx.graphics.getHeight() - alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
+		}
+
 		//refill and repair
 		for (int i = 0; i < AMOUNT; i++) {
 			if (map.isInStationRange(fireEngines[i].getPosition())) {
@@ -276,6 +302,7 @@ public class GameScreen implements Screen {
 				fireEngines[engineSelected].reduceVolume();
 			}
 		}
+
 		if (inputController.moving) {
 			//For testing reasons:
 			if (fireEngines[engineSelected].getFuel() > 0) {
@@ -352,7 +379,7 @@ public class GameScreen implements Screen {
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int i, int i1) {
 
 	}
 
@@ -372,7 +399,11 @@ public class GameScreen implements Screen {
 	}
 
 	@Override
-	public void dispose () {
+	public void dispose() {
 		batch.dispose();
+	}
+
+	public void setScreen(GameScreen gameScreen) {
+
 	}
 }
