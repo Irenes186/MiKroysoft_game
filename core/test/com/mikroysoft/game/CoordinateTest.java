@@ -12,4 +12,11 @@ public class CoordinateTest {
         assertEquals(Math.sqrt(800), result, 0.1);
     }
 
+    @Test
+    public void testtoString(){
+        Coordinate point = new Coordinate((float)10, (float)20);
+        String test = point.toString();
+        assertEquals("(10.0, 20.0)", test);
+    }
+
 }
