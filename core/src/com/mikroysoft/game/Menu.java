@@ -77,8 +77,6 @@ public class Menu implements Screen {
             }
         });
 
-
-
         Button.ButtonStyle style = new Button.ButtonStyle(); //???
 
         //variables for screen size and button size
@@ -96,9 +94,6 @@ public class Menu implements Screen {
         backStoryButton.setSize(buttonWidth,buttonHeight);
         backStoryButton.setPosition(screenWidth / 8 - buttonWidth,screenHeight / 8 - buttonHeight);
         backStoryButton.getImage().setFillParent(true);
-
-
-
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         //add buttons to stage on menu stage
@@ -106,7 +101,6 @@ public class Menu implements Screen {
         stage.addActor(instructionButton);
         stage.addActor(backStoryButton);
         Gdx.input.setInputProcessor(stage);
-
     }
 
     @Override
@@ -129,7 +123,9 @@ public class Menu implements Screen {
         this.batch.begin();
         this.font.draw(this.batch, "Play", this.playButton.getOriginX(), this.playButton.getOriginY());
         this.batch.end();
+
     }
+
     @Override
     public void resize(int width, int height) { }
     @Override
@@ -140,4 +136,5 @@ public class Menu implements Screen {
     public void hide() { }
     @Override
     public void dispose() { }
+
 }

@@ -120,15 +120,11 @@ public class GameScreen implements Screen {
                     acceleration = 0.10f;
                     maxSpeed = 2.00f;
                     break;
-
             }
-
-
             fireEngines[i].setSpeed(maxSpeed);
             fireEngines[i].setAcceleration(acceleration);
             //fireEngines[i].setmaxPosition(); <-- what is this for?!
 
-            //System.out.println(i);
             //setting health stuff.
             health[i] = new ProgressBar(1);
             health[i].setDimensions(100, 10);
@@ -140,7 +136,6 @@ public class GameScreen implements Screen {
             fuel[i].setDimensions(100, 10);
             fuel[i].setMax(fireEngines[i].maxFuel);
             fuel[i].updateCurrent(100);
-
 
             //Getting max volume value for fireEngines[i].
             valueTaken = true;
@@ -315,7 +310,6 @@ public class GameScreen implements Screen {
             fuel[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 25);
             volume[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 40);
 
-            //System.out.println(health[0].position);
             //health
             batch.draw(health[barIndex].texture, health[barIndex].position.x, health[barIndex].position.y, health[barIndex].getFill(), health[barIndex].getHeight());
             batch.draw(healthIcon, health[barIndex].position.x - (5 + health[barIndex].getHeight()), health[barIndex].position.y, health[barIndex].getHeight(), health[barIndex].getHeight());
@@ -411,37 +405,25 @@ public class GameScreen implements Screen {
                 }
             }
             aliens[alienIndex].shoot(fireEngines[minimumIndex].position);
-
         }
-
         //ends batch.
         batch.end();
     }
 
     @Override
-    public void show() {
-
-    }
+    public void show() { }
 
     @Override
-    public void resize(int i, int i1) {
-
-    }
+    public void resize(int i, int i1) { }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {

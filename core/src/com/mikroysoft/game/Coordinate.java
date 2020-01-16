@@ -25,7 +25,7 @@ public class Coordinate {
     
     // Get distance from point to point
     public float distanceTo(Coordinate other) {
-    	return (float) Math.sqrt(Math.pow(this.x-this.y, 2)+Math.pow(this.y-other.y, 2));
+    	return (float) Math.sqrt(Math.pow(this.x-other.x, 2)+Math.pow(this.y-other.y, 2));
     }
 
 }
