@@ -45,7 +45,6 @@ public class AlienBase implements IRenderable {
         this.TILEWIDTH = TILEWIDTH;
         this.TILEHEIGHT = TILEHEIGHT;
         this.rectangle = new Rectangle (new Coordinate (position.x + TILEWIDTH / 2, position.y - TILEHEIGHT / 2), TILEWIDTH, TILEHEIGHT, 0);
-
         this.spawnRate = 50;
         this.aliens = new ArrayList<Alien>();
         this.maxAliens=5;

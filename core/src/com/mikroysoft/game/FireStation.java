@@ -17,7 +17,6 @@ public class FireStation implements IRenderable {
         texture = new Texture("station.png");
         this.TILEHEIGHT = TILEHEIGHT;
         this.TILEWIDTH = TILEWIDTH;
-
     }
 
     public Coordinate getPosition() {
