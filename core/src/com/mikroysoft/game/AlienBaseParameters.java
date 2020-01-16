@@ -11,7 +11,6 @@ public class AlienBaseParameters {
     public int attackRange;
     // shouldn't this be handled in game??
     public int attackTimeAfterFirst;
-
     // DEFAULTS
     // UPDATE AS NEEDED
     public AlienBaseParameters() {

@@ -10,7 +10,6 @@ public class Game extends com.badlogic.gdx.Game {
         this.setScreen(new Menu(this));
         //this.setScreen(new GameScreen(this));
     }
-
     public void render() {
         super.render();
     }

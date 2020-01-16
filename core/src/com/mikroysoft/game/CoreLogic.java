@@ -2,13 +2,7 @@ package com.mikroysoft.game;
 
 public class CoreLogic {
 
+    public CoreLogic() { }
 
-    public CoreLogic() {
-
-    }
-
-    public boolean update() {
-
-        return true;
-    }
+    public boolean update() { return true; }
 }

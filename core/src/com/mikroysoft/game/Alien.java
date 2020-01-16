@@ -30,7 +30,6 @@ public class Alien implements IRenderable {
         this.basePosition = position;
         direction = 0;
         speed = 2;
-
         countToFire = 50; //This is a factor of how much slower alien will shoot compared to fireengine
         currentFireCount = 0;
         shootOffset = 10;
@@ -42,7 +41,6 @@ public class Alien implements IRenderable {
         return this.position;
     }
     public void move(){
-        
         position.x += (int)((Math.random()*10)-5); 
         position.y += (int)((Math.random()*10)-5);
         if (position.x>basePosition.x+100)

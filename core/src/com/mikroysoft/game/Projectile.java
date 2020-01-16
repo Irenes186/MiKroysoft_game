@@ -37,7 +37,6 @@ public class Projectile {
     public void render(SpriteBatch batch) {
         this.position.x += directionX;
         this.position.y += directionY;
-
         batch.draw(texture, this.position.x,Gdx.graphics.getHeight()-this.position.y);
     }
 
