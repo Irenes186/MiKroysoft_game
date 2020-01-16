@@ -224,7 +224,6 @@ public class Map {
         } else {
             return false;
         }
-
     }
     public int getStationX() { return (int)fireStation.x;}
     public int getStationY() {
