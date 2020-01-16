@@ -4,35 +4,36 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Enumeration;
 import java.lang.Math;
 
 public class FireEngine {
-    public Texture texture;
-    public Coordinate position;
     private int waterVolume;
     private float speed;
     private float maxSpeed;
     private float acceleration;
     private float range;
     private float deliveryRate;
+    private Set < Projectile > projectiles;
+    public Texture texture;
+    public Coordinate position;
     public int health;
     public int fuel;
     public int maxHealth;
     public int maxFuel;
     public int maxVolume;
     public int distanceTravelled;
-    private List < Projectile > projectiles;
+    public int shotDamage;
     public float direction;
-    public Rectangle hitBox;
+    public Rectangle rectangle;
 
 
     public FireEngine(int MAPWIDTH, int MAPHEIGHT) {
         texture = new Texture("fireengine.png");
         position = new Coordinate(300,300);
-        projectiles = new ArrayList < Projectile> ();
+        projectiles = new HashSet < Projectile> ();
         direction = 0;
         speed = 0;
         maxSpeed = 0;
@@ -187,12 +188,20 @@ public class FireEngine {
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x - 40,Gdx.graphics.getHeight()-position.y - 40,40,40,80,80,1,1,direction,0,0,16,16,false,false);
 
-        for (int i = 0; i < projectiles.size(); i++) {
-            projectiles.get(i).render(batch);
+        for (Projectile projectile : projectiles) {
+            projectile.render(batch);
         }
     }
 
     public void shoot(Coordinate destination) {
         projectiles.add(new Projectile (position, destination, false));
+    }
+
+    public Set <Projectile> getProjectileList() {
+        return projectiles;
+    }
+
+    public void setProjectiles (Set <Projectile> projectiles) {
+        this.projectiles = projectiles;
     }
 }

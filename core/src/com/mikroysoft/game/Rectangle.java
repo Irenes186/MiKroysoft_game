@@ -1,5 +1,7 @@
 package com.mikroysoft.game;
 
+import com.badlogic.gdx.Gdx;
+
 public class Rectangle {
     private Coordinate centrePoint;
     private int width, height;
@@ -29,7 +31,7 @@ public class Rectangle {
         float midPoints[] = getMidPoints();
 
         if (point.x < midPoints[0] && point.x > midPoints[2]
-                && point.y < midPoints[1] && point.y > midPoints[3]) {
+                && Gdx.graphics.getHeight() -  point.y < midPoints[1] && Gdx.graphics.getHeight() -  point.y > midPoints[3]) {
             return true;
                 }
         return false;
