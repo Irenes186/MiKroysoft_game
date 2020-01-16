@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class InstructionScreen implements Screen {
-
     SpriteBatch batch;
     //Button play;
     CoreLogic coreLogic;
@@ -32,9 +31,6 @@ public class InstructionScreen implements Screen {
 
     @Override
     public void show() {
-
-
-
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         //add buttons
@@ -46,7 +42,6 @@ public class InstructionScreen implements Screen {
         //Background
         Gdx.gl.glClearColor(0,0.2f,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         //draw stage with actors
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
@@ -54,27 +49,17 @@ public class InstructionScreen implements Screen {
     }
 
     @Override
-    public void resize(int i, int i1) {
-
-    }
+    public void resize(int i, int i1) { }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() { }
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() { }
 }

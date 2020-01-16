@@ -20,7 +20,7 @@ public class Alien implements IRenderable {
     private int currentFireCount;
     private int shootOffset;
     private List < Projectile > projectiles;
-    private int shootRange;
+    private int range;
 
     public Alien(Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
         texture = new Texture("alien.png");
@@ -30,11 +30,10 @@ public class Alien implements IRenderable {
         this.basePosition = position;
         direction = 0;
         speed = 2;
-
         countToFire = 50; //This is a factor of how much slower alien will shoot compared to fireengine
         currentFireCount = 0;
         shootOffset = 10;
-        shootRange = 200;
+        range = 300;
         projectiles = new ArrayList < Projectile> ();
     }
 
@@ -42,7 +41,6 @@ public class Alien implements IRenderable {
         return this.position;
     }
     public void move(){
-        
         position.x += (int)((Math.random()*10)-5); 
         position.y += (int)((Math.random()*10)-5);
         if (position.x>basePosition.x+100)
@@ -67,10 +65,8 @@ public class Alien implements IRenderable {
 
     public void shoot(Coordinate destination) {
 
-        boolean inRange = Math.sqrt(Math.pow(position.x - destination.x, 2) + Math.pow(position.y - destination.y, 2)) <= shootRange;
-
-        if (currentFireCount >= countToFire && inRange) {
-            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination, true));
+        if (currentFireCount >= countToFire) {
+            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination, true, range));
             currentFireCount = 0;
         } else {
             currentFireCount++;

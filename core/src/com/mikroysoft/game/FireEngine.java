@@ -15,7 +15,7 @@ public class FireEngine {
     private float speed;
     private float maxSpeed;
     private float acceleration;
-    private float range;
+    private int range;
     private float deliveryRate;
     private Set < Projectile > projectiles;
     public Texture texture;
@@ -46,6 +46,7 @@ public class FireEngine {
         maxHealth = 100;
         maxVolume = 100;
         waterVolume = 100;
+        range = 500;
     }
 	
     public boolean isMaxSpeed() {
@@ -175,10 +176,12 @@ public class FireEngine {
         for (Projectile projectile : projectiles) {
             projectile.render(batch);
         }
+
+        deleteOutOfRangeProjectiles ();
     }
 
     public void shoot(Coordinate destination) {
-        projectiles.add(new Projectile (position, destination, false));
+        projectiles.add(new Projectile (position, destination, false, range));
     }
 
     public Set <Projectile> getProjectileList() {
@@ -187,5 +190,18 @@ public class FireEngine {
 
     public void setProjectiles (Set <Projectile> projectiles) {
         this.projectiles = projectiles;
+    }
+
+    public void deleteOutOfRangeProjectiles () {
+        Set <Projectile> removeProjectiles = new HashSet <Projectile>();
+
+        for (Projectile projectile : projectiles) {
+            if (!projectile.inRange()) {
+                removeProjectiles.add(projectile);
+            }
+        }
+        projectiles.removeAll(removeProjectiles);
+
+
     }
 }

@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class BackStoryScreen implements Screen {
-
     SpriteBatch batch;
     CoreLogic coreLogic;
     InputController inputController;
@@ -25,23 +24,16 @@ public class BackStoryScreen implements Screen {
     Stage stage;
     BitmapFont font;
 
-
     public BackStoryScreen(Game game){
         this.game = game;
     }
 
     @Override
     public void show() {
-
-
-
-
-
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         //add buttons
         Gdx.input.setInputProcessor(stage);
-
     }
 
     @Override
@@ -49,31 +41,20 @@ public class BackStoryScreen implements Screen {
         //Background
         Gdx.gl.glClearColor(0.2f,0,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
     }
 
     @Override
-    public void resize(int i, int i1) {
-
-    }
+    public void resize(int i, int i1) { }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() { }
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() { }
 }
