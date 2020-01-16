@@ -35,16 +35,16 @@ public class InstructionScreen implements Screen {
     int rowHeight;
     int colHeight;
 
-    public InstructionScreen(final Game game){
+    public InstructionScreen(final Game game) {
         this.game = game;
         //setting label
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         BitmapFont font = new BitmapFont();
         labelStyle.font = font;
         labelStyle.fontColor = Color.WHITE;
-        instructionTitle = new Label("Instructions!",labelStyle);
+        instructionTitle = new Label("Instructions!", labelStyle);
         instructionTitle.setFontScale(3.0f, 5.0f);
-        instructionTitle.setPosition(475,650);
+        instructionTitle.setPosition(475, 650);
         instructionTitle.setAlignment(Align.center);
         //Button image set up
         buttonTexture = new Texture("planet_button_0.png");
@@ -52,9 +52,6 @@ public class InstructionScreen implements Screen {
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
         //add different buttons
         backMenuButton = new ImageButton(textureRegionDrawable);
-
-    @Override
-    public void show() {
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         stage.addActor(backMenuButton);
@@ -64,7 +61,7 @@ public class InstructionScreen implements Screen {
         //if instructionButton clicked go to instruction
         backMenuButton.addListener(new ClickListener() {
 
-      @Override
+            @Override
             public void clicked(InputEvent event, float x, float y) {
                 //super.clicked(event, x, y);
                 game.setScreen(new Menu(game));
@@ -76,12 +73,10 @@ public class InstructionScreen implements Screen {
         float screenWidth = 1024, screenHeight = 1024;
         float buttonWidth = screenWidth * 0.1f, buttonHeight = screenHeight * 0.1f;
         //playButton position ans size
-        backMenuButton.setSize(buttonWidth,buttonHeight);
-        backMenuButton.setPosition(500,500);
+        backMenuButton.setSize(buttonWidth, buttonHeight);
+        backMenuButton.setPosition(500, 500);
         backMenuButton.getImage().setFillParent(true);
-
     }
-
     @Override
     public void show() {
     }
