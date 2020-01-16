@@ -20,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Menu implements Screen {
-
     SpriteBatch batch;
     //Button play;
     CoreLogic coreLogic;
@@ -108,7 +107,6 @@ public class Menu implements Screen {
         stage.addActor(backStoryButton);
         Gdx.input.setInputProcessor(stage);
 
-
     }
 
     @Override
@@ -132,30 +130,14 @@ public class Menu implements Screen {
         this.font.draw(this.batch, "Play", this.playButton.getOriginX(), this.playButton.getOriginY());
         this.batch.end();
     }
-
     @Override
-    public void resize(int width, int height) {
-
-    }
-
+    public void resize(int width, int height) { }
     @Override
-    public void pause() {
-
-    }
-
+    public void pause() { }
     @Override
-    public void resume() {
-
-    }
-
+    public void resume() { }
     @Override
-    public void hide() {
-
-    }
-
+    public void hide() { }
     @Override
-    public void dispose() {
-
-    }
-
+    public void dispose() { }
 }
