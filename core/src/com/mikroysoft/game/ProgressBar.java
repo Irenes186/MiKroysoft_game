@@ -20,7 +20,7 @@ public class ProgressBar {
             texture = new Texture("bar_02.png");
         }
         else if (type == 3) {
-        	texture = new Texture("bar_03.png");
+            texture = new Texture("bar_03.png");
         }
         height = 0;
         width = 0;
