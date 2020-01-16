@@ -22,4 +22,10 @@ public class Coordinate {
         this.x = x;
         this.y = y;
     }
+    
+    // Get distance from point to point
+    public float distanceTo(Coordinate other) {
+    	return (float) Math.sqrt(Math.pow(this.x-this.y, 2)+Math.pow(this.y-other.y, 2));
+    }
+
 }

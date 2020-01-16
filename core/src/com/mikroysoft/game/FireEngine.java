@@ -148,9 +148,11 @@ public class FireEngine {
         //TODO: Add moving rules
         if (input.x == -1){ return;}
 
-        // TODO: I thought we agreed to use floats?
-        double xSign = java.lang.Math.signum(input.x - position.x - 40);
-        double ySign = java.lang.Math.signum(input.y - position.y + 40);
+        // TODO: I thought we agreed to ufse floats?
+
+        double xSign = java.lang.Math.signum(input.x - position.x);
+        double ySign = java.lang.Math.signum(input.y - position.y);
+
         boolean xThreshold = position.x - 5 <= input.x && position.x + 5 >= input.x;
         boolean yThreshold = position.y - 5 <= input.y && position.y + 5 >= input.y;
 
