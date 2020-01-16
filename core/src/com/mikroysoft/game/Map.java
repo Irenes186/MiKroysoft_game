@@ -13,8 +13,6 @@ public class Map {
      * I.e includes roads and alien bases
      * but does not include GUI or fire engines (???)
      */
-
-    // actual array containing class instances
     IRenderable[][] grid;
     Texture bg;
     int TILEWIDTH, TILEHEIGHT;
@@ -51,8 +49,6 @@ public class Map {
                 //System.out.print(items[col]);
             }
             row++;
-            // debug: print grid
-            //System.out.println();
         }
 
         reader.close();
