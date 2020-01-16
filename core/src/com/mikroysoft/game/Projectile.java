@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Projectile {
     private Texture texture;
     private float directionX, directionY;
-    private float positionX, positionY;
     private int speed;
+    public Coordinate position;
     public int damage;
     public boolean ally;
 
@@ -26,14 +26,14 @@ public class Projectile {
 
         directionX = (destination.x - source.x)/length; 
         directionY = (destination.y - source.y)/length;
-        positionX = source.x;
-        positionY = source.y;
+        position = new Coordinate(source.x, source.y);
         ally = friendly;
     }
 
     public void render(SpriteBatch batch) {
-        this.positionX += directionX;
-        this.positionY += directionY;
-        batch.draw(texture, this.positionX,Gdx.graphics.getHeight()-this.positionY);
+        this.position.x += directionX;
+        this.position.y += directionY;
+
+        batch.draw(texture, this.position.x,Gdx.graphics.getHeight()-this.position.y);
     }
 }
