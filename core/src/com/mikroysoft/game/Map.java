@@ -214,7 +214,6 @@ public class Map {
                 }
             }
         }
-
         return bases;
     }
 
@@ -251,10 +250,7 @@ public class Map {
 
     }
     
-    public int getStationX() {
-    	return (int)fireStation.x;
-    	
-    }
+    public int getStationX() { return (int)fireStation.x;}
     
     public int getStationY() {
     	return (MAPHEIGHT * TILEHEIGHT) - (int)fireStation.y;
