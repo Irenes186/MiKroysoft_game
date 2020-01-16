@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.compression.lz.BinTree;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class InstructionScreen implements Screen {
-
     SpriteBatch batch;
     CoreLogic coreLogic;
     InputController inputController;
@@ -38,20 +37,15 @@ public class InstructionScreen implements Screen {
 
     public InstructionScreen(final Game game){
         this.game = game;
-
         //setting label
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         BitmapFont font = new BitmapFont();
         labelStyle.font = font;
         labelStyle.fontColor = Color.WHITE;
-
         instructionTitle = new Label("Instructions!",labelStyle);
         instructionTitle.setFontScale(3.0f, 5.0f);
         instructionTitle.setPosition(475,650);
         instructionTitle.setAlignment(Align.center);
-
-
-
         //Button image set up
         buttonTexture = new Texture("planet_button_0.png");
         textureRegion = new TextureRegion(buttonTexture);
@@ -59,6 +53,8 @@ public class InstructionScreen implements Screen {
         //add different buttons
         backMenuButton = new ImageButton(textureRegionDrawable);
 
+    @Override
+    public void show() {
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         stage.addActor(backMenuButton);
@@ -68,7 +64,7 @@ public class InstructionScreen implements Screen {
         //if instructionButton clicked go to instruction
         backMenuButton.addListener(new ClickListener() {
 
-            @Override
+      @Override
             public void clicked(InputEvent event, float x, float y) {
                 //super.clicked(event, x, y);
                 game.setScreen(new Menu(game));
@@ -95,36 +91,23 @@ public class InstructionScreen implements Screen {
         //Background
         Gdx.gl.glClearColor(0,0.2f,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         //draw stage with actors
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-
-
     }
 
     @Override
-    public void resize(int i, int i1) {
-
-    }
+    public void resize(int i, int i1) { }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() { }
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() { }
 }

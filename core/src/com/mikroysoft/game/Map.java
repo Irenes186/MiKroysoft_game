@@ -13,8 +13,6 @@ public class Map {
      * I.e includes roads and alien bases
      * but does not include GUI or fire engines (???)
      */
-
-    // actual array containing class instances
     IRenderable[][] grid;
     Texture bg;
     int TILEWIDTH, TILEHEIGHT;
@@ -24,13 +22,11 @@ public class Map {
     // constructor: takes map dimensions
     public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex) throws Exception {
         this.bg = new Texture(bgtex + ".png");
-        // calculate tile dimensions
+        //Calculate tile dimensions
         TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
         TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
-
         this.MAPWIDTH = MAPWIDTH;
         this.MAPHEIGHT = MAPHEIGHT;
-
         grid = new IRenderable[MAPWIDTH][MAPHEIGHT];
         // Grid containing text description of map
         String[][] inGrid = new String[MAPWIDTH][MAPHEIGHT];
@@ -47,34 +43,27 @@ public class Map {
             items = fileInput.split("",MAPWIDTH);
             for (int col = 0; col < MAPWIDTH; col++) {
                 inGrid[row][col] = items[col];
-                // debug: print grid
-                //System.out.print(items[col]);
             }
             row++;
-            // debug: print grid
-            //System.out.println();
         }
 
         reader.close();
-
-        // populate grid with class instances as described in map_information
+        //Populate grid with class instances as described in map_information
         String fileName;
-        // temp variables for configuring road gfx
+        //Variables for configuring road gfx
         boolean hasRoadAbove, hasRoadBelow, hasRoadLeft, hasRoadRight;
-        // config var for AlienBases
         AlienBaseParameters params;
         
         // iterate through inGrid
         for (row = 0; row < MAPHEIGHT; row++) {
             for (int col = 0; col < MAPWIDTH; col++) {
-                // Decode the required class instance
+                //Decode the required class instance
                 switch (inGrid[row][col]) {
-                    // instance fire stations
+                    //Instance fire stations
                     case "0" :
                         fireStation.setCoordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT);
                         grid[row][col] = new FireStation(10, fireStation, 10, 10);
                         break;
-
                     case "1" :
                         fileName = "roadV";
                         hasRoadAbove = false;
@@ -93,7 +82,6 @@ public class Map {
                         if (col > 0 && inGrid[row][col-1].equals("1")) {
                             hasRoadLeft = true;
                         }
-
                         // set road texture according to the combination of surrounding roads
                         // [!] May later wish to allow any IRenderable to influence road directions (e.g firestations)
                         if (hasRoadAbove) {
@@ -151,44 +139,36 @@ public class Map {
                         // instance road with the required gfx
                         grid[row][col] = new Road(new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, fileName);
                         break;
-
-                        // instance alien bases
-                        // clifford's tower
+                    // Clifford's tower
                     case "2":
                         params = new AlienBaseParameters();
                         grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower");
                         break;
-
-                        // Aldi
+                    // Aldi
                     case "3":
                         params = new AlienBaseParameters();
                         grid[row][col] = new AlienBase("Aldi", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "aldi");
                         break;
-
-                        // Holgate Windmill
+                    // Holgate Windmill
                     case "4":
                         params = new AlienBaseParameters();
                         grid[row][col] = new AlienBase("Holgate Windmill", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Holgate-Windmill");
                         break;
-                        
-                        //Jorvick Viking Centre
+                    //Jorvick Viking Centre
                     case "5":    
                         params = new AlienBaseParameters();
                         grid[row][col] = new AlienBase("Jorvick Viking Centre", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "viking");
                         break;
-                    
-                        //York train station
+                    //York train station
                     case "6":
                     	params = new AlienBaseParameters();
                     	grid[row][col] = new AlienBase("York Station", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "york_station");
                     	break;
-                    	
-                    	//York City FC stadium
+                   //York City FC stadium
                     case "7":
                     	params = new AlienBaseParameters();
                     	grid[row][col] = new AlienBase("York City FC", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "york_city_fc");
                     	break;
-                        
                 }
             }
         }
@@ -209,7 +189,6 @@ public class Map {
         }
         bases = new AlienBase[numBases];
         int currentBase = 0;
-
         for (IRenderable[] row: this.grid) {
             for (IRenderable cell: row) {
                 if (cell instanceof AlienBase) {
@@ -218,16 +197,12 @@ public class Map {
                 }
             }
         }
-
         return bases;
     }
-
-    // render map elements onto the screen
+    //Renders map elements onto the screen
     public void render(SpriteBatch batch) {
-        // batch.draw (this.bg, 0, 0, MAPWIDTH, MAPHEIGHT, 0, 0, this.bg.getWidth(), this.bg.getHeight(), false, false);
         batch.draw (this.bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        // iterate through grid, and call each object's render method
+        //Iterates through grid and call each object's render method
         for (int col = 0; col < grid.length; col++) {
             for (int row = 0; row < grid[0].length; row++) {
                 if (grid[row][col] != null)
@@ -235,12 +210,9 @@ public class Map {
             }
         }
     }
-
-
     public boolean isInStationRange(Coordinate engineCoordinates) {
         float tempX = engineCoordinates.x - fireStation.x;
         float tempY = engineCoordinates.y - ((MAPHEIGHT * TILEHEIGHT) - fireStation.y);
-        //System.out.println(tempY);
         if(tempX < 0) {
             tempX = tempX * -1;
         }
@@ -252,14 +224,8 @@ public class Map {
         } else {
             return false;
         }
-
     }
-    
-    public int getStationX() {
-    	return (int)fireStation.x;
-    	
-    }
-    
+    public int getStationX() { return (int)fireStation.x;}
     public int getStationY() {
     	return (MAPHEIGHT * TILEHEIGHT) - (int)fireStation.y;
     }

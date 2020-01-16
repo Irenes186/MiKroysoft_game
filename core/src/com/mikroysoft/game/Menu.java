@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Menu implements Screen {
-
     SpriteBatch batch;
     CoreLogic coreLogic;
     InputController inputController;
@@ -107,8 +106,6 @@ public class Menu implements Screen {
             }
         });
 
-
-
         Button.ButtonStyle style = new Button.ButtonStyle(); //???
 
         //variables for screen size and button size
@@ -126,13 +123,11 @@ public class Menu implements Screen {
         backStoryButton.setSize(buttonWidth,buttonHeight);
         backStoryButton.setPosition(screenWidth / 8 - buttonWidth,screenHeight / 8 - buttonHeight);
         backStoryButton.getImage().setFillParent(true);
+
         //exitButton position ans size
         exitButton.setSize(buttonWidth,buttonHeight);
         exitButton.setPosition(screenWidth / 5 - buttonWidth,screenHeight / 5 - buttonHeight);
         exitButton.getImage().setFillParent(true);
-
-
-
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         //add buttons to stage on menu stage
@@ -142,8 +137,6 @@ public class Menu implements Screen {
         stage.addActor(exitButton);
         stage.addActor(mainTitle);
         Gdx.input.setInputProcessor(stage);
-
-
     }
 
     @Override
@@ -165,32 +158,18 @@ public class Menu implements Screen {
         /*//add writing //DOES NOT WORK
         this.batch.begin();
         this.font.draw(this.batch, "Play", this.playButton.getOriginX(), this.playButton.getOriginY());
-        this.batch.end();*/
+*/
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
-
+    public void resize(int width, int height) { }
     @Override
-    public void pause() {
-
-    }
-
+    public void pause() { }
     @Override
-    public void resume() {
-
-    }
-
+    public void resume() { }
     @Override
-    public void hide() {
-
-    }
-
+    public void hide() { }
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() { }
 
 }

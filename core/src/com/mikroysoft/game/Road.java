@@ -15,13 +15,11 @@ public class Road implements IRenderable {
         this.TILEWIDTH = TILEWIDTH;
         this.TILEHEIGHT = TILEHEIGHT;
     }
+    public void update() { }
 
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x, position.y, TILEWIDTH, TILEHEIGHT);
     }
-    
-    public void update() {
-        
-    }
+
 }

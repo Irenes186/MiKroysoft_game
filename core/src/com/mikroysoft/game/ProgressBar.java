@@ -20,7 +20,7 @@ public class ProgressBar {
             texture = new Texture("bar_02.png");
         }
         else if (type == 3) {
-        	texture = new Texture("bar_03.png");
+            texture = new Texture("bar_03.png");
         }
         height = 0;
         width = 0;
@@ -33,7 +33,6 @@ public class ProgressBar {
     public float getHeight () {
         return this.height;
     }
-
     public int getFill() {
         return this.barFill;
     }
@@ -49,18 +48,15 @@ public class ProgressBar {
     public void setPosition(float x, float y) {
         this.position = new Coordinate(x, y);
     }
-
     public void setMax (int m) {
         this.maximum = m;
     }
-
     public void updateCurrent (int c) {
         this.current = c;
         float fraction = this.width/this.maximum;
         int multiplication = Math.round(fraction * this.current);
         this.barFill = multiplication;
     }
-
     public void toggleVis () {
         if(this.visible == false) {
             this.visible = true;
@@ -68,8 +64,4 @@ public class ProgressBar {
             this.visible = false;
         }
     }
-
-
-
-
 }

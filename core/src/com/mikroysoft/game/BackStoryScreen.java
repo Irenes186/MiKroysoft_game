@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class BackStoryScreen implements Screen {
-
     SpriteBatch batch;
     CoreLogic coreLogic;
     InputController inputController;
@@ -30,7 +29,6 @@ public class BackStoryScreen implements Screen {
     Label backStoryTitle;
     Stage stage;
     BitmapFont font;
-
 
     public BackStoryScreen(final Game game){
         this.game = game;
@@ -52,13 +50,11 @@ public class BackStoryScreen implements Screen {
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
         //add different buttons
         backMenuButton = new ImageButton(textureRegionDrawable);
-
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         stage.addActor(backMenuButton);
         stage.addActor(backStoryTitle);
         Gdx.input.setInputProcessor(stage);
-
         //if instructionButton clicked go to instruction
         backMenuButton.addListener(new ClickListener() {
 
@@ -80,43 +76,30 @@ public class BackStoryScreen implements Screen {
     }
 
     @Override
-    public void show() {
-    }
+    public void show() {}
 
     @Override
     public void render(float v) {
         //Background
         Gdx.gl.glClearColor(0.2f,0,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        //draw stage with actors
+     //draw stage with actors
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-
     }
 
     @Override
-    public void resize(int i, int i1) {
-
-    }
+    public void resize(int i, int i1) { }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() { }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() { }
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() { }
 }
