@@ -13,7 +13,6 @@ core/src/com/mikroysoft/game/.metadata/
 core/src/com/mikroysoft/game/.project
 desktop/build/
 desktop/desktop.iml
-core/build/libs/core-1.0.jar
-core/build/libs/core-1.0.jar
 out/
-
+core/build/libs/core-1.0.jar
+core/build/libs/core-1.0.jar

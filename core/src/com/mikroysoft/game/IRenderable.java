@@ -1,5 +1,4 @@
 package com.mikroysoft.game;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 interface IRenderable {

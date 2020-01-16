@@ -195,21 +195,6 @@ public class GameScreen implements Screen {
 			volume[i].setMax(maxVolume);
 			volume[i].updateCurrent(fireEngines[i].getVolume());
 		}
-		//fireEngines[1] = new FireEngine();
-		//fireEngines[2] = new FireEngine();
-		//fireEngines[3] = new FireEngine();
-		//fireEngines[4] = new FireEngine();
-
-
-		//aliens = new Alien[1];
-		//aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
-
-		//health progress bar:
-		//health = new ProgressBar(1);
-		//health.setPosition(20,10);
-		//health.setDimensions(100,10);
-		//health.setMax(100);
-		//health.updateCurrent(100);
 
 		//health icon - next to health progress bar.
 		healthIcon = new Texture("health.png");
@@ -319,14 +304,6 @@ public class GameScreen implements Screen {
 			}
 		}
 
-		// TODO: Remove
-		// if(false)) {
-		//	if(engineSelected >= AMOUNT - 1) {
-		//	engineSelected = 0;
-		//} else {
-		//engineSelected = engineSelected + 1;
-		//}
-		//}
 		for (FireEngine engine : fireEngines) {
 			engine.render(batch);
 		}
@@ -368,35 +345,23 @@ public class GameScreen implements Screen {
 			aliens[alienIndex].shoot(fireEngines[minimumIndex].position);
 
 		}
-
-		//ends batch.
 		batch.end();
 	}
 
 	@Override
-	public void show() {
-
-	}
+	public void show() { }
 
 	@Override
-	public void resize(int i, int i1) {
-
-	}
+	public void resize(int i, int i1) { }
 
 	@Override
-	public void pause() {
-
-	}
+	public void pause() { }
 
 	@Override
-	public void resume() {
-
-	}
+	public void resume() { }
 
 	@Override
-	public void hide() {
-
-	}
+	public void hide() { }
 
 	@Override
 	public void dispose() {
