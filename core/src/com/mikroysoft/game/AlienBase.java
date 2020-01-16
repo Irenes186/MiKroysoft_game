@@ -26,10 +26,10 @@ public class AlienBase implements IRenderable {
     public boolean destroyed;
     public Rectangle rectangle;
     public List <Alien> aliens;
+    public int health;
     private Set <Projectile> projectiles;
     private int spawnRate;
     private int TILEWIDTH, TILEHEIGHT;
-    private int health;
 
     // [!] Is it really necessary to store the name of the base? I dont think so.
     public AlienBase(String name, AlienBaseParameters params, Coordinate position, int TILEWIDTH, int TILEHEIGHT, String tex) {

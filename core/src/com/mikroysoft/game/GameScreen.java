@@ -404,9 +404,17 @@ public class GameScreen implements Screen {
         batch.end();
 
         boolean gameWon = true;
+        boolean gameLoss = true;
 
         for (FireEngine engine : fireEngines) {
             if (engine.health > 0) {
+                gameLoss = false;
+                break;
+            }
+        }
+
+        for (AlienBase base : bases) {
+            if (base.health > 0) {
                 gameWon = false;
                 break;
             }
@@ -414,15 +422,6 @@ public class GameScreen implements Screen {
 
         if (gameWon) {
             //set screen Win
-        }
-
-        boolean gameLoss = true;
-
-        for (AlienBase base : bases) {
-            if (base.health > 0) {
-                gameLoss = false;
-                break;
-            }
         }
 
         if (gameLoss) {
