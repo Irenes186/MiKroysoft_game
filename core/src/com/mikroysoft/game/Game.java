@@ -88,7 +88,7 @@ public class Game extends ApplicationAdapter {
             }
         	takenValuesOne[index] = randomValueOne;
         	
-            fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT);
+            fireEngines[i] = new FireEngine(map);
             fireEngines[i].setPosition(map.getStationX() + 50, map.getStationY() + 50);
             float acceleration = 0.00f;
             float maxSpeed = 0.00f;

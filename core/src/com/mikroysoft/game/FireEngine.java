@@ -32,9 +32,12 @@ public class FireEngine {
     private List < Projectile > projectiles;
     public float direction;
     public Rectangle hitBox;
+    Map map;
+    //
+    int cellX, cellY;
 
 
-    public FireEngine(int MAPWIDTH, int MAPHEIGHT) {
+    public FireEngine(Map map) {
         texture = new Texture("fireengine.png");
         position = new Coordinate(300,300);
         projectiles = new ArrayList < Projectile> ();
@@ -49,6 +52,7 @@ public class FireEngine {
         maxHealth = 100;
         maxVolume = 100;
         waterVolume = 100;
+        this.map = map;
     }
 	
     public boolean isMaxSpeed() {
@@ -180,9 +184,16 @@ public class FireEngine {
         if (xThreshold && yThreshold) {
             return;
         }
-
-        position.x += xSign * speed;
-        position.y += ySign * speed;
+        
+        cellX = (int) Math.floor(position.x / map.TILEWIDTH);
+        cellY = (int) Math.floor(position.y / map.TILEHEIGHT) + 1;
+        if (cellX < 0 || cellY < 0 || map.MAPWIDTH <= cellX || map.MAPHEIGHT <= cellY || !(map.grid[cellY][cellX] instanceof Road)) {
+            position.x += xSign * (speed / 2);
+            position.y += ySign * (speed / 2);
+        } else {
+            position.x += xSign * speed;
+            position.y += ySign * speed;
+        }
 
         direction = (float) Math.toDegrees(Math.atan2((input.y - position.y) * -1, input.x - position.x)) - 90;
 
