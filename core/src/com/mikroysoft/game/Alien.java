@@ -64,7 +64,6 @@ public class Alien implements IRenderable {
     }
 
     public void shoot(Coordinate destination) {
-
         if (currentFireCount >= countToFire) {
             projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.y), destination, true, range));
             currentFireCount = 0;

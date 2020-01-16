@@ -41,7 +41,9 @@ public class Projectile {
     }
 
     public boolean inRange () {
+
         return (start.distanceTo(position) < range);
+
     }
 
 }

@@ -402,6 +402,31 @@ public class GameScreen implements Screen {
         }
         //ends batch.
         batch.end();
+
+        boolean gameWon = true;
+        boolean gameLoss = true;
+
+        for (FireEngine engine : fireEngines) {
+            if (engine.health > 0) {
+                gameLoss = false;
+                break;
+            }
+        }
+
+        for (AlienBase base : bases) {
+            if (base.health > 0) {
+                gameWon = false;
+                break;
+            }
+        }
+
+        if (gameWon) {
+            //set screen Win
+        }
+
+        if (gameLoss) {
+            //set lose screen
+        }
     }
 
     @Override
