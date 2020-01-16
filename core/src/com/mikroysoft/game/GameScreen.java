@@ -259,10 +259,7 @@ public class GameScreen implements Screen {
                     }
                 }
 
-                for (Projectile projectile : removeProjectiles) {
-                    currentProjectiles.remove(projectile);
-                }
-
+                currentProjectiles.removeAll(removeProjectiles);
                 base.setProjectiles(currentProjectiles);
             }
         }
@@ -277,13 +274,10 @@ public class GameScreen implements Screen {
                     if (base.rectangle.pointInRectangle(projectile.position)) {
                         removeProjectiles.add(projectile);
                         //Add some collision bullshit like damage IDK
-                        System.out.println("Dan has a small wang");
                     }
                 }
-                for (Projectile projectile : removeProjectiles) {
-                    currentProjectiles.remove(projectile);
-                }
 
+                currentProjectiles.removeAll(removeProjectiles);
                 engine.setProjectiles(currentProjectiles);
             }
         }
