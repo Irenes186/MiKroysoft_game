@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 
 import java.util.Set;
 import java.util.HashSet;
+
 import java.util.Enumeration;
 import java.lang.Math;
 
@@ -59,11 +60,9 @@ public class FireEngine {
     public void increaseSpeed() {
     	this.speed = this.speed + this.acceleration;
     }
-    
     public void resetSpeed() {
     	this.speed = 0;
     }
-    
     public void setSpeed(float s) {
     	this.maxSpeed = s;
     }
@@ -79,31 +78,24 @@ public class FireEngine {
     public void setMaxVolume(int v) {
     	maxVolume = v;
     }
-    
     public void setVolume(int v) {
     	this.waterVolume = v;
     }
-    
     public int getMaxVolume() {
     	return this.maxVolume;
     }
-    
     public int getVolume() {
     	return this.waterVolume;
     }
-    
     public void reduceVolume() {
     	this.waterVolume = this.waterVolume - 1;
     }
-    
     public void repair() {
         this.health += 1;
     }
-
     public void refillFuel() {
         this.fuel += 1;
     }
-    
     public void refillVolume() {
     	this.waterVolume += 1;
     }
@@ -135,11 +127,9 @@ public class FireEngine {
     public int getFuel() {
         return this.fuel;
     }
-
     public void distanceIncreased() {
         distanceTravelled = distanceTravelled + 1;
     }
-
     public void fuelReduce() {
         if(distanceTravelled % 5 == 0) {
             fuel -= 1;
@@ -149,25 +139,21 @@ public class FireEngine {
     public Coordinate getPosition() {
         return position;
     }
-
     public void damage(int amount) {
         health -= amount;
     }
-
     public void move(Coordinate input) {
         float tempspeed = speed;
-
         if (fuel == 0) {
             tempspeed = speed;
             this.speed = 1;
         }
 
-        //add some kind of moving rules.
-        // TODO: Should this be in curly braces?
-        if (input.x == -1)
-            return;
+        //TODO: Add moving rules
+        if (input.x == -1){ return;}
 
-        // TODO: I thought we agreed to use floats?
+        // TODO: I thought we agreed to ufse floats?
+
         double xSign = java.lang.Math.signum(input.x - position.x);
         double ySign = java.lang.Math.signum(input.y - position.y);
 
@@ -180,9 +166,7 @@ public class FireEngine {
 
         position.x += xSign * speed;
         position.y += ySign * speed;
-
         direction = (float) Math.toDegrees(Math.atan2((input.y - position.y) * -1, input.x - position.x)) - 90;
-
         this.speed = tempspeed;
     }
 

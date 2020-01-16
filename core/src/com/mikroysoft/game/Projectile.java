@@ -17,10 +17,9 @@ public class Projectile {
 
     public Projectile (Coordinate source, Coordinate destination, boolean friendly, int range) {
         float length = (float) Math.sqrt(Math.pow(destination.y - source.y, 2) + Math.pow(destination.x - source.x, 2));
-
         speed = 5;
-        
         length /= speed;
+
         if (friendly) {
             texture = new Texture("water_drop.png");
         }else {
