@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 
 import java.util.Random;
 
@@ -19,6 +20,7 @@ public class GameScreen implements Screen {
 	ProgressBar[] health;
 	ProgressBar[] fuel;
 	ProgressBar[] volume;
+	ImageTextButton backMenuButton;
 	int engineSelected;
 
 	Map map;
@@ -43,12 +45,13 @@ public class GameScreen implements Screen {
 
 	public GameScreen(Game game) {
 		create();
+
 	}
 
 	public void create() {
 		MAPWIDTH = 20;
 		MAPHEIGHT = 20;
-		AMOUNT = 4;
+		AMOUNT = 2;
 		engineSelected = 1;
 		nextAlien = 0;
 		this.game = game;
