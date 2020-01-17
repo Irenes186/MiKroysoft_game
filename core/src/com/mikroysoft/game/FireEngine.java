@@ -7,6 +7,8 @@ import com.badlogic.gdx.Gdx;
 // Java Imports
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Enumeration;
 import java.lang.Math;
 
@@ -15,32 +17,33 @@ import java.lang.Math;
  * FireEngines have finite fuel, health, and water supplies. All are refilled over time when within range of a FireStation.
  */
 public class FireEngine {
-    public Texture texture;
-    public Coordinate position;
     private int waterVolume;
     private float speed;
     private float maxSpeed;
     private float acceleration;
-    private float range;
+    private int range;
     private float deliveryRate;
+    private Set < Projectile > projectiles;
+    public Texture texture;
+    public Coordinate position;
     public int health;
     public int fuel;
     public int maxHealth;
     public int maxFuel;
     public int maxVolume;
     public int distanceTravelled;
-    private List < Projectile > projectiles;
+    public int shotDamage;
     public float direction;
-    public Rectangle hitBox;
     Map map;
     //
     int cellX, cellY;
+    public Rectangle rectangle;
 
 
     public FireEngine(Map map) {
         texture = new Texture("fireengine.png");
         position = new Coordinate(300,300);
-        projectiles = new ArrayList < Projectile> ();
+        projectiles = new HashSet < Projectile> ();
         direction = 0;
         speed = 0;
         maxSpeed = 0;
@@ -53,6 +56,8 @@ public class FireEngine {
         maxVolume = 100;
         waterVolume = 100;
         this.map = map;
+        range = 500;
+        this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y - map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
     }
 	
     public boolean isMaxSpeed() {
@@ -66,11 +71,9 @@ public class FireEngine {
     public void increaseSpeed() {
     	this.speed = this.speed + this.acceleration;
     }
-    
     public void resetSpeed() {
     	this.speed = 0;
     }
-    
     public void setSpeed(float s) {
     	this.maxSpeed = s;
     }
@@ -86,31 +89,24 @@ public class FireEngine {
     public void setMaxVolume(int v) {
     	maxVolume = v;
     }
-    
     public void setVolume(int v) {
     	this.waterVolume = v;
     }
-    
     public int getMaxVolume() {
     	return this.maxVolume;
     }
-    
     public int getVolume() {
     	return this.waterVolume;
     }
-    
     public void reduceVolume() {
     	this.waterVolume = this.waterVolume - 1;
     }
-    
     public void repair() {
         this.health += 1;
     }
-
     public void refillFuel() {
         this.fuel += 1;
     }
-    
     public void refillVolume() {
     	this.waterVolume += 1;
     }
@@ -142,11 +138,9 @@ public class FireEngine {
     public int getFuel() {
         return this.fuel;
     }
-
     public void distanceIncreased() {
         distanceTravelled = distanceTravelled + 1;
     }
-
     public void fuelReduce() {
         if(distanceTravelled % 5 == 0) {
             fuel -= 1;
@@ -156,25 +150,21 @@ public class FireEngine {
     public Coordinate getPosition() {
         return position;
     }
-
-    public void damage(int amount) {
+    public void takeDamage(int amount) {
         health -= amount;
     }
-
     public void move(Coordinate input) {
         float tempspeed = speed;
-
         if (fuel == 0) {
             tempspeed = speed;
             this.speed = 1;
         }
 
-        //add some kind of moving rules.
-        // TODO: Should this be in curly braces?
-        if (input.x == -1)
-            return;
+        //TODO: Add moving rules
+        if (input.x == -1){ return;}
 
         // TODO: I thought we agreed to use floats?
+
         double xSign = java.lang.Math.signum(input.x - position.x);
         double ySign = java.lang.Math.signum(input.y - position.y);
 
@@ -196,19 +186,46 @@ public class FireEngine {
         }
 
         direction = (float) Math.toDegrees(Math.atan2((input.y - position.y) * -1, input.x - position.x)) - 90;
-
         this.speed = tempspeed;
     }
 
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x - 40,Gdx.graphics.getHeight()-position.y - 40,40,40,80,80,1,1,direction,0,0,16,16,false,false);
 
-        for (int i = 0; i < projectiles.size(); i++) {
-            projectiles.get(i).render(batch);
+        for (Projectile projectile : projectiles) {
+            projectile.render(batch);
         }
+
+        deleteOutOfRangeProjectiles ();
     }
 
     public void shoot(Coordinate destination) {
-        projectiles.add(new Projectile (position, destination, false, ProjectileType.WATER));
+        projectiles.add(new Projectile (position, destination, false, ProjectileType.WATER, range));
+    }
+
+    public Set <Projectile> getProjectileList() {
+        return projectiles;
+    }
+
+    public void setProjectiles (Set <Projectile> projectiles) {
+        this.projectiles = projectiles;
+    }
+
+    public void deleteOutOfRangeProjectiles () {
+        Set <Projectile> removeProjectiles = new HashSet <Projectile>();
+
+        for (Projectile projectile : projectiles) {
+            if (!projectile.inRange()) {
+                removeProjectiles.add(projectile);
+            }
+        }
+        projectiles.removeAll(removeProjectiles);
+    }
+    
+    public Rectangle getRect() {
+        if (this.rectangle == null) {
+            throw new NullPointerException("Fire engine rectangle not initialized before use in collisions");
+        }
+        return this.rectangle;
     }
 }

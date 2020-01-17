@@ -1,5 +1,7 @@
 package com.mikroysoft.game;
 
+import com.badlogic.gdx.Gdx;
+
 public class Coordinate {
     public float x;
     public float y;
@@ -53,5 +55,9 @@ public class Coordinate {
     public float angleTo(Coordinate other) {
         Coordinate vectorToTarget = other.minus(this);
         return (float) Math.acos(vectorToTarget.x/(Math.sqrt(Math.pow(vectorToTarget.x, 2) + Math.pow(vectorToTarget.y, 2))));
+    }
+    
+    public Coordinate invertY() {
+        return new Coordinate(Gdx.graphics.getHeight() - y, x);
     }
 }

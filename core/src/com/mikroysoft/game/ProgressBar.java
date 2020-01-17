@@ -13,14 +13,18 @@ public class ProgressBar {
     private int barFill;
 
     public ProgressBar(BarColour colour) {
-        if (colour == BarColour.YELLOW) {
-            texture = new Texture("bar_01.png");
-        }
-        else if (colour == BarColour.BLUE) {
-            texture = new Texture("bar_02.png");
-        }
-        else if (colour == BarColour.PINK) {
-        	texture = new Texture("bar_03.png");
+        switch (colour) {
+            case YELLOW:
+                texture = new Texture("bar_01.png");
+                break;
+            case BLUE:
+                texture = new Texture("bar_02.png");
+                break;
+            case PINK:
+                texture = new Texture("bar_03.png");
+                break;
+            default:
+                throw new IllegalArgumentException ("ProgressBar given unsupported BarColour: " + colour);
         }
         height = 0;
         width = 0;
@@ -33,7 +37,6 @@ public class ProgressBar {
     public float getHeight () {
         return this.height;
     }
-
     public int getFill() {
         return this.barFill;
     }
@@ -49,18 +52,15 @@ public class ProgressBar {
     public void setPosition(float x, float y) {
         this.position = new Coordinate(x, y);
     }
-
     public void setMax (int m) {
         this.maximum = m;
     }
-
     public void updateCurrent (int c) {
         this.current = c;
         float fraction = this.width/this.maximum;
         int multiplication = Math.round(fraction * this.current);
         this.barFill = multiplication;
     }
-
     public void toggleVis () {
         if(this.visible == false) {
             this.visible = true;

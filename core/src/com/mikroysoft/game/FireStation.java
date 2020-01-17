@@ -17,7 +17,6 @@ public class FireStation implements IRenderable {
         texture = new Texture("station.png");
         this.TILEHEIGHT = TILEHEIGHT;
         this.TILEWIDTH = TILEWIDTH;
-
     }
 
     public Coordinate getPosition() {
@@ -27,14 +26,11 @@ public class FireStation implements IRenderable {
     public void destroy() {
         destroyed = true;
     }
+    
+    public void update() { }
 
     @Override
     public void render(SpriteBatch batch) {
         batch.draw (texture, position.x, position.y, TILEWIDTH * 8, TILEHEIGHT * 3);
     }
-    
-    public void update() {
-        
-    }
-
 }

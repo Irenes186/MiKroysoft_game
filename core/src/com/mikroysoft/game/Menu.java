@@ -3,72 +3,173 @@ package com.mikroysoft.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Menu implements Screen {
-
     SpriteBatch batch;
-    //Button play;
     CoreLogic coreLogic;
     InputController inputController;
     Game game;
-   // Texture playButtonTexture;
+    Texture buttonTexture;
+    TextureRegion textureRegion;
+    TextureRegionDrawable textureRegionDrawable;
+    Texture buttonTexture2;
+    TextureRegion textureRegion2;
+    TextureRegionDrawable textureRegionDrawable2;
+    ImageButton playButton;
+    ImageButton instructionButton;
+    ImageButton backStoryButton;
+    ImageButton exitButton;
+    Label mainTitle;
+    Stage stage;
+    BitmapFont font;
 
-
-    public Menu(Game game){
+    public Menu(final Game game){
         this.game = game;
 
+        /*//Font set up
+        this.batch = new SpriteBatch();
+        this.font = new BitmapFont();
+        font.setColor(0.5f,0.4f,0,1);
+        font.getData().scale(3);*/
+
+        //LABEL
+        //setting label
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        BitmapFont font = new BitmapFont();
+        labelStyle.font = font;
+        labelStyle.fontColor = Color.WHITE;
+
+        mainTitle = new Label("KROY! (by MiKroysoft)",labelStyle);
+        mainTitle.setFontScale(3.0f, 5.0f);
+        mainTitle.setPosition(460,650);
+        mainTitle.setAlignment(Align.center);
 
 
+        //Button image set up
+        buttonTexture = new Texture("planet_button_0.png");
+        textureRegion = new TextureRegion(buttonTexture);
+        textureRegionDrawable = new TextureRegionDrawable(textureRegion);
+        //set another texture
+        buttonTexture2 = new Texture("planet_button_1.png");
+        textureRegion2 = new TextureRegion(buttonTexture2);
+        textureRegionDrawable2 = new TextureRegionDrawable(textureRegion2);
+        //add different buttons
+        playButton = new ImageButton(textureRegionDrawable);
+        instructionButton = new ImageButton(textureRegionDrawable);
+        backStoryButton = new ImageButton(textureRegionDrawable);
+        exitButton = new ImageButton(textureRegionDrawable);
 
 
+        //If playButton clicked go to game screen
+        playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new GameScreen(game));
+            }
+        });
+        //if instructionButton clicked go to instruction
+        instructionButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new InstructionScreen(game));
+            }
+        });
+        //if instructionButton clicked go to instruction
+        backStoryButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new BackStoryScreen(game));
+            }
+        });
+        //if exit button clicked then exit game
+        exitButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                new Game().dispose(); // ref to Game Class
+                Gdx.app.exit();
+                //super.clicked(event, x, y);
+            }
+        });
+
+        Button.ButtonStyle style = new Button.ButtonStyle(); //???
+
+        //variables for screen size and button size
+        float screenWidth = 1024, screenHeight = 1024;
+        float buttonWidth = screenWidth * 0.1f, buttonHeight = screenHeight * 0.1f;
+        //playButton position ans size
+        playButton.setSize(buttonWidth,buttonHeight);
+        playButton.setPosition(screenWidth / 2 - buttonWidth,screenHeight / 2 - buttonHeight);
+        playButton.getImage().setFillParent(true);
+        //instructionButton position ans size
+        instructionButton.setSize(buttonWidth,buttonHeight);
+        instructionButton.setPosition(screenWidth / 3 - buttonWidth,screenHeight / 3 - buttonHeight);
+        instructionButton.getImage().setFillParent(true);
+        //backStoryButton position ans size
+        backStoryButton.setSize(buttonWidth,buttonHeight);
+        backStoryButton.setPosition(screenWidth / 8 - buttonWidth,screenHeight / 8 - buttonHeight);
+        backStoryButton.getImage().setFillParent(true);
+
+        //exitButton position ans size
+        exitButton.setSize(buttonWidth,buttonHeight);
+        exitButton.setPosition(screenWidth / 5 - buttonWidth,screenHeight / 5 - buttonHeight);
+        exitButton.getImage().setFillParent(true);
+        //set stage
+        stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
+        //add buttons to stage on menu stage
+        stage.addActor(playButton);
+        stage.addActor(instructionButton);
+        stage.addActor(backStoryButton);
+        stage.addActor(exitButton);
+        stage.addActor(mainTitle);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
         //Gdx.input.setInputProcessor((InputProcessor) this);
         //this.game.setScreen(new GameScreen(this.game));
-
-
-
     }
 
     @Override
     public void render(float delta) {
+        //Menu background
         Gdx.gl.glClearColor(0,0,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        //draw stage with actors
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
+
+        /*//add writing //DOES NOT WORK
+        this.batch.begin();
+        this.font.draw(this.batch, "Play", this.playButton.getOriginX(), this.playButton.getOriginY());
+*/
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
-
+    public void resize(int width, int height) { }
     @Override
-    public void pause() {
-
-    }
-
+    public void pause() { }
     @Override
-    public void resume() {
-
-    }
-
+    public void resume() { }
     @Override
-    public void hide() {
-
-    }
-
+    public void hide() { }
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() { }
 
 }

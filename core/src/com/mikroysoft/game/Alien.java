@@ -37,7 +37,7 @@ public class Alien implements IRenderable {
     // List of spawned Projectile objects - i.e bullets - to be used in collision detection
     private List < Projectile > projectiles;
     // The maximum distance a fireengine can be from the alien before alien begins firing at it
-    private int shootRange;
+    private int range;
 
     /* Constructor.
      * Position - Coordinate - spawn location of Alien
@@ -59,8 +59,8 @@ public class Alien implements IRenderable {
         countToFire = 50;
         currentFireCount = 0;
         shootOffset = 10;
-        // By default, shoot at fire engines within 200px of alien.
-        shootRange = 200;
+        // By default, shoot at fire engines within 300px of alien.
+        range = 300;
         projectiles = new ArrayList < Projectile> ();
     }
 
@@ -117,7 +117,7 @@ public class Alien implements IRenderable {
     	// Check we are within the firing rate
         if (currentFireCount >= countToFire) {
         	// Spawn a new projectile
-            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, Gdx.graphics.getHeight() - position.y), destination, true, ProjectileType.BULLET));
+            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, Gdx.graphics.getHeight() - position.y), destination, true, ProjectileType.BULLET, range));
             // reset the frames-since-fired tracker
             currentFireCount = 0;
         

@@ -1,12 +1,17 @@
 package com.mikroysoft.game;
 
-// LibGDX Imports
+// Java imports
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.ArrayList;
+
+//LibGDX Imports
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import java.util.ArrayList;
 
 
 /* This class represents the buildings found throughout the map that the player must
@@ -37,8 +42,8 @@ public class AlienBase implements IRenderable {
     public int spawnRate;
     // The weapon mounted on the base
     public BaseWeapon weapon;
-    // Health
-    public int floodLevel;
+    // Health - renamed from floodLevel
+    public int health;
     // TODO: Is this the same as weaponRange?
     public int attackRange;
     // Once an AlienBase is destroyed, wait this number of frames before destroying the FireStation.
@@ -49,10 +54,15 @@ public class AlienBase implements IRenderable {
     private int TILEWIDTH, TILEHEIGHT;
     // has this base been destroyed by the player?
     public boolean destroyed;
-    // Things created by the BaseWeapon that need rendering. Could be sprites, projectiles...
+    // Things created by the BaseWeapon that need rendering and are not projectiles (i.e not using projectile collision). e.g sprites
     // WARNING: Not type checked, since Sprites and Textures do not share a super class.
     // TAKE CARE WHEN CREATING NEW BASEWEAPONS.
-    private ArrayList<Object> weaponObjects;
+    private HashSet<Object> weaponObjects;
+    
+    public Rectangle rectangle;
+    public List <Alien> aliens;
+    // projectiles fired by the base
+    private Set <Projectile> projectiles;
 
     /* Constructor.
      * name - String - name of the base for debugging purposes
@@ -71,7 +81,7 @@ public class AlienBase implements IRenderable {
         //this.weapon = params.weapon;
         //this.weapon = new WeaponLaser(params.weaponRange, position, TILEWIDTH, TILEHEIGHT);
         this.weapon = new WeaponBullet(10, 1, "laser.png", position, TILEWIDTH, TILEHEIGHT);
-        this.floodLevel = params.floodLevel;
+        this.health = params.floodLevel;
         this.attackRange = params.attackRange;
         this.attackTimeAfterFirst = params.attackTimeAfterFirst;
         this.TILEWIDTH = TILEWIDTH;
@@ -80,7 +90,10 @@ public class AlienBase implements IRenderable {
         
         // Initialise base to wait spawnRate before spawning anything
         this.framesLeftUntilSpawn = this.spawnRate;
-        weaponObjects = new ArrayList<Object>();
+        weaponObjects = new HashSet<Object>();
+        projectiles = new HashSet<Projectile>();
+        this.rectangle = new Rectangle (new Coordinate (position.x + TILEWIDTH / 2, position.y - TILEHEIGHT / 2), TILEWIDTH, TILEHEIGHT, 0);
+        this.aliens = new ArrayList<Alien>();
     }
 
     /* Increase aggression of base.
@@ -104,6 +117,10 @@ public class AlienBase implements IRenderable {
             } else {
                 throw new IllegalArgumentException("Base " + name + " attempted to render unrecognised BaseWeapon object");
             }
+        }
+        
+        for (Projectile proj: projectiles) {
+            proj.render(batch);
         }
     }
 
@@ -156,20 +173,67 @@ public class AlienBase implements IRenderable {
     	return null;
     }
 
+    public Alien defend(FireEngine[] fireEngines) {
+        // Debug: # of frames until this base spawns a new alien.
+        // System.out.println("Alien cooldown " + this.name + ": " + this.alienSpawnCountDown);
+        boolean truckInRange = false;
+        for (FireEngine currentTruck: fireEngines) {
+            if (java.lang.Math.abs(this.position.x - currentTruck.position.x) <= ((this.weaponRange+1) * TILEWIDTH) &&
+                    java.lang.Math.abs(this.position.y - (Gdx.graphics.getHeight()-currentTruck.position.y)) <= ((this.weaponRange+1) * TILEHEIGHT)) {
+                if (this.framesLeftUntilSpawn == 0) {
+                    return this.spawnAlien();
+                }
+                truckInRange = true;
+                    }
+        }
+        if (truckInRange) {
+            this.framesLeftUntilSpawn--;
+        }
+        return null;
+    }
+
     /* spawns an alien around the base (but not on top of it)
      * returns the spawned alien object.
      */
     private Alien spawnAlien() {
-    	Float[] offset = Util.randomCoordOffset(-((float)TILEWIDTH/2), ((float)TILEWIDTH/2), 0.8f);
-    	return new Alien(new Coordinate(this.position.x + (TILEWIDTH/2) + offset[0], this.position.y + (TILEHEIGHT/2) + offset[1]), this.TILEWIDTH, this.TILEHEIGHT);
+        this.framesLeftUntilSpawn = this.spawnRate;
+        Float[] offset = Util.randomCoordOffset(-((float)TILEWIDTH/2), ((float)TILEWIDTH/2), 0.8f);
+        return new Alien(new Coordinate(this.position.x + (TILEWIDTH/2) + offset[0], this.position.y + (TILEHEIGHT/2) + offset[1]), this.TILEWIDTH, this.TILEHEIGHT);
+    }
+
+    public Set <Projectile> getProjectileList() {
+        return projectiles;
+    }
+
+    public void takeDamage (int damage) {
+        if (damage > this.health) {
+            this.health = 0;
+        } else {
+            this.health -= damage;
+        }
+    }
+
+    public void setProjectiles (Set <Projectile> projectiles) {
+        this.projectiles = projectiles;
     }
     
     public void doWeaponFiring(FireEngine[] fireEngines) {
         if (this.weapon != null) {
             Object firedObject = this.weapon.fire(fireEngines);
             if (firedObject != null) {
-                weaponObjects.add(firedObject);
+                if (firedObject instanceof Projectile) {
+                    projectiles.add((Projectile) firedObject);
+                } else {
+                    weaponObjects.add(firedObject);
+                }
             }
         }
+    }
+    
+    public Rectangle getRect() {
+        if (this.rectangle == null) {
+            throw new NullPointerException("Alien base " + name + " rectangle not initialized before use in collisions");
+        }
+        return this.rectangle;
     }
 }
