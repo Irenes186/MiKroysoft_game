@@ -18,28 +18,38 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class WinnerScreen implements Screen {
 
-    Game game;
-    Texture buttonTexture;
-    TextureRegion textureRegion;
-    TextureRegionDrawable textureRegionDrawable;
-    ImageButton exitButton;
-    Stage stage;
-    BitmapFont font;
-    Label outcomeTitle;
+    private Game game;
+    private Texture buttonTexture;
+    private TextureRegion textureRegion;
+    private TextureRegionDrawable textureRegionDrawable;
+    private ImageButton exitButton;
+    private Stage stage;
+    private BitmapFont font;
+    private Label outcomeTitle;
+    private Label menuButtonLabel;
 
     public WinnerScreen(final Game game){
         this.game = game;
 
         //setting label
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        BitmapFont font = new BitmapFont();
+        font = new BitmapFont();
         labelStyle.font = font;
         labelStyle.fontColor = Color.WHITE;
+        //alternative text style
+        Label.LabelStyle labelStyle2 = new Label.LabelStyle();
+        labelStyle2.font = font;
+        labelStyle2.fontColor = Color.BLACK;
 
         outcomeTitle = new Label("Winner!",labelStyle);
         outcomeTitle.setFontScale(3.0f, 5.0f);
-        outcomeTitle.setPosition(475,650);
+        outcomeTitle.setPosition(475,400);
         outcomeTitle.setAlignment(Align.center);
+
+        menuButtonLabel = new Label("Menu",labelStyle2);
+        menuButtonLabel.setFontScale(1.5f, 1.5f);
+        menuButtonLabel.setPosition(475,235);
+        menuButtonLabel.setAlignment(Align.center);
 
         //Button image set up
         buttonTexture = new Texture("planet_button_0.png");
@@ -52,6 +62,7 @@ public class WinnerScreen implements Screen {
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         stage.addActor(exitButton);
         stage.addActor(outcomeTitle);
+        stage.addActor(menuButtonLabel);
         Gdx.input.setInputProcessor(stage);
 
         //if instructionButton clicked go to instruction
@@ -70,7 +81,7 @@ public class WinnerScreen implements Screen {
         float buttonWidth = screenWidth * 0.1f, buttonHeight = screenHeight * 0.1f;
         //playButton position ans size
         exitButton.setSize(buttonWidth,buttonHeight);
-        exitButton.setPosition(500,500);
+        exitButton.setPosition(400,150);
         exitButton.getImage().setFillParent(true);
 
 
@@ -85,7 +96,7 @@ public class WinnerScreen implements Screen {
     @Override
     public void render(float v) {
         //Background
-        Gdx.gl.glClearColor(0.5f,0,0,1);
+        Gdx.gl.glClearColor(0f,0f,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //draw stage with actors

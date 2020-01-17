@@ -7,7 +7,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.Random;
 import java.util.HashSet;
@@ -23,6 +31,17 @@ public class GameScreen implements Screen {
     ProgressBar[] fuel;
     ProgressBar[] volume;
     int engineSelected;
+
+    boolean gameWon;
+    boolean gameLoss;
+
+    Texture buttonTexture;
+    TextureRegion textureRegion;
+    TextureRegionDrawable textureRegionDrawable;
+    ImageButton backMenuButton;
+    Stage stage;
+    BitmapFont font;
+    Label instructionTitle;
 
     Map map;
     int MAPWIDTH;
@@ -44,7 +63,35 @@ public class GameScreen implements Screen {
     int nextAlien;
     AlienBase[] bases;
 
-    public GameScreen(Game game) {
+    public GameScreen(final Game game) {
+
+        //BUTTON WONT WORK AFTER GAME STARTED - worth even having??
+        //Button image set up
+        this.game = game;
+        buttonTexture = new Texture("planet_button_1.png");
+        textureRegion = new TextureRegion(buttonTexture);
+        textureRegionDrawable = new TextureRegionDrawable(textureRegion);
+        //add different buttons
+        backMenuButton = new ImageButton(textureRegionDrawable);
+        //variables for screen size and button size
+        float screenWidth = 1024, screenHeight = 1024;
+        float buttonWidth = screenWidth * 0.08f, buttonHeight = screenHeight * 0.08f;
+        //set stage
+        stage = new Stage();//Set up a stage for the ui
+        stage.addActor(backMenuButton);
+        Gdx.input.setInputProcessor(stage);
+        //playButton position ans size
+        backMenuButton.setSize(buttonWidth, buttonHeight);
+        backMenuButton.setPosition(10, 5);
+        backMenuButton.getImage().setFillParent(true);
+        //if instructionButton clicked go to instruction
+        backMenuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //super.clicked(event, x, y);
+                game.setScreen(new Menu(game));
+            }
+        });
         create();
     }
 
@@ -101,7 +148,7 @@ public class GameScreen implements Screen {
             takenValuesOne[index] = randomValueOne;
 
             fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT);
-            fireEngines[i].setPosition(map.getStationX() + 50, map.getStationY() + 50);
+            fireEngines[i].setPosition(map.getStationX() + 50 * i, map.getStationY() + 50);
             float acceleration = 0.00f;
             float maxSpeed = 0.00f;
             switch(randomValueOne) {
@@ -236,6 +283,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         // Handle Alien spawning
         for (AlienBase base : this.bases) {
             Alien newAlien = base.defend(this.fireEngines);
@@ -285,6 +333,7 @@ public class GameScreen implements Screen {
 
         batch.begin();
         map.render(batch);
+
 
         if (inputController.moving) {
             for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {
@@ -404,29 +453,41 @@ public class GameScreen implements Screen {
         //ends batch.
         batch.end();
 
-        boolean gameWon = true;
-        boolean gameLoss = true;
+        this.gameWon = true;
+        this.gameLoss = true;
 
         for (FireEngine engine : fireEngines) {
             if (engine.health > 0) {
-                gameLoss = false;
+                this.gameLoss = false;
                 break;
             }
         }
+
 
         for (AlienBase base : bases) {
             if (base.health > 0) {
-                gameWon = false;
+                this.gameWon = false;
                 break;
             }
         }
 
-        if (gameWon) {
+
+
+        //INCASE BUTTON WANTED IDK - probs not
+        //draw stage with actors // back button
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
+
+
+        if (this.gameWon) {
             //set screen Win
+            System.out.println("test");
+            game.setScreen(new WinnerScreen(game));
         }
 
-        if (gameLoss) {
+        if (this.gameLoss) {
             //set lose screen
+            game.setScreen(new LoserScreen(game));
         }
     }
 

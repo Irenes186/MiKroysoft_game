@@ -35,25 +35,47 @@ public class Menu implements Screen {
     ImageButton backStoryButton;
     ImageButton exitButton;
     Label mainTitle;
+    Label playLabel;
+    Label instructionLabel;
+    Label backStoryLabel;
+    Label exitLabel;
     Stage stage;
     BitmapFont font;
 
     public Menu(final Game game){
         this.game = game;
 
-        /*//Font set up
-        this.batch = new SpriteBatch();
-        this.font = new BitmapFont();
-        font.setColor(0.5f,0.4f,0,1);
-        font.getData().scale(3);*/
-
         //LABEL
         //setting label
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        BitmapFont font = new BitmapFont();
+        font = new BitmapFont();
         labelStyle.font = font;
         labelStyle.fontColor = Color.WHITE;
-
+        //alternative text style
+        Label.LabelStyle labelStyle2 = new Label.LabelStyle();
+        labelStyle2.font = font;
+        labelStyle2.fontColor = Color.BLACK;
+        //play button text
+        playLabel = new Label("Play!",labelStyle2);
+        playLabel.setFontScale(3.0f, 3.0f);
+        playLabel.setPosition(495,415);
+        playLabel.setAlignment(Align.center);
+        //instruction button text
+        instructionLabel = new Label("Instructions",labelStyle2);
+        instructionLabel.setFontScale(1.2f, 1.5f);
+        instructionLabel.setPosition(200,305);
+        instructionLabel.setAlignment(Align.center);
+        //story button text
+        backStoryLabel = new Label("Story",labelStyle2);
+        backStoryLabel.setFontScale(2.0f, 2.0f);
+        backStoryLabel.setPosition(485,155);
+        backStoryLabel.setAlignment(Align.center);
+        //exit button text
+        exitLabel = new Label("Exit",labelStyle2);
+        exitLabel.setFontScale(2.0f, 2.0f);
+        exitLabel.setPosition(750,305);
+        exitLabel.setAlignment(Align.center);
+        //Main title
         mainTitle = new Label("KROY! (by MiKroysoft)",labelStyle);
         mainTitle.setFontScale(3.0f, 5.0f);
         mainTitle.setPosition(460,650);
@@ -111,23 +133,23 @@ public class Menu implements Screen {
         //variables for screen size and button size
         float screenWidth = 1024, screenHeight = 1024;
         float buttonWidth = screenWidth * 0.1f, buttonHeight = screenHeight * 0.1f;
-        //playButton position ans size
-        playButton.setSize(buttonWidth,buttonHeight);
-        playButton.setPosition(screenWidth / 2 - buttonWidth,screenHeight / 2 - buttonHeight);
+        //playButton position and size
+        playButton.setSize(buttonWidth * 1.8f,buttonHeight * 1.8f);
+        playButton.setPosition(335, 250);
         playButton.getImage().setFillParent(true);
-        //instructionButton position ans size
-        instructionButton.setSize(buttonWidth,buttonHeight);
-        instructionButton.setPosition(screenWidth / 3 - buttonWidth,screenHeight / 3 - buttonHeight);
+        //instructionButton position and size
+        instructionButton.setSize(buttonWidth * 1.2f,buttonHeight * 1.2f);
+        instructionButton.setPosition(120,200);
         instructionButton.getImage().setFillParent(true);
-        //backStoryButton position ans size
-        backStoryButton.setSize(buttonWidth,buttonHeight);
-        backStoryButton.setPosition(screenWidth / 8 - buttonWidth,screenHeight / 8 - buttonHeight);
+        //backStoryButton position and size
+        backStoryButton.setSize(buttonWidth * 1.2f,buttonHeight * 1.2f);
+        backStoryButton.setPosition(390, 50);
         backStoryButton.getImage().setFillParent(true);
-
-        //exitButton position ans size
-        exitButton.setSize(buttonWidth,buttonHeight);
-        exitButton.setPosition(screenWidth / 5 - buttonWidth,screenHeight / 5 - buttonHeight);
+        //exitButton position and size
+        exitButton.setSize(buttonWidth * 1.2f,buttonHeight * 1.2f);
+        exitButton.setPosition(650, 200);
         exitButton.getImage().setFillParent(true);
+
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         //add buttons to stage on menu stage
@@ -136,6 +158,10 @@ public class Menu implements Screen {
         stage.addActor(backStoryButton);
         stage.addActor(exitButton);
         stage.addActor(mainTitle);
+        stage.addActor(playLabel);
+        stage.addActor(instructionLabel);
+        stage.addActor(backStoryLabel);
+        stage.addActor(exitLabel);
         Gdx.input.setInputProcessor(stage);
     }
 
