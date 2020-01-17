@@ -53,13 +53,15 @@ public class Coordinate {
      * The angle is given with respect to the x axis, i.e:
      * 
      * | B 
-     * |_    A is this point, B is other point, n is the angle
-     * |n| 
+     * |<_   A is this point, B is other point, n is the angle (anticlockwise)
+     * |+n| 
      * A-----
      */
     public float angleTo(Coordinate other) {
-        Coordinate vectorToTarget = other.minus(this);
-        return (float) Math.acos(vectorToTarget.x/(Math.sqrt(Math.pow(vectorToTarget.x, 2) + Math.pow(vectorToTarget.y, 2))));
+        return (float) Math.toDegrees(Math.atan2(other.minus(this).y,other.minus(this).x));
+        // Old method, less accurate
+        //Coordinate vectorToTarget = other.minus(this);
+        //return (float) Math.acos(vectorToTarget.x/(Math.sqrt(Math.pow(vectorToTarget.x, 2) + Math.pow(vectorToTarget.y, 2))));
     }
     
     public Coordinate invertY() {
