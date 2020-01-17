@@ -28,6 +28,8 @@ public class WeaponBullet extends BaseWeapon {
             if (target == null || currentClosestDist == -1) {
                 return null;
             }
+
+            resetCooldown();
             
             // Spawn a new projectile
             return new Projectile (new Coordinate(position.x, Gdx.graphics.getHeight() - position.y), target.position, true, ProjectileType.BULLET, (int) Math.round(currentClosestDist));
