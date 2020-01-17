@@ -12,6 +12,7 @@ public class Rectangle {
         this.width = width;
         this.height = height;
     }
+
     boolean intersect(Rectangle rectangle) {
         if (this.centrePoint.x < rectangle.centrePoint.x + rectangle.width / 2 &&
                 this.centrePoint.x + this.width / 2 > rectangle.centrePoint.x &&
@@ -38,5 +39,12 @@ public class Rectangle {
                 this.centrePoint.x - width / 2,
                 this.centrePoint.y - height /2};
         return points;
+    }
+
+    public void updatePosition (Coordinate newPosition, float direction) {
+
+        this.centrePoint = new Coordinate (newPosition.x - width / 2, newPosition.y - height / 2);
+        this.angle = direction;
+        this.centrePoint = this.centrePoint.invertY();
     }
 }

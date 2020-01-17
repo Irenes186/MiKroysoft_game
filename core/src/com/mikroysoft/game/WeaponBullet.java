@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 public class WeaponBullet extends BaseWeapon {
     public WeaponBullet(int cooldown, int range, String tex, Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
         super(cooldown, range, tex, position, TILEWIDTH, TILEHEIGHT);
+
+        weaponDamage = 15;
     }
     
     @Override

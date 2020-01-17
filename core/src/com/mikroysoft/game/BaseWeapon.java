@@ -14,6 +14,8 @@ public abstract class BaseWeapon {
     protected int TILEWIDTH, TILEHEIGHT;
     // Texture for the weapon's projectile/firing method/etc
     protected Texture texture;
+
+    protected int weaponDamage;
     
     /* Constructor.
      * cooldown - int - The number of frames to wait between weapon fires

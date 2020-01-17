@@ -57,7 +57,9 @@ public class FireEngine {
         waterVolume = 100;
         this.map = map;
         range = 500;
-        this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y + map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
+        //this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y + map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
+        this.rectangle = new Rectangle (this.position, map.TILEWIDTH, map.TILEHEIGHT, 0);
+        this.shotDamage = parameters.shotDamage;
     }
 
     public void increaseSpeed() {
@@ -147,7 +149,12 @@ public class FireEngine {
         return position;
     }
     public void takeDamage(int amount) {
-        health -= amount;
+        
+        if (amount >= health) {
+            health = 0;
+        } else {
+            health -= amount;
+        }
     }
     public void move(Coordinate input) {
         increaseSpeed();
@@ -184,6 +191,7 @@ public class FireEngine {
 
         direction = (float) Math.toDegrees(Math.atan2((input.y - position.y) * -1, input.x - position.x)) - 90;
 
+        this.rectangle.updatePosition (new Coordinate (position.x + map.TILEWIDTH / 2, position.y + map.TILEHEIGHT / 2), direction);
         this.speed = tempspeed;
     }
 
@@ -226,4 +234,5 @@ public class FireEngine {
         }
         return this.rectangle;
     }
+
 }

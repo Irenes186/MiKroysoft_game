@@ -245,7 +245,7 @@ public class GameScreen implements Screen {
                     if (engine.getRect().pointInRectangle(projectile.position)) {
                         removeProjectiles.add(projectile);
                         //Add some collision bullshit like damage IDK
-                        engine.takeDamage(engine.shotDamage);
+                        engine.takeDamage(base.weapon.weaponDamage);
                     }
                 }
 
@@ -262,7 +262,6 @@ public class GameScreen implements Screen {
                 for (Projectile projectile : currentProjectiles) {
                     if (base.getRect().pointInRectangle(projectile.position)) {
                         removeProjectiles.add(projectile);
-                        System.out.println("hit");
                         //Add some collision bullshit like damage IDK
                         base.takeDamage(engine.shotDamage);
                     }
@@ -275,6 +274,10 @@ public class GameScreen implements Screen {
 
         batch.begin();
         map.render(batch);
+
+        for (AlienBase base : bases) {
+            base.checkHealth();
+        }
 
         if (inputController.moving) {
             for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {

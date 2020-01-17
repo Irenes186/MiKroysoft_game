@@ -32,6 +32,7 @@ public class AlienBase implements IRenderable {
     public int weaponRange;
     // Name of this base, e.g Aldi, for debugging
     public String name;
+    public String tex;
     // Maximum number of aliens that can be alive at any time around this base
     public int maxAliens;
     // Number of aliens current alive around this base
@@ -73,6 +74,7 @@ public class AlienBase implements IRenderable {
     public AlienBase(String name, AlienBaseParameters params, Coordinate position, int TILEWIDTH, int TILEHEIGHT, String tex) {
         // Save parameters to local variables
     	texture = new Texture(tex + ".png");
+        this.tex = tex;
         this.name = name;
         this.position = position;
         this.weaponRange = params.weaponRange;
@@ -80,6 +82,7 @@ public class AlienBase implements IRenderable {
         //this.weapon = params.weapon;
         //this.weapon = new WeaponLaser(params.weaponRange, position, TILEWIDTH, TILEHEIGHT);
         this.weapon = new WeaponBullet(10, this.weaponRange, "laser.png", position, TILEWIDTH, TILEHEIGHT);
+
         this.health = params.floodLevel;
         this.attackTimeAfterFirst = params.attackTimeAfterFirst;
         this.TILEWIDTH = TILEWIDTH;
@@ -204,6 +207,7 @@ public class AlienBase implements IRenderable {
     }
 
     public void takeDamage (int damage) {
+        System.out.println (this.health);
         if (damage > this.health) {
             this.health = 0;
         } else {
@@ -237,5 +241,11 @@ public class AlienBase implements IRenderable {
     
     public int getHealth() {
         return this.health;
+    }
+
+    public void checkHealth() {
+        if (health == 0) {
+            this.texture = new Texture ("soggy-" + tex + ".png");
+        }
     }
 }
