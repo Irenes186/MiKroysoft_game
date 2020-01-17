@@ -29,18 +29,21 @@ public class AlienBaseParameters {
                 weaponType = "laser";
                 floodLevel = 20;
                 attackTimeAfterFirst = 300;
+                break;
             case 2:
                 weaponRange = 4;
                 maxAliens = 3;
                 weaponType = "laser";
                 floodLevel = 20;
                 attackTimeAfterFirst = 300;
+                break;
             case 3:
                 weaponRange = 4;
                 maxAliens = 3;
                 weaponType = "laser";
                 floodLevel = 20;
                 attackTimeAfterFirst = 300;
+                break;
         }
     }
 }
