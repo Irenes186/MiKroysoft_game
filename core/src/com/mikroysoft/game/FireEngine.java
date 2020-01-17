@@ -34,6 +34,7 @@ public class FireEngine {
     public int distanceTravelled;
     public int shotDamage;
     public float direction;
+    public boolean dead;
     Map map;
     //
     int cellX, cellY;
@@ -60,6 +61,7 @@ public class FireEngine {
         //this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y + map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
         this.rectangle = new Rectangle (this.position, map.TILEWIDTH, map.TILEHEIGHT, 0);
         this.shotDamage = parameters.shotDamage;
+        this.dead = false;
     }
 
     public void increaseSpeed() {
@@ -152,11 +154,19 @@ public class FireEngine {
         
         if (amount >= health) {
             health = 0;
+            this.dead = true;
         } else {
             health -= amount;
         }
+
     }
     public void move(Coordinate input) {
+
+        if (dead) {
+            return;
+        }
+
+        fuelReduce();
         increaseSpeed();
         float tempspeed = speed;
         if (fuel == 0) {
@@ -206,6 +216,11 @@ public class FireEngine {
     }
 
     public void shoot(Coordinate destination) {
+        if (dead) {
+            return;
+        }
+        reduceVolume();
+
         projectiles.add(new Projectile (position, destination, false, ProjectileType.WATER, range));
     }
 
@@ -233,6 +248,10 @@ public class FireEngine {
             throw new NullPointerException("Fire engine rectangle not initialized before use in collisions");
         }
         return this.rectangle;
+    }
+
+    public boolean isDead () {
+        return this.dead;
     }
 
 }

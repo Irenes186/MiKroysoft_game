@@ -291,6 +291,9 @@ public class GameScreen implements Screen {
 
         for (int barIndex = 0; barIndex < AMOUNT; barIndex++) {
 
+            System.out.print(barIndex);
+            System.out.println(fireEngines[barIndex].isDead());
+
             health[barIndex].updateCurrent(fireEngines[barIndex].health);
             fuel[barIndex].updateCurrent(fireEngines[barIndex].fuel);
             volume[barIndex].updateCurrent(fireEngines[barIndex].getVolume());
@@ -298,12 +301,6 @@ public class GameScreen implements Screen {
             fuel[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 25);
             volume[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 40);
 
-            //health
-            batch.draw(health[barIndex].texture, health[barIndex].position.x, health[barIndex].position.y, health[barIndex].getFill(), health[barIndex].getHeight());
-            batch.draw(healthIcon, health[barIndex].position.x - (5 + health[barIndex].getHeight()), health[barIndex].position.y, health[barIndex].getHeight(), health[barIndex].getHeight());
-            //fuel
-            batch.draw(fuel[barIndex].texture, fuel[barIndex].position.x, fuel[barIndex].position.y, fuel[barIndex].getFill(), fuel[barIndex].getHeight());
-            batch.draw(fuelIcon, fuel[barIndex].position.x - (5 + fuel[barIndex].getHeight()), fuel[barIndex].position.y, fuel[barIndex].getHeight(), fuel[barIndex].getHeight());
         }
 
         //refill and repair
@@ -322,7 +319,6 @@ public class GameScreen implements Screen {
         if (inputController.getShotsFired()) {
             if(fireEngines[engineSelected].getVolume() > 0) {
                 fireEngines[engineSelected].shoot(inputController.getLatestPosition());
-                fireEngines[engineSelected].reduceVolume();
             }
         }
 
@@ -330,7 +326,6 @@ public class GameScreen implements Screen {
             //For testing reasons:
             if (fireEngines[engineSelected].getFuel() > 0) {
                 fireEngines[engineSelected].distanceIncreased();
-                fireEngines[engineSelected].fuelReduce();
             }
             fireEngines[engineSelected].move(inputController.getLatestPosition());
         } else {
@@ -352,6 +347,9 @@ public class GameScreen implements Screen {
         }
         //health and fuel drawing.
         for (int i = 0; i < AMOUNT; i = i + 1) {
+            if (fireEngines[i].isDead()) {
+                continue;
+            }
             health[i].updateCurrent(fireEngines[i].health);
             fuel[i].updateCurrent(fireEngines[i].fuel);
             volume[i].updateCurrent(fireEngines[i].getVolume());
@@ -394,7 +392,7 @@ public class GameScreen implements Screen {
         this.gameLoss = true;
 
         for (FireEngine engine : fireEngines) {
-            if (engine.health > 0) {
+            if (!engine.isDead()) {
                 this.gameLoss = false;
                 break;
             }
