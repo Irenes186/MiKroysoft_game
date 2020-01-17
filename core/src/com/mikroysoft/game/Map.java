@@ -156,7 +156,7 @@ public class Map {
                         break;
                     //Jorvik Viking Centre
                     case "5":
-                        params = new AlienBaseParameters();
+                        params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                         grid[row][col] = new AlienBase("Jorvik Viking Centre", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "viking");
                         break;
                     //York train station

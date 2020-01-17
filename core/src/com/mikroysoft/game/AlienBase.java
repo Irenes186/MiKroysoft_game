@@ -45,7 +45,6 @@ public class AlienBase implements IRenderable {
     // Health - renamed from floodLevel
     public int health;
     // TODO: Is this the same as weaponRange?
-    public int attackRange;
     // Once an AlienBase is destroyed, wait this number of frames before destroying the FireStation.
     public int attackTimeAfterFirst;
     // Position in pixels of this base on the screen
@@ -80,9 +79,8 @@ public class AlienBase implements IRenderable {
         this.maxAliens = params.maxAliens;
         //this.weapon = params.weapon;
         //this.weapon = new WeaponLaser(params.weaponRange, position, TILEWIDTH, TILEHEIGHT);
-        this.weapon = new WeaponBullet(10, 1, "laser.png", position, TILEWIDTH, TILEHEIGHT);
+        this.weapon = new WeaponBullet(10, this.weaponRange, "laser.png", position, TILEWIDTH, TILEHEIGHT);
         this.health = params.floodLevel;
-        this.attackRange = params.attackRange;
         this.attackTimeAfterFirst = params.attackTimeAfterFirst;
         this.TILEWIDTH = TILEWIDTH;
         this.TILEHEIGHT = TILEHEIGHT;
