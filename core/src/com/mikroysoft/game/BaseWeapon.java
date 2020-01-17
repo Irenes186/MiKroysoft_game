@@ -24,6 +24,7 @@ public abstract class BaseWeapon {
      */
     public BaseWeapon(int cooldown, int range, String tex, Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
         this.cooldown = cooldown;
+        this.cooldownCurrent = cooldown;
         this.range = range;
         // Using position by reference rather than by copy to allow dynamic positioning
         this.position = position;
