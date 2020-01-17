@@ -115,6 +115,14 @@ public class FireEngine {
         }
     }
     
+    public int getHealth() {
+        return health;
+    }
+    
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+    
     public void repair() {
         if (health < maxHealth) {
             health++;
@@ -165,6 +173,10 @@ public class FireEngine {
         if(distanceTravelled % 5 == 0) {
             fuel -= 1;
         }
+    }
+    
+    public int getMaxFuel() {
+        return maxFuel;
     }
 
     public Coordinate getPosition() {

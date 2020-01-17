@@ -8,12 +8,12 @@ public class FireEngineTest {
     Map map;
     FireEngine truck;
     
-    @BeforeAll
+    @Before
     public void makeMap() {
         map = new Map(20, 20, "background");
     }
     
-    @BeforeEach
+    @BeforeClass
     public void makeTruck() {
         truck = new FireEngine(map, new FireEngineParameters(1));
     }
@@ -48,20 +48,20 @@ public class FireEngineTest {
     }
     
     @Test
-    public void testStartMaxHealth()) {
+    public void testStartMaxHealth() {
         assertEquals(truck.getHealth(), truck.getMaxHealth(), 0.1);
     }
     
     @Test
     public void testTakeDamage() {
         FireEngine truck = new FireEngine(map, new FireEngineParameters(1));
-        truck.takeDamage(1));
+        truck.takeDamage(1);
         assertEquals(truck.getHealth(), truck.getMaxHealth() - 1, 0.1);
     }
     
     @Test
     public void testRepair() {
-        truck.takeDamage(1));
+        truck.takeDamage(1);
         truck.repair();
         assertEquals(truck.getHealth(), truck.getMaxHealth(), 0.1);
     }
@@ -74,7 +74,7 @@ public class FireEngineTest {
     @Test
     public void testReduceFuel() {
         truck.reduceVolume();
-        assertEquals(truck.getVolume(), truck.getMaxVolume() - 1, 0.1);
+        assertEquals(truck.getVolume(), truck.getMaxFuel(), 0.1);
     }
     
     @Test
