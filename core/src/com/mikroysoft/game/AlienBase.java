@@ -79,7 +79,7 @@ public class AlienBase implements IRenderable {
         this.maxAliens = params.maxAliens;
         //this.weapon = params.weapon;
         //this.weapon = new WeaponLaser(params.weaponRange, position, TILEWIDTH, TILEHEIGHT);
-        this.weapon = new WeaponBullet(10, this.weaponRange, "laser.png", position, TILEWIDTH, TILEHEIGHT);
+        this.weapon = new WeaponBullet(10, weaponRange, "laser.png", position, TILEWIDTH, TILEHEIGHT);
         this.health = params.floodLevel;
         this.attackTimeAfterFirst = params.attackTimeAfterFirst;
         this.TILEWIDTH = TILEWIDTH;
@@ -145,15 +145,18 @@ public class AlienBase implements IRenderable {
     	
     	for (FireEngine currentTruck: fireEngines) {
     		// Is the fire engine within weaponRange?
-			if (java.lang.Math.abs(this.position.x - currentTruck.position.x) <= ((this.weaponRange+1) * TILEWIDTH) &&
-					java.lang.Math.abs(this.position.y - (Gdx.graphics.getHeight()-currentTruck.position.y)) <= ((this.weaponRange+1) * TILEHEIGHT)) {
-				
+			if (weapon.truckInRange(currentTruck)) {
 				// Has the spawning countdown passed?
 				if (this.framesLeftUntilSpawn == 0) {
 					// Reset the spawning cooldown
 					this.framesLeftUntilSpawn = this.spawnRate;
 					// spawn and return an alien
-					return this.spawnAlien();
+					if (currentAliens < maxAliens) {
+					    currentAliens++;
+					    return this.spawnAlien();
+					} else {
+					    return null;
+					}
 				}
 				
 				// If cooldown has not been passed, decrease it and don't spawn anything.
@@ -163,31 +166,8 @@ public class AlienBase implements IRenderable {
 			}
 		}
     	
-    	// If no FireEngines were found in range, cooldown will not have been reduced.
-    	// dont't spawn anything.
-//    	if (this.framesLeftUntilSpawn > 0) {
-//			this.framesLeftUntilSpawn--;
-//		}
+    	// If no FireEngines were found in range, dont't spawn anything.
     	return null;
-    }
-
-    public Alien defend(FireEngine[] fireEngines) {
-        // Debug: # of frames until this base spawns a new alien.
-        // System.out.println("Alien cooldown " + this.name + ": " + this.alienSpawnCountDown);
-        boolean truckInRange = false;
-        for (FireEngine currentTruck: fireEngines) {
-            if (java.lang.Math.abs(this.position.x - currentTruck.position.x) <= ((this.weaponRange+1) * TILEWIDTH) &&
-                    java.lang.Math.abs(this.position.y - (Gdx.graphics.getHeight()-currentTruck.position.y)) <= ((this.weaponRange+1) * TILEHEIGHT)) {
-                if (this.framesLeftUntilSpawn == 0) {
-                    return this.spawnAlien();
-                }
-                truckInRange = true;
-                    }
-        }
-        if (truckInRange) {
-            this.framesLeftUntilSpawn--;
-        }
-        return null;
     }
 
     /* spawns an alien around the base (but not on top of it)
