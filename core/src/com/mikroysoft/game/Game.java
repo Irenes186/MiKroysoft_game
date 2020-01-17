@@ -55,7 +55,6 @@ public class Game extends ApplicationAdapter {
         inputController = new InputController();
         Gdx.input.setInputProcessor(inputController);
 
-        //Fire Engines:
         fireEngines = new FireEngine[AMOUNT];
         ////health:
         health = new ProgressBar[AMOUNT];
@@ -215,7 +214,8 @@ public class Game extends ApplicationAdapter {
 
         // Handle Alien spawning
         for (AlienBase base : this.bases) {
-            Alien newAlien = base.defend(this.fireEngines);
+            base.doWeaponFiring(this.fireEngines);
+            Alien newAlien = base.doAlienSpawning(this.fireEngines);
             if (newAlien != null) {
                 this.aliens[nextAlien] = newAlien;
                 // Theoretically, this should never overflow due to the way i instantiated aliens.

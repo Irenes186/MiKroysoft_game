@@ -3,7 +3,10 @@ package com.mikroysoft.game;
 // LibGDX Imports
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.util.ArrayList;
 
 
 /* This class represents the buildings found throughout the map that the player must
@@ -32,9 +35,8 @@ public class AlienBase implements IRenderable {
     public int framesLeftUntilSpawn;
     // Number of frames the base will wait in between spawning aliens
     public int spawnRate;
-    // Type of weapon that this base has
-    //Changed from String[] as weapon type does not change.
-    public String weaponType;
+    // The weapon mounted on the base
+    public BaseWeapon weapon;
     // Health
     public int floodLevel;
     // TODO: Is this the same as weaponRange?
@@ -47,6 +49,10 @@ public class AlienBase implements IRenderable {
     private int TILEWIDTH, TILEHEIGHT;
     // has this base been destroyed by the player?
     public boolean destroyed;
+    // Things created by the BaseWeapon that need rendering. Could be sprites, projectiles...
+    // WARNING: Not type checked, since Sprites and Textures do not share a super class.
+    // TAKE CARE WHEN CREATING NEW BASEWEAPONS.
+    private ArrayList<Object> weaponObjects;
 
     /* Constructor.
      * name - String - name of the base for debugging purposes
@@ -62,7 +68,9 @@ public class AlienBase implements IRenderable {
         this.position = position;
         this.weaponRange = params.weaponRange;
         this.maxAliens = params.maxAliens;
-        this.weaponType = params.weaponType;
+        //this.weapon = params.weapon;
+        //this.weapon = new WeaponLaser(params.weaponRange, position, TILEWIDTH, TILEHEIGHT);
+        this.weapon = new WeaponBullet(10, 1, "laser.png", position, TILEWIDTH, TILEHEIGHT);
         this.floodLevel = params.floodLevel;
         this.attackRange = params.attackRange;
         this.attackTimeAfterFirst = params.attackTimeAfterFirst;
@@ -72,6 +80,7 @@ public class AlienBase implements IRenderable {
         
         // Initialise base to wait spawnRate before spawning anything
         this.framesLeftUntilSpawn = this.spawnRate;
+        weaponObjects = new ArrayList<Object>();
     }
 
     /* Increase aggression of base.
@@ -87,6 +96,15 @@ public class AlienBase implements IRenderable {
      */
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x, position.y, TILEWIDTH, TILEHEIGHT);
+        for (Object weaponObj: weaponObjects) {
+            if (weaponObj instanceof Sprite) {
+                ((Sprite) weaponObj).draw(batch);
+            } else if (weaponObj instanceof Projectile) {
+                ((Projectile) weaponObj).render(batch);
+            } else {
+                throw new IllegalArgumentException("Base " + name + " attempted to render unrecognised BaseWeapon object");
+            }
+        }
     }
 
     /* Update the base
@@ -105,7 +123,7 @@ public class AlienBase implements IRenderable {
      *
      * TODO: Add progress bars for alien spawning
      */
-    public Alien defend(FireEngine[] fireEngines) {
+    public Alien doAlienSpawning(FireEngine[] fireEngines) {
     	// Debug: # of frames until this base spawns a new alien.
     	// System.out.println("Alien cooldown " + this.name + ": " + this.alienSpawnCountDown);
     	// Check all fire engines
@@ -144,5 +162,14 @@ public class AlienBase implements IRenderable {
     private Alien spawnAlien() {
     	Float[] offset = Util.randomCoordOffset(-((float)TILEWIDTH/2), ((float)TILEWIDTH/2), 0.8f);
     	return new Alien(new Coordinate(this.position.x + (TILEWIDTH/2) + offset[0], this.position.y + (TILEHEIGHT/2) + offset[1]), this.TILEWIDTH, this.TILEHEIGHT);
+    }
+    
+    public void doWeaponFiring(FireEngine[] fireEngines) {
+        if (this.weapon != null) {
+            Object firedObject = this.weapon.fire(fireEngines);
+            if (firedObject != null) {
+                weaponObjects.add(firedObject);
+            }
+        }
     }
 }
