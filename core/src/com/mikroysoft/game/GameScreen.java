@@ -121,7 +121,7 @@ public class GameScreen implements Screen {
             }
             takenValuesOne[index] = randomValueOne;
 
-            fireEngines[i] = new FireEngine(map, new FireEngineParameters());
+            fireEngines[i] = new FireEngine(map, new FireEngineParameters(i));
             fireEngines[i].setPosition(map.getStationX() + 50, map.getStationY() + 50);
             float acceleration = 0.00f;
             float maxSpeed = 0.00f;
@@ -260,13 +260,13 @@ public class GameScreen implements Screen {
 
         // Handle Alien spawning
         for (AlienBase base : this.bases) {
-            Alien newAlien = base.defend(this.fireEngines);
+            //Alien newAlien = base.defend(this.fireEngines);
             base.doWeaponFiring(fireEngines);
-            if (newAlien != null) {
-                this.aliens[nextAlien] = newAlien;
-                // Theoretically, this should never overflow due to the way i instantiated aliens.
-                nextAlien++;
-            }
+            //if (newAlien != null) {
+            //    this.aliens[nextAlien] = newAlien;
+            //    // Theoretically, this should never overflow due to the way i instantiated aliens.
+            //    nextAlien++;
+            //}
         }
         
         // This code is fucking awful, extract to a method
