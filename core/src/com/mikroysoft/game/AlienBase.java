@@ -236,4 +236,8 @@ public class AlienBase implements IRenderable {
         }
         return this.rectangle;
     }
+    
+    public int getHealth() {
+        return this.health;
+    }
 }

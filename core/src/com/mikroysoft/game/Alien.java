@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 /* This class represents the small, walking and shooting aliens
  * that are spawned by AlienBases.
@@ -35,7 +37,7 @@ public class Alien implements IRenderable {
     private int currentFireCount;
     private int shootOffset;
     // List of spawned Projectile objects - i.e bullets - to be used in collision detection
-    private List < Projectile > projectiles;
+    private Set < Projectile > projectiles;
     // The maximum distance a fireengine can be from the alien before alien begins firing at it
     private int range;
 
@@ -61,7 +63,7 @@ public class Alien implements IRenderable {
         shootOffset = 10;
         // By default, shoot at fire engines within 300px of alien.
         range = 300;
-        projectiles = new ArrayList < Projectile> ();
+        projectiles = new HashSet < Projectile> ();
     }
 
     /* Get the position of the alien
@@ -127,10 +129,18 @@ public class Alien implements IRenderable {
         }
     }
     
+    public Set<Projectile> getProjectiles() {
+        return this.projectiles;
+    }
+    
     /* Update the Alien
      * TODO: Implement (or delete)
      */
     public void update() {
         
-    };
+    }
+    
+    public int getRange() {
+        return this.range;
+    }
 }

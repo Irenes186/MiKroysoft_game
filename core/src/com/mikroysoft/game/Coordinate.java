@@ -10,6 +10,11 @@ public class Coordinate {
         this.x = x;
         this.y = y;
     }
+    
+    public Coordinate(int x, int y) {
+        this.x = (float) x;
+        this.y = (float) y;
+    }
 	
     public Coordinate(Coordinate coord) {
         this.x = coord.x;
@@ -59,5 +64,9 @@ public class Coordinate {
     
     public Coordinate invertY() {
         return new Coordinate(Gdx.graphics.getHeight() - y, x);
+    }
+    
+    public boolean equals(Coordinate other) {
+        return other.x == x && other.y == y;
     }
 }
