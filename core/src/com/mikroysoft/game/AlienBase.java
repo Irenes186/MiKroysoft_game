@@ -92,7 +92,7 @@ public class AlienBase implements IRenderable {
         this.framesLeftUntilSpawn = this.spawnRate;
         weaponObjects = new HashSet<Object>();
         projectiles = new HashSet<Projectile>();
-        this.rectangle = new Rectangle (new Coordinate (position.x + TILEWIDTH / 2, position.y - TILEHEIGHT / 2), TILEWIDTH, TILEHEIGHT, 0);
+        this.rectangle = new Rectangle (new Coordinate (position.x + TILEWIDTH / 2, position.y + TILEHEIGHT / 2), TILEWIDTH, TILEHEIGHT, 0);
         this.aliens = new ArrayList<Alien>();
     }
 
