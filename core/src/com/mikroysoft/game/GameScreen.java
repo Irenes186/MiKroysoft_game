@@ -458,13 +458,11 @@ public class GameScreen implements Screen {
 
         for (FireEngine engine : fireEngines) {
             if (engine.health > 0) {
-                System.out.println("calleijijijd");
                 this.gameLoss = false;
                 break;
             }
         }
 
-        System.out.println(this.gameLoss);
 
         for (AlienBase base : bases) {
             if (base.health > 0) {
@@ -472,6 +470,8 @@ public class GameScreen implements Screen {
                 break;
             }
         }
+
+
 
         //INCASE BUTTON WANTED IDK - probs not
         //draw stage with actors // back button
@@ -481,6 +481,7 @@ public class GameScreen implements Screen {
 
         if (this.gameWon) {
             //set screen Win
+            System.out.println("test");
             game.setScreen(new WinnerScreen(game));
         }
 

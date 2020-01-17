@@ -48,6 +48,7 @@ public class AlienBase implements IRenderable {
         this.spawnRate = 50;
         this.aliens = new ArrayList<Alien>();
         this.maxAliens=5;
+        this.health = 1000;
 
         // should this be in AlienBaseParameters?
         // set aliens to spawn every 500 frames that a truck is in range
