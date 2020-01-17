@@ -418,6 +418,10 @@ public class GameScreen implements Screen {
             //set lose screen
             game.setScreen(new LoserScreen(game));
         }
+
+        if (inputController.isEscaped()) {
+            game.setScreen (new Menu (game));
+        }
     }
 
     @Override
