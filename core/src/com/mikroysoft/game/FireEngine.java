@@ -22,7 +22,8 @@ public class FireEngine {
     private float maxSpeed;
     private float acceleration;
     private int range;
-    private float deliveryRate;
+    private int shotCooldown;
+    private int deliveryRate;
     private Set < Projectile > projectiles;
     public Texture texture;
     public Coordinate position;
@@ -62,6 +63,7 @@ public class FireEngine {
         this.rectangle = new Rectangle (this.position, map.TILEWIDTH, map.TILEHEIGHT, 0);
         this.shotDamage = parameters.shotDamage;
         this.dead = false;
+        this.deliveryRate = parameters.deliveryRate;
     }
 
     public void increaseSpeed() {
@@ -206,6 +208,10 @@ public class FireEngine {
     }
 
     public void render(SpriteBatch batch) {
+        if (shotCooldown > 0) {
+            shotCooldown--;
+        }
+
         batch.draw(texture, position.x - 40,Gdx.graphics.getHeight()-position.y - 40,40,40,80,80,1,1,direction,0,0,16,16,false,false);
 
         for (Projectile projectile : projectiles) {
@@ -216,12 +222,16 @@ public class FireEngine {
     }
 
     public void shoot(Coordinate destination) {
+        if (shotCooldown > 0) {
+            return;
+        }
         if (dead) {
             return;
         }
         reduceVolume();
 
         projectiles.add(new Projectile (position, destination, false, ProjectileType.WATER, range));
+        shotCooldown = deliveryRate;
     }
 
     public Set <Projectile> getProjectileList() {

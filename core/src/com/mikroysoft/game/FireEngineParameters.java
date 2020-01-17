@@ -5,6 +5,7 @@ public class FireEngineParameters{
     public float acceleration;
     public float maxSpeed;
     public int shotDamage;
+    public int deliveryRate;
 
     // DEFAULTS
     // UPDATE AS NEEDED
@@ -14,21 +15,25 @@ public class FireEngineParameters{
                 acceleration = 0.50f;
                 maxSpeed = 2.00f;
                 shotDamage = 5;
+                deliveryRate = 15;
                 break;
             case 1:
                 acceleration = 1.00f;
                 maxSpeed = 2.00f;
                 shotDamage = 1;
+                deliveryRate = 18;
                 break;
             case 2:
                 acceleration = 0.20f;
                 maxSpeed = 1.00f;
                 shotDamage = 2;
+                deliveryRate = 12;
                 break;
             case 3:
                 acceleration = 0.50f;
                 maxSpeed = 1.00f;
                 shotDamage = 3;
+                deliveryRate = 10;
                 break;
         }
     }
