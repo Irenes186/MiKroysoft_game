@@ -214,21 +214,6 @@ public class GameScreen implements Screen {
             volume[i].setMax(maxVolume);
             volume[i].updateCurrent(fireEngines[i].getVolume());
         }
-        //fireEngines[1] = new FireEngine();
-        //fireEngines[2] = new FireEngine();
-        //fireEngines[3] = new FireEngine();
-        //fireEngines[4] = new FireEngine();
-
-
-        //aliens = new Alien[1];
-        //aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
-
-        //health progress bar:
-        //health = new ProgressBar(1);
-        //health.setPosition(20,10);
-        //health.setDimensions(100,10);
-        //health.setMax(100);
-        //health.updateCurrent(100);
 
         //health icon - next to health progress bar.
         healthIcon = new Texture("health.png");
@@ -297,7 +282,9 @@ public class GameScreen implements Screen {
                 for (Projectile projectile : currentProjectiles) {
                     if (base.getRect().pointInRectangle(projectile.position)) {
                         removeProjectiles.add(projectile);
+                        System.out.println("hit");
                         //Add some collision bullshit like damage IDK
+                        base.takeDamage(engine.shotDamage);
                     }
                 }
 

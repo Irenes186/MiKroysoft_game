@@ -39,6 +39,8 @@ public class AlienBaseParameters {
                 floodLevel = 20;
                 attackRange = 1;
                 attackTimeAfterFirst = 300;
+                spawnRate = 500;
+                break;
             case 2:
                 weaponRange = 1;
                 maxAliens = 3;
@@ -46,6 +48,8 @@ public class AlienBaseParameters {
                 floodLevel = 20;
                 attackRange = 1;
                 attackTimeAfterFirst = 300;
+                spawnRate = 500;
+                break;
             case 3:
                 weaponRange = 1;
                 maxAliens = 3;
@@ -53,6 +57,16 @@ public class AlienBaseParameters {
                 floodLevel = 20;
                 attackRange = 1;
                 attackTimeAfterFirst = 300;
+                spawnRate = 500;
+                break;
+            default:
+                weaponRange = 1;
+                maxAliens = 3;
+                weaponType = "laser";
+                floodLevel = 20;
+                attackRange = 1;
+                attackTimeAfterFirst = 300;
+                spawnRate = 500;
         }
     }
 }

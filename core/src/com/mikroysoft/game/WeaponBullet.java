@@ -29,8 +29,11 @@ public class WeaponBullet extends BaseWeapon {
                 return null;
             }
             
+            resetCooldown();
+            
             // Spawn a new projectile
-            return new Projectile (new Coordinate(position.x, Gdx.graphics.getHeight() - position.y), target.position, true, ProjectileType.BULLET, (int) Math.round(currentClosestDist));
+            return new Projectile (new Coordinate(position.x, position.invertY().y), target.position, true, ProjectileType.BULLET, (int) Math.round(currentClosestDist));
+            
         
         // If we are not within firing rate, wait another frame
         } else {

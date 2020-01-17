@@ -63,7 +63,7 @@ public class Coordinate {
     }
     
     public Coordinate invertY() {
-        return new Coordinate(Gdx.graphics.getHeight() - y, x);
+        return new Coordinate(x, Gdx.graphics.getHeight() - y);
     }
     
     public boolean equals(Coordinate other) {

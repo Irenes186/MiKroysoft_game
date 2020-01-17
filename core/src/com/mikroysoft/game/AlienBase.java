@@ -80,7 +80,7 @@ public class AlienBase implements IRenderable {
         this.maxAliens = params.maxAliens;
         //this.weapon = params.weapon;
         //this.weapon = new WeaponLaser(params.weaponRange, position, TILEWIDTH, TILEHEIGHT);
-        this.weapon = new WeaponBullet(10, 1, "laser.png", position, TILEWIDTH, TILEHEIGHT);
+        this.weapon = new WeaponBullet(10, weaponRange, "laser.png", position, TILEWIDTH, TILEHEIGHT);
         this.health = params.floodLevel;
         this.attackRange = params.attackRange;
         this.attackTimeAfterFirst = params.attackTimeAfterFirst;
@@ -166,10 +166,10 @@ public class AlienBase implements IRenderable {
 		}
     	
     	// If no FireEngines were found in range, cooldown will not have been reduced.
-    	// Handle that, and dont't spawn anything.
-    	if (this.framesLeftUntilSpawn > 0) {
-			this.framesLeftUntilSpawn--;
-		}
+    	// dont't spawn anything.
+//    	if (this.framesLeftUntilSpawn > 0) {
+//			this.framesLeftUntilSpawn--;
+//		}
     	return null;
     }
 
