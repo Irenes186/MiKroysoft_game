@@ -55,6 +55,7 @@ public class AlienBaseParameters {
                 attackRange = 1;
                 attackTimeAfterFirst = 300;
                 spawnRate = 500;
+                break;
         }
     }
 }
