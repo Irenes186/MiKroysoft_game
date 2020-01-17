@@ -154,10 +154,10 @@ public class Map {
                         params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                         grid[row][col] = new AlienBase("Holgate Windmill", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Holgate-Windmill");
                         break;
-                    //Jorvick Viking Centre
-                    case "5":    
+                    //Jorvik Viking Centre
+                    case "5":
                         params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
-                        grid[row][col] = new AlienBase("Jorvick Viking Centre", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "viking");
+                        grid[row][col] = new AlienBase("Jorvik Viking Centre", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "viking");
                         break;
                     //York train station
                     case "6":

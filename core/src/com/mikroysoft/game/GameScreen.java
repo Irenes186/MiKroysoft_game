@@ -47,6 +47,7 @@ public class GameScreen implements Screen {
     Texture healthIcon;
     //ProgressBar icon fuel;
     Texture fuelIcon;
+
     //ProgressBar icon volume;
     Texture volumeIcon;
 
@@ -120,39 +121,19 @@ public class GameScreen implements Screen {
             }
             takenValuesOne[index] = randomValueOne;
 
-            fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT, new FireEngineParameters(i));
+            fireEngines[i] = new FireEngine(map, new FireEngineParameters(i));
             fireEngines[i].setPosition(map.getStationX() + 50 * i, map.getStationY() + 50);
-            //float acceleration = 0.00f;
-            //float maxSpeed = 0.00f;
-            //switch(randomValueOne) {
-            //    case 0:
-            //        acceleration = 0.10f;
-            //        maxSpeed = 1.00f;
-            //        break;
-            //    case 1:
-            //        acceleration = 0.50f;
-            //        maxSpeed = 2.00f;
-            //        break;
-            //    case 2:
-            //        acceleration = 0.01f;
-            //        maxSpeed = 0.05f;
-            //        break;
-            //    default:
-            //        acceleration = 0.10f;
-            //        maxSpeed = 2.00f;
-            //        break;
-            //}
-            //fireEngines[i].setSpeed(maxSpeed);
-            //fireEngines[i].setAcceleration(acceleration);
+
+            //fireEngines[i].setmaxPosition(); <-- what is this for?!
 
             //setting health stuff.
-            health[i] = new ProgressBar(1);
+            health[i] = new ProgressBar(BarColour.YELLOW);
             health[i].setDimensions(100, 10);
             health[i].setMax(fireEngines[i].maxHealth);
             health[i].updateCurrent(100);
 
             //setting fuel stuff.
-            fuel[i] = new ProgressBar(3);
+            fuel[i] = new ProgressBar(BarColour.PINK);
             fuel[i].setDimensions(100, 10);
             fuel[i].setMax(fireEngines[i].maxFuel);
             fuel[i].updateCurrent(100);
@@ -207,26 +188,11 @@ public class GameScreen implements Screen {
             //Setting volume attributes to the fire engine.
             fireEngines[i].setMaxVolume(maxVolume);
             fireEngines[i].setVolume(fireEngines[i].getMaxVolume());
-            volume[i] = new ProgressBar(2);
+            volume[i] = new ProgressBar(BarColour.BLUE);
             volume[i].setDimensions(100,10);
             volume[i].setMax(maxVolume);
             volume[i].updateCurrent(fireEngines[i].getVolume());
         }
-        //fireEngines[1] = new FireEngine();
-        //fireEngines[2] = new FireEngine();
-        //fireEngines[3] = new FireEngine();
-        //fireEngines[4] = new FireEngine();
-
-
-        //aliens = new Alien[1];
-        //aliens[0] = new Alien( new Coordinate(100, 100), 2, 2);
-
-        //health progress bar:
-        //health = new ProgressBar(1);
-        //health.setPosition(20,10);
-        //health.setDimensions(100,10);
-        //health.setMax(100);
-        //health.updateCurrent(100);
 
         //health icon - next to health progress bar.
         healthIcon = new Texture("health.png");
@@ -256,15 +222,18 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
+
         // Handle Alien spawning
         for (AlienBase base : this.bases) {
-            Alien newAlien = base.defend(this.fireEngines);
-            if (newAlien != null) {
-                this.aliens[nextAlien] = newAlien;
-                // Theoretically, this should never overflow due to the way i instantiated aliens.
-                nextAlien++;
-            }
+            //Alien newAlien = base.defend(this.fireEngines);
+            base.doWeaponFiring(fireEngines);
+            //if (newAlien != null) {
+            //    this.aliens[nextAlien] = newAlien;
+            //    // Theoretically, this should never overflow due to the way i instantiated aliens.
+            //    nextAlien++;
+            //}
         }
+        
         // This code is fucking awful, extract to a method
         Set <Projectile> currentProjectiles;
         Set <Projectile> removeProjectiles = new HashSet <Projectile>();
@@ -273,10 +242,10 @@ public class GameScreen implements Screen {
             for (AlienBase base : bases) {
                 currentProjectiles = base.getProjectileList();
                 for (Projectile projectile : currentProjectiles) {
-                    if (engine.rectangle.pointInRectangle(projectile.position)) {
+                    if (engine.getRect().pointInRectangle(projectile.position)) {
                         removeProjectiles.add(projectile);
                         //Add some collision bullshit like damage IDK
-                        base.takeDamage(engine.shotDamage);
+                        engine.takeDamage(engine.shotDamage);
                     }
                 }
 
@@ -285,16 +254,17 @@ public class GameScreen implements Screen {
             }
         }
 
-
         removeProjectiles.clear();
 
         for (AlienBase base : bases) {
             for (FireEngine engine : fireEngines) {
                 currentProjectiles = engine.getProjectileList();
                 for (Projectile projectile : currentProjectiles) {
-                    if (base.rectangle.pointInRectangle(projectile.position)) {
+                    if (base.getRect().pointInRectangle(projectile.position)) {
                         removeProjectiles.add(projectile);
+                        System.out.println("hit");
                         //Add some collision bullshit like damage IDK
+                        base.takeDamage(engine.shotDamage);
                     }
                 }
 
@@ -305,7 +275,6 @@ public class GameScreen implements Screen {
 
         batch.begin();
         map.render(batch);
-
 
         if (inputController.moving) {
             for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {
@@ -332,10 +301,6 @@ public class GameScreen implements Screen {
             //fuel
             batch.draw(fuel[barIndex].texture, fuel[barIndex].position.x, fuel[barIndex].position.y, fuel[barIndex].getFill(), fuel[barIndex].getHeight());
             batch.draw(fuelIcon, fuel[barIndex].position.x - (5 + fuel[barIndex].getHeight()), fuel[barIndex].position.y, fuel[barIndex].getHeight(), fuel[barIndex].getHeight());
-        }
-
-        for (Alien alien: aliens) {
-            //batch.draw(alien.texture, alien.position.x, Gdx.graphics.getHeight() - alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
         }
 
         //refill and repair
@@ -399,10 +364,10 @@ public class GameScreen implements Screen {
         }
 
 
-        // render aliens
+        // render and update aliens
         for (int i = 0; i < nextAlien; i++) {
-            Alien alien = aliens[i];
-            batch.draw(alien.texture, alien.position.x, alien.position.y, 40, 40, 40, 40, 1, 1, alien.direction, 0, 0, 16, 16, false, false);
+            aliens[i].update();;
+            aliens[i].render(batch);
         }
 
         // MAKE ALIEN SHOOT
@@ -476,4 +441,3 @@ public class GameScreen implements Screen {
 
     }
 }
-
