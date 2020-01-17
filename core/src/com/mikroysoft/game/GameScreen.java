@@ -291,9 +291,6 @@ public class GameScreen implements Screen {
 
         for (int barIndex = 0; barIndex < AMOUNT; barIndex++) {
 
-            System.out.print(barIndex);
-            System.out.println(fireEngines[barIndex].isDead());
-
             health[barIndex].updateCurrent(fireEngines[barIndex].health);
             fuel[barIndex].updateCurrent(fireEngines[barIndex].fuel);
             volume[barIndex].updateCurrent(fireEngines[barIndex].getVolume());
@@ -400,7 +397,7 @@ public class GameScreen implements Screen {
 
 
         for (AlienBase base : bases) {
-            if (base.health > 0) {
+            if (!base.isDead()) {
                 this.gameWon = false;
                 break;
             }
@@ -408,7 +405,6 @@ public class GameScreen implements Screen {
 
         if (this.gameWon) {
             //set screen Win
-            System.out.println("test");
             game.setScreen(new WinnerScreen(game));
         }
 

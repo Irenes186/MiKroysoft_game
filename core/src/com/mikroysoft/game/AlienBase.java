@@ -64,6 +64,8 @@ public class AlienBase implements IRenderable {
     // projectiles fired by the base
     private Set <Projectile> projectiles;
 
+    private boolean dead;
+
     /* Constructor.
      * name - String - name of the base for debugging purposes
      * params - AlienBaseParameters - various properties and behaviour of this base
@@ -95,6 +97,7 @@ public class AlienBase implements IRenderable {
         projectiles = new HashSet<Projectile>();
         this.rectangle = new Rectangle (new Coordinate (position.x + TILEWIDTH / 2, position.y + TILEHEIGHT / 2), TILEWIDTH, TILEHEIGHT, 0);
         this.aliens = new ArrayList<Alien>();
+        this.dead = false;
     }
 
     /* Increase aggression of base.
@@ -207,9 +210,9 @@ public class AlienBase implements IRenderable {
     }
 
     public void takeDamage (int damage) {
-        System.out.println (this.health);
-        if (damage > this.health) {
+        if (damage >= this.health) {
             this.health = 0;
+            this.dead = true;
         } else {
             this.health -= damage;
         }
@@ -247,5 +250,9 @@ public class AlienBase implements IRenderable {
         if (health == 0) {
             this.texture = new Texture ("soggy-" + tex + ".png");
         }
+    }
+    
+    public boolean isDead() {
+        return dead;
     }
 }
