@@ -122,28 +122,6 @@ public class GameScreen implements Screen {
 
             fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT, new FireEngineParameters(i));
             fireEngines[i].setPosition(map.getStationX() + 50 * i, map.getStationY() + 50);
-            //float acceleration = 0.00f;
-            //float maxSpeed = 0.00f;
-            //switch(randomValueOne) {
-            //    case 0:
-            //        acceleration = 0.10f;
-            //        maxSpeed = 1.00f;
-            //        break;
-            //    case 1:
-            //        acceleration = 0.50f;
-            //        maxSpeed = 2.00f;
-            //        break;
-            //    case 2:
-            //        acceleration = 0.01f;
-            //        maxSpeed = 0.05f;
-            //        break;
-            //    default:
-            //        acceleration = 0.10f;
-            //        maxSpeed = 2.00f;
-            //        break;
-            //}
-            //fireEngines[i].setSpeed(maxSpeed);
-            //fireEngines[i].setAcceleration(acceleration);
 
             //setting health stuff.
             health[i] = new ProgressBar(1);
