@@ -39,7 +39,7 @@ public class FireEngine {
     int cellX, cellY;
     public Rectangle rectangle;
 
-    
+
     public FireEngine(Map map, FireEngineParameters parameters) {
         texture = new Texture("fireengine.png");
         position = new Coordinate(300,300);
@@ -59,43 +59,43 @@ public class FireEngine {
         range = 500;
         this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y + map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
     }
-	
+
     public void increaseSpeed() {
-    	this.speed = this.speed + this.acceleration;
+        this.speed = this.speed + this.acceleration;
 
         if (this.speed >= this.maxSpeed) {
             this.speed = this.maxSpeed;
         }
     }
     public void resetSpeed() {
-    	this.speed = 0;
+        this.speed = 0;
     }
     public void setSpeed(float s) {
-    	this.maxSpeed = s;
+        this.maxSpeed = s;
     }
-    
+
     public void setAcceleration(float a) {
-    	this.acceleration = a;
+        this.acceleration = a;
     }
     public void setPosition(int x, int y) {
         position.x = x;
         position.y = y;
     }
-    
+
     public void setMaxVolume(int v) {
-    	maxVolume = v;
+        maxVolume = v;
     }
     public void setVolume(int v) {
-    	this.waterVolume = v;
+        this.waterVolume = v;
     }
     public int getMaxVolume() {
-    	return this.maxVolume;
+        return this.maxVolume;
     }
     public int getVolume() {
-    	return this.waterVolume;
+        return this.waterVolume;
     }
     public void reduceVolume() {
-    	this.waterVolume = this.waterVolume - 1;
+        this.waterVolume = this.waterVolume - 1;
     }
     public void repair() {
         this.health += 1;
@@ -104,7 +104,7 @@ public class FireEngine {
         this.fuel += 1;
     }
     public void refillVolume() {
-    	this.waterVolume += 1;
+        this.waterVolume += 1;
     }
 
     public boolean isMaxHealth() {
@@ -122,13 +122,13 @@ public class FireEngine {
             return false;
         }
     }
-    
+
     public boolean isMaxVolume() {
-    	if(this.waterVolume == this.maxVolume) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+        if(this.waterVolume == this.maxVolume) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getFuel() {
@@ -171,7 +171,7 @@ public class FireEngine {
         if (xThreshold && yThreshold) {
             return;
         }
-        
+
         cellX = (int) Math.floor(position.x / map.TILEWIDTH);
         cellY = (int) Math.floor(position.y / map.TILEHEIGHT) + 1;
         if (cellX < 0 || cellY < 0 || map.MAPWIDTH <= cellX || map.MAPHEIGHT <= cellY || !(map.grid[cellY][cellX] instanceof Road)) {
@@ -219,7 +219,7 @@ public class FireEngine {
         }
         projectiles.removeAll(removeProjectiles);
     }
-    
+
     public Rectangle getRect() {
         if (this.rectangle == null) {
             throw new NullPointerException("Fire engine rectangle not initialized before use in collisions");
