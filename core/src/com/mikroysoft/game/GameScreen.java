@@ -35,14 +35,6 @@ public class GameScreen implements Screen {
     boolean gameWon;
     boolean gameLoss;
 
-    Texture buttonTexture;
-    TextureRegion textureRegion;
-    TextureRegionDrawable textureRegionDrawable;
-    ImageButton backMenuButton;
-    Stage stage;
-    BitmapFont font;
-    Label instructionTitle;
-
     Map map;
     int MAPWIDTH;
     int MAPHEIGHT;
@@ -68,30 +60,11 @@ public class GameScreen implements Screen {
         //BUTTON WONT WORK AFTER GAME STARTED - worth even having??
         //Button image set up
         this.game = game;
-        buttonTexture = new Texture("planet_button_1.png");
-        textureRegion = new TextureRegion(buttonTexture);
-        textureRegionDrawable = new TextureRegionDrawable(textureRegion);
-        //add different buttons
-        backMenuButton = new ImageButton(textureRegionDrawable);
+
         //variables for screen size and button size
         float screenWidth = 1024, screenHeight = 1024;
         float buttonWidth = screenWidth * 0.08f, buttonHeight = screenHeight * 0.08f;
-        //set stage
-        stage = new Stage();//Set up a stage for the ui
-        stage.addActor(backMenuButton);
-        Gdx.input.setInputProcessor(stage);
-        //playButton position ans size
-        backMenuButton.setSize(buttonWidth, buttonHeight);
-        backMenuButton.setPosition(10, 5);
-        backMenuButton.getImage().setFillParent(true);
-        //if instructionButton clicked go to instruction
-        backMenuButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                //super.clicked(event, x, y);
-                game.setScreen(new Menu(game));
-            }
-        });
+
         create();
     }
 
@@ -147,31 +120,30 @@ public class GameScreen implements Screen {
             }
             takenValuesOne[index] = randomValueOne;
 
-            fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT);
+            fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT, new FireEngineParameters(i));
             fireEngines[i].setPosition(map.getStationX() + 50 * i, map.getStationY() + 50);
-            float acceleration = 0.00f;
-            float maxSpeed = 0.00f;
-            switch(randomValueOne) {
-                case 0:
-                    acceleration = 0.10f;
-                    maxSpeed = 1.00f;
-                    break;
-                case 1:
-                    acceleration = 0.50f;
-                    maxSpeed = 2.00f;
-                    break;
-                case 2:
-                    acceleration = 0.01f;
-                    maxSpeed = 0.05f;
-                    break;
-                default:
-                    acceleration = 0.10f;
-                    maxSpeed = 2.00f;
-                    break;
-            }
-            fireEngines[i].setSpeed(maxSpeed);
-            fireEngines[i].setAcceleration(acceleration);
-            //fireEngines[i].setmaxPosition(); <-- what is this for?!
+            //float acceleration = 0.00f;
+            //float maxSpeed = 0.00f;
+            //switch(randomValueOne) {
+            //    case 0:
+            //        acceleration = 0.10f;
+            //        maxSpeed = 1.00f;
+            //        break;
+            //    case 1:
+            //        acceleration = 0.50f;
+            //        maxSpeed = 2.00f;
+            //        break;
+            //    case 2:
+            //        acceleration = 0.01f;
+            //        maxSpeed = 0.05f;
+            //        break;
+            //    default:
+            //        acceleration = 0.10f;
+            //        maxSpeed = 2.00f;
+            //        break;
+            //}
+            //fireEngines[i].setSpeed(maxSpeed);
+            //fireEngines[i].setAcceleration(acceleration);
 
             //setting health stuff.
             health[i] = new ProgressBar(1);
@@ -392,9 +364,6 @@ public class GameScreen implements Screen {
                 fireEngines[engineSelected].distanceIncreased();
                 fireEngines[engineSelected].fuelReduce();
             }
-            if(!fireEngines[engineSelected].isMaxSpeed()) {
-                fireEngines[engineSelected].increaseSpeed();
-            }
             fireEngines[engineSelected].move(inputController.getLatestPosition());
         } else {
             for(int z = 0; z < AMOUNT; z = z + 1) {
@@ -470,14 +439,6 @@ public class GameScreen implements Screen {
                 break;
             }
         }
-
-
-
-        //INCASE BUTTON WANTED IDK - probs not
-        //draw stage with actors // back button
-        stage.act(Gdx.graphics.getDeltaTime());
-        stage.draw();
-
 
         if (this.gameWon) {
             //set screen Win
