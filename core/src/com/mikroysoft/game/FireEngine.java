@@ -1,15 +1,21 @@
 package com.mikroysoft.game;
 
+// LibGDX Imports
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
-
+// Java Imports
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
-
 import java.util.Enumeration;
 import java.lang.Math;
 
+/* This class represents the player-controlled Fire Engines.
+ * FireEngines can be moved by dragging with the mouse along a road. TODO: Constrain momement to roads
+ * FireEngines have finite fuel, health, and water supplies. All are refilled over time when within range of a FireStation.
+ */
 public class FireEngine {
     private int waterVolume;
     private float speed;
@@ -28,10 +34,13 @@ public class FireEngine {
     public int distanceTravelled;
     public int shotDamage;
     public float direction;
+    Map map;
+    //
+    int cellX, cellY;
     public Rectangle rectangle;
 
-
-    public FireEngine(int MAPWIDTH, int MAPHEIGHT, FireEngineParameters parameters) {
+    
+    public FireEngine(Map map, FireEngineParameters parameters) {
         texture = new Texture("fireengine.png");
         position = new Coordinate(300,300);
         projectiles = new HashSet < Projectile> ();
@@ -46,7 +55,9 @@ public class FireEngine {
         maxHealth = 100;
         maxVolume = 100;
         waterVolume = 100;
+        this.map = map;
         range = 500;
+        this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y - map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
     }
 	
     public void increaseSpeed() {
@@ -135,7 +146,7 @@ public class FireEngine {
     public Coordinate getPosition() {
         return position;
     }
-    public void damage(int amount) {
+    public void takeDamage(int amount) {
         health -= amount;
     }
     public void move(Coordinate input) {
@@ -149,7 +160,7 @@ public class FireEngine {
         //TODO: Add moving rules
         if (input.x == -1){ return;}
 
-        // TODO: I thought we agreed to ufse floats?
+        // TODO: I thought we agreed to use floats?
 
         double xSign = java.lang.Math.signum(input.x - position.x);
         double ySign = java.lang.Math.signum(input.y - position.y);
@@ -160,9 +171,17 @@ public class FireEngine {
         if (xThreshold && yThreshold) {
             return;
         }
+        
+        cellX = (int) Math.floor(position.x / map.TILEWIDTH);
+        cellY = (int) Math.floor(position.y / map.TILEHEIGHT) + 1;
+        if (cellX < 0 || cellY < 0 || map.MAPWIDTH <= cellX || map.MAPHEIGHT <= cellY || !(map.grid[cellY][cellX] instanceof Road)) {
+            position.x += xSign * (speed / 2);
+            position.y += ySign * (speed / 2);
+        } else {
+            position.x += xSign * speed;
+            position.y += ySign * speed;
+        }
 
-        position.x += xSign * speed;
-        position.y += ySign * speed;
         direction = (float) Math.toDegrees(Math.atan2((input.y - position.y) * -1, input.x - position.x)) - 90;
 
         this.speed = tempspeed;
@@ -179,7 +198,7 @@ public class FireEngine {
     }
 
     public void shoot(Coordinate destination) {
-        projectiles.add(new Projectile (position, destination, false, range));
+        projectiles.add(new Projectile (position, destination, false, ProjectileType.WATER, range));
     }
 
     public Set <Projectile> getProjectileList() {
@@ -199,7 +218,12 @@ public class FireEngine {
             }
         }
         projectiles.removeAll(removeProjectiles);
-
-
+    }
+    
+    public Rectangle getRect() {
+        if (this.rectangle == null) {
+            throw new NullPointerException("Fire engine rectangle not initialized before use in collisions");
+        }
+        return this.rectangle;
     }
 }

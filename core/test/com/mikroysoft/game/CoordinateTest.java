@@ -11,6 +11,13 @@ public class CoordinateTest {
         float result = pointOne.distanceTo(pointTwo);
         assertEquals(Math.sqrt(800), result, 0.1);
     }
+    
+    @Test
+    public void testCellDistanceTo() {
+        Coordinate pointOne = new Coordinate(20, 20);
+        Coordinate pointTwo = new Coordinate(80, 20);
+        assertEquals(pointOne.cellDistanceTo(pointTwo, 20, 20), 3);
+    }
 
     @Test
     public void testtoString(){

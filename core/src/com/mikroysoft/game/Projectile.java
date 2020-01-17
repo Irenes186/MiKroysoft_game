@@ -14,16 +14,22 @@ public class Projectile {
     public boolean ally;
     private Coordinate start;
     private int range;
+    ProjectileType type;
 
-    public Projectile (Coordinate source, Coordinate destination, boolean friendly, int range) {
+    public Projectile (Coordinate source, Coordinate destination, boolean friendly, ProjectileType type, int range) {
         float length = (float) Math.sqrt(Math.pow(destination.y - source.y, 2) + Math.pow(destination.x - source.x, 2));
         speed = 5;
         length /= speed;
-
-        if (friendly) {
-            texture = new Texture("water_drop.png");
-        }else {
-            texture = new Texture("water_drop.png");
+        
+        switch (type) {
+        	case WATER:
+        		texture = new Texture("water_drop.png");
+        		break;
+        	case BULLET:
+        		texture = new Texture("bullet.png");
+        		break;
+        	default:
+        		throw new IllegalArgumentException("Requested projectile type '" + type + "' which has not yet been implemeneted");
         }
 
         directionX = (destination.x - source.x)/length; 
@@ -32,6 +38,7 @@ public class Projectile {
         ally = friendly;
         start = new Coordinate (source.x, source.y);
         this.range = range;
+        this.type = type;
     }
 
     public void render(SpriteBatch batch) {
@@ -44,6 +51,12 @@ public class Projectile {
 
         return (start.distanceTo(position) < range);
 
+    }
+    
+    public boolean equals(Projectile other) {
+        return directionX == other.directionX && directionY == other.directionY && speed == other.speed && 
+                position == other.position && damage == other.damage && ally == other.ally && 
+                start == other.start && range == other.range && type == other.type; 
     }
 
 }

@@ -12,15 +12,19 @@ public class ProgressBar {
     private boolean visible;
     private int barFill;
 
-    public ProgressBar(int type) {
-        if (type == 1) {
-            texture = new Texture("bar_01.png");
-        }
-        else if (type == 2) {
-            texture = new Texture("bar_02.png");
-        }
-        else if (type == 3) {
-            texture = new Texture("bar_03.png");
+    public ProgressBar(BarColour colour) {
+        switch (colour) {
+            case YELLOW:
+                texture = new Texture("bar_01.png");
+                break;
+            case BLUE:
+                texture = new Texture("bar_02.png");
+                break;
+            case PINK:
+                texture = new Texture("bar_03.png");
+                break;
+            default:
+                throw new IllegalArgumentException ("ProgressBar given unsupported BarColour: " + colour);
         }
         height = 0;
         width = 0;
