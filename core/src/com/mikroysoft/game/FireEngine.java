@@ -67,16 +67,27 @@ public class FireEngine {
             this.speed = this.maxSpeed;
         }
     }
+    
     public void resetSpeed() {
         this.speed = 0;
     }
+    
     public void setSpeed(float s) {
         this.maxSpeed = s;
+    }
+    
+    public float getSpeed() {
+        return speed;
     }
 
     public void setAcceleration(float a) {
         this.acceleration = a;
     }
+    
+    public float getAcceleration() {
+        return acceleration;
+    }
+    
     public void setPosition(int x, int y) {
         position.x = x;
         position.y = y;
@@ -85,24 +96,35 @@ public class FireEngine {
     public void setMaxVolume(int v) {
         maxVolume = v;
     }
+    
     public void setVolume(int v) {
         this.waterVolume = v;
     }
+    
     public int getMaxVolume() {
         return this.maxVolume;
     }
+    
     public int getVolume() {
         return this.waterVolume;
     }
+    
     public void reduceVolume() {
-        this.waterVolume = this.waterVolume - 1;
+        if (waterVolume > 0) {
+            waterVolume--;
+        }
     }
+    
     public void repair() {
-        this.health += 1;
+        if (health < maxHealth) {
+            health++;
+        }
     }
+    
     public void refillFuel() {
         this.fuel += 1;
     }
+    
     public void refillVolume() {
         this.waterVolume += 1;
     }
@@ -134,9 +156,11 @@ public class FireEngine {
     public int getFuel() {
         return this.fuel;
     }
+    
     public void distanceIncreased() {
-        distanceTravelled = distanceTravelled + 1;
+        distanceTravelled++;
     }
+    
     public void fuelReduce() {
         if(distanceTravelled % 5 == 0) {
             fuel -= 1;
@@ -146,9 +170,11 @@ public class FireEngine {
     public Coordinate getPosition() {
         return position;
     }
+    
     public void takeDamage(int amount) {
         health -= amount;
     }
+    
     public void move(Coordinate input) {
         increaseSpeed();
         float tempspeed = speed;

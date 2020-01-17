@@ -12,6 +12,6 @@ public class AlienBaseTest {
         alienBase.health = 12;
         alienBase.takeDamage(damage);
         int result = alienBase.getHealth();
-        assertEquals(2, result);
+        assertEquals(2, result, 0.1);
     }
 }
