@@ -141,32 +141,32 @@ public class Map {
                         break;
                     // Clifford's tower
                     case "2":
-                        params = new AlienBaseParameters();
+                        params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                         grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "cliffords-tower");
                         break;
                     // Aldi
                     case "3":
-                        params = new AlienBaseParameters();
+                        params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                         grid[row][col] = new AlienBase("Aldi", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "aldi");
                         break;
                     // Holgate Windmill
                     case "4":
-                        params = new AlienBaseParameters();
+                        params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                         grid[row][col] = new AlienBase("Holgate Windmill", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "Holgate-Windmill");
                         break;
                     //Jorvik Viking Centre
-                    case "5":    
+                    case "5":
                         params = new AlienBaseParameters();
                         grid[row][col] = new AlienBase("Jorvik Viking Centre", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "viking");
                         break;
                     //York train station
                     case "6":
-                    	params = new AlienBaseParameters();
+                        params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                     	grid[row][col] = new AlienBase("York Station", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "york_station");
                     	break;
                    //York City FC stadium
                     case "7":
-                    	params = new AlienBaseParameters();
+                        params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                     	grid[row][col] = new AlienBase("York City FC", params, new Coordinate(col * TILEWIDTH, (MAPHEIGHT-row) * TILEHEIGHT), TILEWIDTH, TILEHEIGHT, "york_city_fc");
                     	break;
                 }

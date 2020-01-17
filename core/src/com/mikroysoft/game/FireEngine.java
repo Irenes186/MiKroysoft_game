@@ -39,15 +39,15 @@ public class FireEngine {
     int cellX, cellY;
     public Rectangle rectangle;
 
-
-    public FireEngine(Map map) {
+    
+    public FireEngine(Map map, FireEngineParameters parameters) {
         texture = new Texture("fireengine.png");
         position = new Coordinate(300,300);
         projectiles = new HashSet < Projectile> ();
         direction = 0;
         speed = 0;
-        maxSpeed = 0;
-        acceleration = 0;
+        maxSpeed = parameters.maxSpeed;
+        acceleration = parameters.acceleration;
         health = 100;
         fuel = 100;
         distanceTravelled = 0;
@@ -60,16 +60,12 @@ public class FireEngine {
         this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y - map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
     }
 	
-    public boolean isMaxSpeed() {
-    	if(this.speed == this.maxSpeed) {
-    		return true;
-    	} else {
-    		return false;
-    	}
-    }
-    
     public void increaseSpeed() {
     	this.speed = this.speed + this.acceleration;
+
+        if (this.speed >= this.maxSpeed) {
+            this.speed = this.maxSpeed;
+        }
     }
     public void resetSpeed() {
     	this.speed = 0;
@@ -154,6 +150,7 @@ public class FireEngine {
         health -= amount;
     }
     public void move(Coordinate input) {
+        increaseSpeed();
         float tempspeed = speed;
         if (fuel == 0) {
             tempspeed = speed;
@@ -186,6 +183,7 @@ public class FireEngine {
         }
 
         direction = (float) Math.toDegrees(Math.atan2((input.y - position.y) * -1, input.x - position.x)) - 90;
+
         this.speed = tempspeed;
     }
 

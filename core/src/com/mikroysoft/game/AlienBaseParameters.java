@@ -29,4 +29,30 @@ public class AlienBaseParameters {
         attackTimeAfterFirst = 300;
         spawnRate = 500;
     }
+
+    public AlienBaseParameters(int baseIndex) {
+        switch(baseIndex){
+            case 1:
+                weaponRange = 1;
+                maxAliens = 3;
+                weaponType = "laser";
+                floodLevel = 20;
+                attackRange = 1;
+                attackTimeAfterFirst = 300;
+            case 2:
+                weaponRange = 1;
+                maxAliens = 3;
+                weaponType = "laser";
+                floodLevel = 20;
+                attackRange = 1;
+                attackTimeAfterFirst = 300;
+            case 3:
+                weaponRange = 1;
+                maxAliens = 3;
+                weaponType = "laser";
+                floodLevel = 20;
+                attackRange = 1;
+                attackTimeAfterFirst = 300;
+        }
+    }
 }

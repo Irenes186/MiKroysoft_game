@@ -7,7 +7,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.Random;
 import java.util.HashSet;
@@ -23,6 +31,9 @@ public class GameScreen implements Screen {
     ProgressBar[] fuel;
     ProgressBar[] volume;
     int engineSelected;
+
+    boolean gameWon;
+    boolean gameLoss;
 
     Map map;
     int MAPWIDTH;
@@ -45,7 +56,16 @@ public class GameScreen implements Screen {
     int nextAlien;
     AlienBase[] bases;
 
-    public GameScreen(Game game) {
+    public GameScreen(final Game game) {
+
+        //BUTTON WONT WORK AFTER GAME STARTED - worth even having??
+        //Button image set up
+        this.game = game;
+
+        //variables for screen size and button size
+        float screenWidth = 1024, screenHeight = 1024;
+        float buttonWidth = screenWidth * 0.08f, buttonHeight = screenHeight * 0.08f;
+
         create();
     }
 
@@ -101,7 +121,7 @@ public class GameScreen implements Screen {
             }
             takenValuesOne[index] = randomValueOne;
 
-            fireEngines[i] = new FireEngine(map);
+            fireEngines[i] = new FireEngine(map, new FireEngineParameters());
             fireEngines[i].setPosition(map.getStationX() + 50, map.getStationY() + 50);
             float acceleration = 0.00f;
             float maxSpeed = 0.00f;
@@ -237,6 +257,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         // Handle Alien spawning
         for (AlienBase base : this.bases) {
             Alien newAlien = base.defend(this.fireEngines);
@@ -287,6 +308,7 @@ public class GameScreen implements Screen {
 
         batch.begin();
         map.render(batch);
+
 
         if (inputController.moving) {
             for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {
@@ -340,9 +362,6 @@ public class GameScreen implements Screen {
             if (fireEngines[engineSelected].getFuel() > 0) {
                 fireEngines[engineSelected].distanceIncreased();
                 fireEngines[engineSelected].fuelReduce();
-            }
-            if(!fireEngines[engineSelected].isMaxSpeed()) {
-                fireEngines[engineSelected].increaseSpeed();
             }
             fireEngines[engineSelected].move(inputController.getLatestPosition());
         } else {
@@ -402,29 +421,33 @@ public class GameScreen implements Screen {
         //ends batch.
         batch.end();
 
-        boolean gameWon = true;
-        boolean gameLoss = true;
+        this.gameWon = true;
+        this.gameLoss = true;
 
         for (FireEngine engine : fireEngines) {
             if (engine.health > 0) {
-                gameLoss = false;
+                this.gameLoss = false;
                 break;
             }
         }
+
 
         for (AlienBase base : bases) {
             if (base.health > 0) {
-                gameWon = false;
+                this.gameWon = false;
                 break;
             }
         }
 
-        if (gameWon) {
+        if (this.gameWon) {
             //set screen Win
+            System.out.println("test");
+            game.setScreen(new WinnerScreen(game));
         }
 
-        if (gameLoss) {
+        if (this.gameLoss) {
             //set lose screen
+            game.setScreen(new LoserScreen(game));
         }
     }
 
