@@ -57,7 +57,7 @@ public class FireEngine {
         waterVolume = 100;
         this.map = map;
         range = 500;
-        this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y - map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
+        this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y + map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
     }
 	
     public void increaseSpeed() {
