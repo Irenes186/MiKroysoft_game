@@ -164,10 +164,10 @@ public class AlienBase implements IRenderable {
 		}
     	
     	// If no FireEngines were found in range, cooldown will not have been reduced.
-    	// Handle that, and dont't spawn anything.
-    	if (this.framesLeftUntilSpawn > 0) {
-			this.framesLeftUntilSpawn--;
-		}
+    	// dont't spawn anything.
+//    	if (this.framesLeftUntilSpawn > 0) {
+//			this.framesLeftUntilSpawn--;
+//		}
     	return null;
     }
 

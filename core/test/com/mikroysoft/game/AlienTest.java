@@ -10,7 +10,7 @@ public class AlienTest {
     public void testMove() {
         Alien alien = new Alien(new Coordinate(1, 1), 1, 1);
         alien.move();
-        assertThat(new Coordinate(1, 1), not(equalTo(alien.getLatestPosition())));
+        assertNotEquals(new Coordinate(1, 1), alien.getLatestPosition());
     }
     
     @Test
