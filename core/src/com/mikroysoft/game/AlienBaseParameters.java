@@ -13,12 +13,29 @@ public class AlienBaseParameters {
     public int attackTimeAfterFirst;
     // DEFAULTS
     // UPDATE AS NEEDED
-    public AlienBaseParameters() {
-        weaponRange = 1;
-        maxAliens = 3;
-        weaponType = "laser";
-        floodLevel = 20;
-        attackRange = 1;
-        attackTimeAfterFirst = 300;
+    public AlienBaseParameters(int baseIndex) {
+        switch(baseIndex){
+            case 1:
+                weaponRange = 1;
+                maxAliens = 3;
+                weaponType = "laser";
+                floodLevel = 20;
+                attackRange = 1;
+                attackTimeAfterFirst = 300;
+            case 2:
+                weaponRange = 1;
+                maxAliens = 3;
+                weaponType = "laser";
+                floodLevel = 20;
+                attackRange = 1;
+                attackTimeAfterFirst = 300;
+            case 3:
+                weaponRange = 1;
+                maxAliens = 3;
+                weaponType = "laser";
+                floodLevel = 20;
+                attackRange = 1;
+                attackTimeAfterFirst = 300;
+        }
     }
 }

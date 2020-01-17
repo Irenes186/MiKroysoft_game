@@ -147,31 +147,30 @@ public class GameScreen implements Screen {
             }
             takenValuesOne[index] = randomValueOne;
 
-            fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT);
+            fireEngines[i] = new FireEngine(MAPWIDTH, MAPHEIGHT, new FireEngineParameters(i));
             fireEngines[i].setPosition(map.getStationX() + 50 * i, map.getStationY() + 50);
-            float acceleration = 0.00f;
-            float maxSpeed = 0.00f;
-            switch(randomValueOne) {
-                case 0:
-                    acceleration = 0.10f;
-                    maxSpeed = 1.00f;
-                    break;
-                case 1:
-                    acceleration = 0.50f;
-                    maxSpeed = 2.00f;
-                    break;
-                case 2:
-                    acceleration = 0.01f;
-                    maxSpeed = 0.05f;
-                    break;
-                default:
-                    acceleration = 0.10f;
-                    maxSpeed = 2.00f;
-                    break;
-            }
-            fireEngines[i].setSpeed(maxSpeed);
-            fireEngines[i].setAcceleration(acceleration);
-            //fireEngines[i].setmaxPosition(); <-- what is this for?!
+            //float acceleration = 0.00f;
+            //float maxSpeed = 0.00f;
+            //switch(randomValueOne) {
+            //    case 0:
+            //        acceleration = 0.10f;
+            //        maxSpeed = 1.00f;
+            //        break;
+            //    case 1:
+            //        acceleration = 0.50f;
+            //        maxSpeed = 2.00f;
+            //        break;
+            //    case 2:
+            //        acceleration = 0.01f;
+            //        maxSpeed = 0.05f;
+            //        break;
+            //    default:
+            //        acceleration = 0.10f;
+            //        maxSpeed = 2.00f;
+            //        break;
+            //}
+            //fireEngines[i].setSpeed(maxSpeed);
+            //fireEngines[i].setAcceleration(acceleration);
 
             //setting health stuff.
             health[i] = new ProgressBar(1);
@@ -391,9 +390,6 @@ public class GameScreen implements Screen {
             if (fireEngines[engineSelected].getFuel() > 0) {
                 fireEngines[engineSelected].distanceIncreased();
                 fireEngines[engineSelected].fuelReduce();
-            }
-            if(!fireEngines[engineSelected].isMaxSpeed()) {
-                fireEngines[engineSelected].increaseSpeed();
             }
             fireEngines[engineSelected].move(inputController.getLatestPosition());
         } else {
