@@ -1,19 +1,19 @@
 package com.mikroysoft.game;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
+import java.util.HashSet;
 
 public class FireEngineTest {
     Map map;
     FireEngine truck;
     
-    @Before
+    @BeforeClass
     public void makeMap() {
         map = new Map(20, 20, "background");
     }
     
-    @BeforeClass
+    @Before
     public void makeTruck() {
         truck = new FireEngine(map, new FireEngineParameters(1));
     }
@@ -73,14 +73,41 @@ public class FireEngineTest {
     
     @Test
     public void testReduceFuel() {
-        truck.reduceVolume();
-        assertEquals(truck.getVolume(), truck.getMaxFuel(), 0.1);
+        truck.distanceIncreased();
+        truck.fuelReduce();
+        assertNotEquals(truck.getFuel(), truck.getMaxFuel(), 0.1);
+    }
+    
+    @Test
+    public void testRefuel() {
+        truck.distanceIncreased();
+        truck.fuelReduce();
+        assertNotEquals(truck.getFuel(), truck.getMaxFuel(), 0.1);
     }
     
     @Test
     public void testMove() {
         truck.setPosition(0, 0);
         truck.move(new Coordinate(1, 1));
-        assertNotEquals(truck.getPosition(), new Coordinate(0, 0), 0.1);
+        assertNotEquals(truck.getPosition(), new Coordinate(0, 0));
+    }
+    
+    @Test
+    public void testMoveReduceFuel() {
+        truck.setPosition(0, 0);
+        truck.move(new Coordinate(1, 1));
+        assertNotEquals(truck.getFuel(), truck.getMaxFuel(), 0.1);
+    }
+    
+    @Test
+    public void testStartNoProjectiles() {
+        assertEquals(truck.getProjectileList(), new HashSet<Projectile>());
+    }
+    
+    @Test
+    public void testShootProjectile() {
+        truck.setPosition(0, 0);
+        truck.shoot(new Coordinate(1, 1));
+        assertNotEquals(truck.getProjectileList(), new HashSet<Projectile>());
     }
 }
