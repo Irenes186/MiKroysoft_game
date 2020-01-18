@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 /* Lasers have no cooldown and perfect aim, but take time to move aim towards a target,
  * meaning they are easy to evade.
  * Shhhhh... super secret strat: have 2 trucks at different positions around a laser tower, rotating each one in and out of range. Since aim can only move so fast, it's possible to avoid getting hit all together!
+ * 
+ * WARNING: CLASS NOT CURRENTLY FUNCTIONAL
  */
 public class WeaponLaser extends BaseWeapon {
     // The angle in which the weapon is currently facing.

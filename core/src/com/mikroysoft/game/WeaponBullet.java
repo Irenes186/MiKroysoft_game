@@ -30,7 +30,7 @@ public class WeaponBullet extends BaseWeapon {
             resetCooldown();
             
             // Spawn a new projectile
-            return new Projectile (new Coordinate(position.x, position.invertY().y), target.position, true, ProjectileType.BULLET, (int) Math.round(currentClosestDist));
+            return new Projectile (new Coordinate(position.x, position.invertY().y), target.position, ProjectileType.BULLET, (int) Math.round(currentClosestDist));
             
         
         // If we are not within firing rate, wait another frame
@@ -46,7 +46,7 @@ public class WeaponBullet extends BaseWeapon {
             resetCooldown();
             
             // Spawn a new projectile
-            return new Projectile (new Coordinate(position.x, position.y), destination, true, ProjectileType.WATER, range);
+            return new Projectile (new Coordinate(position.x, position.y), destination, ProjectileType.WATER, range);
             
         
         // If we are not within firing rate, wait another frame

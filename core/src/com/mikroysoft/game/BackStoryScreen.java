@@ -19,8 +19,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class BackStoryScreen implements Screen {
     SpriteBatch batch;
-    CoreLogic coreLogic;
-    InputController inputController;
     Game game;
     Texture buttonTexture;
     TextureRegion textureRegion;
@@ -83,7 +81,6 @@ public class BackStoryScreen implements Screen {
         backMenuButton.getImage().setFillParent(true);
 
         textFileString = Gdx.files.internal("lore.txt").readString();
-
     }
     
     private Label.LabelStyle makeLabelStyle(Color textColour) {
@@ -94,7 +91,7 @@ public class BackStoryScreen implements Screen {
     }
     
     private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
-        backMenuButton.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
+        button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
     }
 
     @Override
@@ -116,7 +113,7 @@ public class BackStoryScreen implements Screen {
     }
 
     @Override
-    public void resize(int i, int i1) {System.out.println("resized " + i + " " + i1);}
+    public void resize(int i, int i1) {}
 
     @Override
     public void pause() { }

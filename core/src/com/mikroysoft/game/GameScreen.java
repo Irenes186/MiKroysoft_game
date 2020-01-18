@@ -26,9 +26,6 @@ public class GameScreen implements Screen {
     // used to track the farthest-left empty cell in the aliens array.
     int nextAlien;
     AlienBase[] bases;
-    
-    boolean gameWon;
-    boolean gameLoss;
 
     Map map;
     FireStation fireStation;
@@ -173,99 +170,60 @@ public class GameScreen implements Screen {
         }
 
         if (inputController.moving) {
-            for (int engineIndex = 0; engineIndex < Util.NUMFIREENGINES; engineIndex++) {
-                double distance = Math.sqrt(Math.pow(inputController.position.x - fireEngines[engineIndex].position.x, 2) + Math.pow(inputController.position.y - fireEngines[engineIndex].position.y, 2));
-                if (!fireEngines[engineIndex].isDead() && distance < 40) {
-                    engineSelected = engineIndex;
-                    break;
-                }
+            selectFireEngine();
+            
+            if (fireEngines[engineSelected].getFuel() > 0) {
+                fireEngines[engineSelected].distanceIncreased();
+            }
+            fireEngines[engineSelected].move(inputController.getLatestPosition());
+            
+        } else {
+            for(int z = 0; z < Util.NUMFIREENGINES; z = z + 1) {
+                fireEngines[z].resetSpeed();
             }
         }
-
-        for (int barIndex = 0; barIndex < Util.NUMFIREENGINES; barIndex++) {
-
-            health[barIndex].updateCurrent(fireEngines[barIndex].health);
-            fuel[barIndex].updateCurrent(fireEngines[barIndex].fuel);
-            volume[barIndex].updateCurrent(fireEngines[barIndex].getVolume());
-            health[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 10);
-            fuel[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 25);
-            volume[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 40);
-
-        }
-
-        //refill and repair
-        for (int i = 0; i < Util.NUMFIREENGINES; i++) {
-            if (map.isInStationRange(fireEngines[i].getPosition())) {
-                if (!fireEngines[i].isMaxHealth()) {
-                    fireEngines[i].repair();
-                } else if (!fireEngines[i].isMaxFuel()) {
-                    fireEngines[i].refillFuel();
-                } else if (!fireEngines[i].isMaxVolume()) {
-                    fireEngines[i].refillVolume();
-                }
-            }
-        }
-
+        
         if (inputController.getShotsFired()) {
             if(fireEngines[engineSelected].getVolume() > 0) {
                 fireEngines[engineSelected].doWeaponFiring(inputController.getLatestPosition());
             }
         }
 
-        if (inputController.moving) {
-            //For testing reasons:
-            if (fireEngines[engineSelected].getFuel() > 0) {
-                fireEngines[engineSelected].distanceIncreased();
+        for (int truckIndex = 0; truckIndex < Util.NUMFIREENGINES; truckIndex++) {
+            // Refill and repair
+            if (map.isInStationRange(fireEngines[truckIndex].getPosition())) {
+                if (!fireEngines[truckIndex].isMaxHealth()) {
+                    fireEngines[truckIndex].repair();
+                } else if (!fireEngines[truckIndex].isMaxFuel()) {
+                    fireEngines[truckIndex].refillFuel();
+                } else if (!fireEngines[truckIndex].isMaxVolume()) {
+                    fireEngines[truckIndex].refillVolume();
+                }
             }
-            fireEngines[engineSelected].move(inputController.getLatestPosition());
-        } else {
-            for(int z = 0; z < Util.NUMFIREENGINES; z = z + 1) {
-                fireEngines[z].resetSpeed();
+            
+            fireEngines[truckIndex].render(batch);
+            
+            // Update bars
+            updateBars(truckIndex);
+            // Draw bars
+            if (!fireEngines[truckIndex].isDead()) {
+                health[truckIndex].render(batch, healthIcon);
+                fuel[truckIndex].render(batch, fuelIcon);
+                volume[truckIndex].render(batch, volumeIcon);
             }
+            
         }
 
-        // TODO: Remove
-        // if(false)) {
-        //	if(engineSelected >= AMOUNT - 1) {
-        //	engineSelected = 0;
-        //} else {
-        //engineSelected = engineSelected + 1;
-        //}
-        //}
-        for (FireEngine engine : fireEngines) {
-            engine.render(batch);
-        }
-        //health and fuel drawing.
-        for (int i = 0; i < Util.NUMFIREENGINES; i = i + 1) {
-            if (fireEngines[i].isDead()) {
-                continue;
-            }
-            health[i].updateCurrent(fireEngines[i].health);
-            fuel[i].updateCurrent(fireEngines[i].fuel);
-            volume[i].updateCurrent(fireEngines[i].getVolume());
-            health[i].setPosition(fireEngines[i].position.x, fireEngines[i].position.invertY().y - 10);
-            fuel[i].setPosition(fireEngines[i].position.x, fireEngines[i].position.invertY().y - 25);
-            volume[i].setPosition(fireEngines[i].position.x, fireEngines[i].position.invertY().y - 40);
-            batch.draw(health[i].texture, health[i].position.x, health[i].position.y, health[i].getFill(), health[i].getHeight());
-            batch.draw(healthIcon, health[i].position.x - (5 + health[i].getHeight()), health[i].position.y, health[i].getHeight(), health[i].getHeight());
-            batch.draw(fuel[i].texture, fuel[i].position.x, fuel[i].position.y, fuel[i].getFill(), fuel[i].getHeight());
-            batch.draw(fuelIcon, fuel[i].position.x - (5 + fuel[i].getHeight()), fuel[i].position.y, fuel[i].getHeight(), fuel[i].getHeight());
-            batch.draw(volume[i].texture, volume[i].position.x, volume[i].position.y, volume[i].getFill(), volume[i].getHeight());
-            batch.draw(volumeIcon, volume[i].position.x - (5 + volume[i].getHeight()), volume[i].position.y, volume[i].getHeight(), volume[i].getHeight());
-        }
-
-
-        // render and update aliens
-        for (int i = 0; i < nextAlien; i++) {
-            aliens[i].update();;
-            aliens[i].render(batch);
-        }
-
-        // MAKE ALIEN SHOOT
         for (int alienIndex = 0; alienIndex<nextAlien; alienIndex++) {
+            // update and render aliens
+            aliens[alienIndex].update();
+            aliens[alienIndex].render(batch);
+            
+            // Make aliens shoot
             float minimumDistance = 1000;
             int minimumIndex = -1;
             float distance;
+            
             for (int engineIndex = 0; engineIndex < Util.NUMFIREENGINES; engineIndex++) {
                 distance = fireEngines[engineIndex].position.distanceTo(aliens[alienIndex].position);
                 if (distance<minimumDistance) {
@@ -273,41 +231,62 @@ public class GameScreen implements Screen {
                     minimumIndex = engineIndex;
                 }
             }
+            
             aliens[alienIndex].shoot(fireEngines[minimumIndex].position);
         }
         //ends batch.
         batch.end();
 
-        this.gameWon = true;
-        this.gameLoss = true;
-
-        for (FireEngine engine : fireEngines) {
-            if (!engine.isDead()) {
-                this.gameLoss = false;
-                break;
-            }
-        }
-
-
-        for (AlienBase base : bases) {
-            if (!base.isDead()) {
-                this.gameWon = false;
-                break;
-            }
-        }
-
-        if (this.gameWon) {
+        if (checkGameWon()) {
             //set screen Win
             game.setScreen(new WinnerScreen(game));
         }
 
-        if (this.gameLoss) {
+        if (checkGameLost()) {
             //set lose screen
             game.setScreen(new LoserScreen(game));
         }
 
         if (inputController.isEscaped()) {
             game.setScreen (new Menu (game));
+        }
+    }
+
+    private boolean checkGameWon() {
+        for (AlienBase base : bases) {
+            if (!base.isDead()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkGameLost() {
+        for (FireEngine engine : fireEngines) {
+            if (!engine.isDead()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void updateBars(int barIndex) {        
+        health[barIndex].updateCurrent(fireEngines[barIndex].health);
+        fuel[barIndex].updateCurrent(fireEngines[barIndex].fuel);
+        volume[barIndex].updateCurrent(fireEngines[barIndex].getVolume());
+        
+        health[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 10);
+        fuel[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 25);
+        volume[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 40);
+    }
+
+    private void selectFireEngine() {
+        for (int engineIndex = 0; engineIndex < Util.NUMFIREENGINES; engineIndex++) {
+            double distance = Math.sqrt(Math.pow(inputController.position.x - fireEngines[engineIndex].position.x, 2) + Math.pow(inputController.position.y - fireEngines[engineIndex].position.y, 2));
+            if (!fireEngines[engineIndex].isDead() && distance < 40) {
+                engineSelected = engineIndex;
+                break;
+            }
         }
     }
 
@@ -364,9 +343,5 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-    }
-
-    public void setScreen(GameScreen gameScreen) {
-
     }
 }

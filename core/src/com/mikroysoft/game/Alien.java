@@ -112,7 +112,7 @@ public class Alien implements IRenderable {
     	// Check we are within the firing rate
         if (currentFireCount >= countToFire) {
         	// Spawn a new projectile
-            projectiles.add(new Projectile (new Coordinate(position.x + texture.getWidth() / 2, position.invertY().y), destination, true, ProjectileType.BULLET, range));
+            projectiles.add(new Projectile (new Coordinate(position.x + texture.getWidth() / 2, position.invertY().y), destination, ProjectileType.BULLET, range));
             // reset the frames-since-fired tracker
             currentFireCount = 0;
         
