@@ -1,7 +1,12 @@
 package com.mikroysoft.game;
-import org.junit.*;
+//import org.junit.*;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.runner.RunWith;
+import org.junit.Test;
+import de.tomgrill.gdxtesting.GdxTestRunner;
+
+@RunWith(GdxTestRunner.class)
 public class RectangleTest {
 
     @Test

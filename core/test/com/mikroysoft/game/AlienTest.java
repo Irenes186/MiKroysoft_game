@@ -4,7 +4,11 @@ import java.util.HashSet;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import org.junit.runner.RunWith;
+import org.junit.Test;
+import de.tomgrill.gdxtesting.GdxTestRunner;
 
+@RunWith(GdxTestRunner.class)
 public class AlienTest {
     @Test
     public void testMove() {

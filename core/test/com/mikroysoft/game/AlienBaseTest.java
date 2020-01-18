@@ -2,6 +2,11 @@ package com.mikroysoft.game;
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.runner.RunWith;
+import org.junit.Test;
+import de.tomgrill.gdxtesting.GdxTestRunner;
+
+@RunWith(GdxTestRunner.class)
 public class AlienBaseTest {
     
     //We needed a delta of 0.1 to allow for imprecisions

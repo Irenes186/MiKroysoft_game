@@ -5,6 +5,11 @@ import org.junit.Test;
 import java.util.HashSet;
 import com.badlogic.gdx.graphics.Texture;
 
+import org.junit.runner.RunWith;
+import org.junit.Test;
+import de.tomgrill.gdxtesting.GdxTestRunner;
+
+@RunWith(GdxTestRunner.class)
 public class FireEngineTest {
     FireEngine truck ;
 
