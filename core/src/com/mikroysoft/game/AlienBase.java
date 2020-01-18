@@ -63,6 +63,7 @@ public class AlienBase extends Killable implements IRenderable {
         this.tex = tex;
         this.name = name;
         this.position = position;
+        currentAliens = 0;
         maxAliens = params.maxAliens;
         //this.weapon = params.weapon;
         //this.weapon = new WeaponLaser(params.weaponRange, position);
@@ -128,12 +129,12 @@ public class AlienBase extends Killable implements IRenderable {
      */
     //@Override
     public Alien doAlienSpawning(FireEngine[] fireEngines) {
-    	// Debug: # of frames until this base spawns a new alien.
-//    	 System.out.println("Alien cooldown " + name + ": " + framesLeftUntilSpawn);
     	// Check all fire engines
     	for (FireEngine currentTruck: fireEngines) {
     		// Is the fire engine within weaponRange?
 			if (weapon.truckInRange(currentTruck)) {
+			    // Debug: # of frames until this base spawns a new alien.
+			    // System.out.println("Alien cooldown " + name + ": " + framesLeftUntilSpawn);
 				// Has the spawning countdown passed?
 				if (framesLeftUntilSpawn == 0) {
 					// Reset the spawning cooldown
@@ -163,7 +164,7 @@ public class AlienBase extends Killable implements IRenderable {
      */
     private Alien spawnAlien() {
         Float[] offset = Util.randomCoordOffset(-((float)Util.TILEWIDTH/2), ((float)Util.TILEWIDTH/2), 0.8f);
-        return new Alien(new Coordinate(position.x + (Util.TILEWIDTH/2) + offset[0], position.y + (Util.TILEHEIGHT/2) + offset[1]));
+        return new Alien(new Coordinate(position.x + (Util.TILEWIDTH/2) + offset[0], position.y + (Util.TILEHEIGHT/2) + offset[1]), this);
     }
     
     

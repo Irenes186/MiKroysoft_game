@@ -161,6 +161,8 @@ public class GameScreen implements Screen {
         defendBases();
         doProjectileCollision(bases, fireEngines);
         doProjectileCollision(fireEngines, bases);
+        doProjectileCollision(aliens, fireEngines);
+        doProjectileCollision(fireEngines, aliens);
 
         batch.begin();
         map.render(batch);
@@ -215,24 +217,17 @@ public class GameScreen implements Screen {
         }
 
         for (int alienIndex = 0; alienIndex<nextAlien; alienIndex++) {
-            // update and render aliens
-            aliens[alienIndex].update();
-            aliens[alienIndex].render(batch);
-            
-            // Make aliens shoot
-            float minimumDistance = 1000;
-            int minimumIndex = -1;
-            float distance;
-            
-            for (int engineIndex = 0; engineIndex < Util.NUMFIREENGINES; engineIndex++) {
-                distance = fireEngines[engineIndex].position.distanceTo(aliens[alienIndex].position);
-                if (distance<minimumDistance) {
-                    minimumDistance = distance;
-                    minimumIndex = engineIndex;
+            if (aliens[alienIndex] != null) {
+                if (aliens[alienIndex].isDead()) {
+                    aliens[alienIndex] = null;
+                } else {
+                    // update and render aliens
+                    aliens[alienIndex].update();
+                    aliens[alienIndex].render(batch);
+                    // make aliens shoot
+                    aliens[alienIndex].doWeaponFiring(fireEngines);
                 }
             }
-            
-            aliens[alienIndex].shoot(fireEngines[minimumIndex].position);
         }
         //ends batch.
         batch.end();
@@ -296,17 +291,21 @@ public class GameScreen implements Screen {
         Set <Projectile> removeProjectiles = new HashSet <Projectile>();
 
         for (Killable target : targets) {
-            for (Killable shooter : shooters) {
-                currentProjectiles = shooter.getProjectiles();
-                for (Projectile projectile : currentProjectiles) {
-                    if (!target.isDead() && target.getRect().pointInRectangle(projectile.position)) {
-                        removeProjectiles.add(projectile);
-                        target.takeDamage(shooter.weapon.weaponDamage);
+            if (target != null) {
+                for (Killable shooter : shooters) {
+                    if (shooter != null) {
+                        currentProjectiles = shooter.getProjectiles();
+                        for (Projectile projectile : currentProjectiles) {
+                            if (projectile != null && !target.isDead() && target.getRect().pointInRectangle(projectile.position)) {
+                                removeProjectiles.add(projectile);
+                                target.takeDamage(shooter.weapon.weaponDamage);
+                            }
+                        }
+
+                        currentProjectiles.removeAll(removeProjectiles);
+                        shooter.setProjectiles(currentProjectiles);
                     }
                 }
-
-                currentProjectiles.removeAll(removeProjectiles);
-                shooter.setProjectiles(currentProjectiles);
             }
         }
     }
