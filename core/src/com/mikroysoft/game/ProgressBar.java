@@ -1,6 +1,7 @@
 package com.mikroysoft.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ProgressBar {
     public Texture texture;
@@ -67,5 +68,10 @@ public class ProgressBar {
         } else {
             this.visible = false;
         }
+    }
+    
+    public void render(SpriteBatch batch, Texture icon) {
+        batch.draw(texture, position.x, position.y, barFill, height);
+        batch.draw(icon, position.x - (height + 5), position.y, height, height);
     }
 }

@@ -9,42 +9,26 @@ import com.badlogic.gdx.graphics.Texture;
 public class Map {
     /* Container class for all map elements
      * I.e includes roads and alien bases
-     * but does not include GUI or fire engines (???)
+     * but does not include GUI or fire engines
      */
     IRenderable[][] grid;
     Texture bg;
     public Coordinate fireStation = new Coordinate(0, 0);
 
-    // constructor: takes map dimensions
+    // constructor: takes background image name
     public Map(String bgtex) throws Exception {
         this.bg = new Texture(bgtex + ".png");
-        //Calculate tile dimensions
+        
         grid = new IRenderable[Util.MAPWIDTH][Util.MAPHEIGHT];
         // Grid containing text description of map
-        String[][] inGrid = new String[Util.MAPWIDTH][Util.MAPHEIGHT];
+        String[][] inGrid = readMapInfoFile();
         
-        // import map info
-        File file = new File("map_information.txt");
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        int row = 0;
-        String fileInput;
-        String[] items;
-
-        // read map info into inGrid where each character is a cell
-        while ((fileInput = reader.readLine()) != null) {
-            items = fileInput.split("",Util.MAPWIDTH);
-            for (int col = 0; col < Util.MAPWIDTH; col++) {
-                inGrid[row][col] = items[col];
-            }
-            row++;
-        }
-
-        reader.close();
         //Populate grid with class instances as described in map_information
         String fileName;
         //Variables for configuring road gfx
         boolean hasRoadAbove, hasRoadBelow, hasRoadLeft, hasRoadRight;
         AlienBaseParameters params;
+        int row = 0;
         
         // iterate through inGrid
         for (row = 0; row < Util.MAPHEIGHT; row++) {
@@ -164,6 +148,29 @@ public class Map {
                 }
             }
         }
+    }
+
+    private String[][] readMapInfoFile() throws IOException {
+        // import map info
+        File file = new File("map_information.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String[][] grid = new String[Util.MAPWIDTH][Util.MAPHEIGHT];
+        
+        int row = 0;
+        String fileInput;
+        String[] items;
+
+        // read map info into inGrid where each character is a cell
+        while ((fileInput = reader.readLine()) != null) {
+            items = fileInput.split("",Util.MAPWIDTH);
+            for (int col = 0; col < Util.MAPWIDTH; col++) {
+                grid[row][col] = items[col];
+            }
+            row++;
+        }
+
+        reader.close();
+        return grid;
     }
 
     /* Returns all currently active alien bases

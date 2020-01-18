@@ -12,30 +12,24 @@ import java.lang.Math;
  * FireEngines can be moved by dragging with the mouse along a road. TODO: Constrain momement to roads
  * FireEngines have finite fuel, health, and water supplies. All are refilled over time when within range of a FireStation.
  */
-public class FireEngine {
+public class FireEngine extends Killable {
     private int waterVolume;
     private float speed;
     private float maxSpeed;
     private float acceleration;
-    private int range;
     private int shotCooldown;
     private int deliveryRate;
-    private Set < Projectile > projectiles;
     public Texture texture;
     public Coordinate position;
-    public int health;
     public int fuel;
-    public int maxHealth;
     public int maxFuel;
     public int maxVolume;
     public int distanceTravelled;
     public int shotDamage;
     public float direction;
-    public boolean dead;
     Map map;
     //
     int cellX, cellY;
-    public Rectangle rectangle;
 
 
     public FireEngine(Map map, FireEngineParameters parameters) {
@@ -60,6 +54,7 @@ public class FireEngine {
         shotDamage = parameters.shotDamage;
         dead = false;
         deliveryRate = parameters.deliveryRate;
+        weapon = new WeaponBullet(shotCooldown, range, "water_drop.png", position);
     }
 
     public void increaseSpeed() {
@@ -117,14 +112,6 @@ public class FireEngine {
         }
     }
     
-    public int getHealth() {
-        return health;
-    }
-    
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-    
     public void repair() {
         if (health < maxHealth) {
             health++;
@@ -132,18 +119,14 @@ public class FireEngine {
     }
     
     public void refillFuel() {
-        this.fuel++;
+        if (fuel < maxFuel) {
+            fuel++;
+        }
     }
     
     public void refillVolume() {
-        this.waterVolume++;
-    }
-
-    public boolean isMaxHealth() {
-        if(this.health == this.maxHealth) {
-            return true;
-        } else {
-            return false;
+        if (waterVolume < maxVolume) {
+            this.waterVolume++;
         }
     }
 
@@ -172,7 +155,7 @@ public class FireEngine {
     }
     
     public void fuelReduce() {
-        if(distanceTravelled % 5 == 0) {
+        if (fuel > 0 && distanceTravelled % 5 == 0) {
             fuel--;
         }
     }
@@ -183,17 +166,6 @@ public class FireEngine {
 
     public Coordinate getPosition() {
         return position;
-    }
-    
-    public void takeDamage(int amount) {
-        
-        if (amount >= health) {
-            health = 0;
-            this.dead = true;
-        } else {
-            health -= amount;
-        }
-
     }
     
     public void move(Coordinate input) {
@@ -254,47 +226,22 @@ public class FireEngine {
         deleteOutOfRangeProjectiles ();
     }
 
-    public void shoot(Coordinate destination) {
-        if (shotCooldown > 0) {
-            return;
+    //@Override
+    public void doWeaponFiring(Coordinate destination) {
+//        if (shotCooldown > 0) {
+//            return;
+//        }
+//        if (dead) {
+//            return;
+//        }
+//        reduceVolume();
+//
+//        projectiles.add(new Projectile (position, destination, false, ProjectileType.WATER, range));
+//        shotCooldown = deliveryRate;
+        if (!dead && !weapon.onCooldown()) {
+            reduceVolume();
+            projectiles.add((Projectile) weapon.fire(destination));
+            weapon.resetCooldown();
         }
-        if (dead) {
-            return;
-        }
-        reduceVolume();
-
-        projectiles.add(new Projectile (position, destination, false, ProjectileType.WATER, range));
-        shotCooldown = deliveryRate;
     }
-
-    public Set <Projectile> getProjectileList() {
-        return projectiles;
-    }
-
-    public void setProjectiles (Set <Projectile> projectiles) {
-        this.projectiles = projectiles;
-    }
-
-    public void deleteOutOfRangeProjectiles () {
-        Set <Projectile> removeProjectiles = new HashSet <Projectile>();
-
-        for (Projectile projectile : projectiles) {
-            if (!projectile.inRange()) {
-                removeProjectiles.add(projectile);
-            }
-        }
-        projectiles.removeAll(removeProjectiles);
-    }
-
-    public Rectangle getRect() {
-        if (this.rectangle == null) {
-            throw new NullPointerException("Fire engine rectangle not initialized before use in collisions");
-        }
-        return this.rectangle;
-    }
-
-    public boolean isDead () {
-        return this.dead;
-    }
-
 }

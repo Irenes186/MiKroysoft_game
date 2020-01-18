@@ -24,7 +24,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * 
  * TODO: ADD HEALTH BARS
  */
-public class AlienBase implements IRenderable {
+public class AlienBase extends Killable implements IRenderable {
 	// Texture of this base
     public Texture texture;
     // Name of this base, e.g Aldi, for debugging
@@ -39,26 +39,17 @@ public class AlienBase implements IRenderable {
     public int framesLeftUntilSpawn;
     // Number of frames the base will wait in between spawning aliens
     public int spawnRate;
-    // The weapon mounted on the base
-    public BaseWeapon weapon;
-    // Health - renamed from floodLevel
-    public int health;
     // TODO: Is this the same as weaponRange?
     // Once an AlienBase is destroyed, wait this number of frames before destroying the FireStation.
     public int attackTimeAfterFirst;
     // Position in pixels of this base on the screen
     public Coordinate position;
-    // has this base been destroyed by the player?
-    private boolean dead;
     // Things created by the BaseWeapon that need rendering and are not projectiles (i.e not using projectile collision). e.g sprites
     // WARNING: Not type checked, since Sprites and Textures do not share a super class.
     // TAKE CARE WHEN CREATING NEW BASEWEAPONS.
     private HashSet<Object> weaponObjects;
     
-    public Rectangle rectangle;
     public List <Alien> aliens;
-    // projectiles fired by the base
-    private Set <Projectile> projectiles;
 
     /* Constructor.
      * name - String - name of the base for debugging purposes
@@ -72,6 +63,7 @@ public class AlienBase implements IRenderable {
         this.tex = tex;
         this.name = name;
         this.position = position;
+        currentAliens = 0;
         maxAliens = params.maxAliens;
         //this.weapon = params.weapon;
         //this.weapon = new WeaponLaser(params.weaponRange, position);
@@ -135,13 +127,14 @@ public class AlienBase implements IRenderable {
      * TODO: Add progress bars for alien spawning
      * TODO: Bugged! line 141 is reached, but no alien is spawned for some reason...
      */
+    //@Override
     public Alien doAlienSpawning(FireEngine[] fireEngines) {
-    	// Debug: # of frames until this base spawns a new alien.
-//    	 System.out.println("Alien cooldown " + name + ": " + framesLeftUntilSpawn);
     	// Check all fire engines
     	for (FireEngine currentTruck: fireEngines) {
     		// Is the fire engine within weaponRange?
 			if (weapon.truckInRange(currentTruck)) {
+			    // Debug: # of frames until this base spawns a new alien.
+			    // System.out.println("Alien cooldown " + name + ": " + framesLeftUntilSpawn);
 				// Has the spawning countdown passed?
 				if (framesLeftUntilSpawn == 0) {
 					// Reset the spawning cooldown
@@ -171,28 +164,12 @@ public class AlienBase implements IRenderable {
      */
     private Alien spawnAlien() {
         Float[] offset = Util.randomCoordOffset(-((float)Util.TILEWIDTH/2), ((float)Util.TILEWIDTH/2), 0.8f);
-        return new Alien(new Coordinate(position.x + (Util.TILEWIDTH/2) + offset[0], position.y + (Util.TILEHEIGHT/2) + offset[1]));
+        return new Alien(new Coordinate(position.x + (Util.TILEWIDTH/2) + offset[0], position.y + (Util.TILEHEIGHT/2) + offset[1]), this);
     }
     
-    public Set <Projectile> getProjectileList() {
-        return projectiles;
-    }
-
-    public void takeDamage (int damage) {
-        if (damage > health) {
-            health = 0;
-            killBase();
-        } else {
-            health -= damage;
-        }
-    }
-
-    public void setProjectiles (Set <Projectile> projectiles) {
-        this.projectiles = projectiles;
-    }
     
     public void doWeaponFiring(FireEngine[] fireEngines) {
-        if (weapon != null) {
+        if (!dead && weapon != null) {
             Object firedObject = weapon.fire(fireEngines);
             if (firedObject != null) {
                 if (firedObject instanceof Projectile) {
@@ -203,29 +180,10 @@ public class AlienBase implements IRenderable {
             }
         }
     }
-    
-    public Rectangle getRect() {
-        if (rectangle == null) {
-            throw new NullPointerException("Alien base " + name + " rectangle not initialized before use in collisions");
-        }
-        return rectangle;
-    }
-    
-    public int getHealth() {
-        return health;
-    }
 
     public void checkHealth() {
         if (health == 0) {
             this.texture = new Texture ("soggy-" + tex + ".png");
         }
-    }
-    
-    public boolean isDead() {
-        return dead;
-    }
-    
-    public void killBase() {
-        dead = true;
     }
 }

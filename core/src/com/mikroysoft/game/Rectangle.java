@@ -45,4 +45,8 @@ public class Rectangle {
         this.angle = direction;
         this.centrePoint = this.centrePoint.invertY();
     }
+    
+    public float getAngle() {
+        return angle;
+    }
 }

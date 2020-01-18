@@ -1,6 +1,5 @@
 package com.mikroysoft.game;
 
-import java.lang.Math;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -10,13 +9,12 @@ public class Projectile {
     private int speed;
     public Coordinate position;
     public int damage;
-    public boolean ally;
     private Coordinate start;
     private int range;
     ProjectileType type;
 
-    public Projectile (Coordinate source, Coordinate destination, boolean friendly, ProjectileType type, int range) {
-        float length = (float) Math.sqrt(Math.pow(destination.y - source.y, 2) + Math.pow(destination.x - source.x, 2));
+    public Projectile (Coordinate source, Coordinate destination, ProjectileType type, int range) {
+        float length = source.distanceTo(destination);
         speed = 5;
         length /= speed;
         
@@ -34,7 +32,7 @@ public class Projectile {
         directionX = (destination.x - source.x)/length; 
         directionY = (destination.y - source.y)/length;
         position = new Coordinate(source.x, source.y);
-        ally = friendly;
+        
         start = new Coordinate (source.x, source.y);
         this.range = range;
         this.type = type;
@@ -47,14 +45,12 @@ public class Projectile {
     }
 
     public boolean inRange () {
-
         return (start.distanceTo(position) < range);
-
     }
     
     public boolean equals(Projectile other) {
         return directionX == other.directionX && directionY == other.directionY && speed == other.speed && 
-                position == other.position && damage == other.damage && ally == other.ally && 
+                position == other.position && damage == other.damage && 
                 start == other.start && range == other.range && type == other.type; 
     }
 

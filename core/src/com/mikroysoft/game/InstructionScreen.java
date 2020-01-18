@@ -19,8 +19,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class InstructionScreen implements Screen {
-    CoreLogic coreLogic;
-    InputController inputController;
     Game game;
     Texture buttonTexture;
     TextureRegion textureRegion;
@@ -37,20 +35,19 @@ public class InstructionScreen implements Screen {
     public InstructionScreen(final Game game) {
         this.game = game;
         batch = new SpriteBatch();
-        //setting label
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
         font = new BitmapFont();
-        labelStyle.font = font;
-        labelStyle.fontColor = Color.WHITE;
+
+        //setting label
+        Label.LabelStyle labelStyle = makeLabelStyle(Color.WHITE);
         //alternative text style
-        Label.LabelStyle labelStyle2 = new Label.LabelStyle();
-        labelStyle2.font = font;
-        labelStyle2.fontColor = Color.BLACK;
+        Label.LabelStyle labelStyle2 = makeLabelStyle(Color.BLACK);
+
         //Title label
         instructionTitle = new Label("Instructions!", labelStyle);
         instructionTitle.setFontScale(3.0f, 5.0f);
         instructionTitle.setPosition(475, 650);
         instructionTitle.setAlignment(Align.center);
+        
         //Button text
         menuButtonLabel = new Label("Menu",labelStyle2);
         menuButtonLabel.setFontScale(1.5f, 1.5f);
@@ -61,8 +58,10 @@ public class InstructionScreen implements Screen {
         buttonTexture = new Texture("planet_button_0.png");
         textureRegion = new TextureRegion(buttonTexture);
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
+        
         //add different buttons
         backMenuButton = new ImageButton(textureRegionDrawable);
+        
         //set stage with actors
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         stage.addActor(backMenuButton);
@@ -81,19 +80,25 @@ public class InstructionScreen implements Screen {
             }
         });
 
-        //variables for screen size and button size
-        float screenWidth = 1024, screenHeight = 1024;
-        float buttonWidth = screenWidth * 0.1f, buttonHeight = screenHeight * 0.1f;
-        //playButton position ans size
-        backMenuButton.setSize(buttonWidth, buttonHeight);
+        //playButton position and size
+        scaleButtonToScreen(backMenuButton, 0.1f, 0.1f);
         backMenuButton.setPosition(800, 20);
         backMenuButton.getImage().setFillParent(true);
 
         textFileString = Gdx.files.internal("instructions.txt").readString();
-        //System.out.println(textFileString);
-
-
     }
+    
+    private Label.LabelStyle makeLabelStyle(Color textColour) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+        labelStyle.fontColor = textColour;
+        return labelStyle;
+    }
+    
+    private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
+        button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
+    }
+
     @Override
     public void show() {
     }
@@ -103,9 +108,11 @@ public class InstructionScreen implements Screen {
         //Background
         Gdx.gl.glClearColor(0,0.2f,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
         //draw stage with actors
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        
         batch.begin();
         font.draw(batch, textFileString,(Gdx.graphics.getWidth()/2) - 300,(Gdx.graphics.getHeight()/2) + 150);
         batch.end();
