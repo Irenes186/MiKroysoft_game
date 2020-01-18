@@ -77,7 +77,6 @@ public class GameScreen implements Screen {
         engineSelected = 1;
         nextAlien = 0;
         this.game = game;
-
         try {
             map = new Map(MAPWIDTH, MAPHEIGHT, "background");
         } catch (Exception e) {
@@ -261,12 +260,17 @@ public class GameScreen implements Screen {
             for (FireEngine engine : fireEngines) {
                 currentProjectiles = engine.getProjectileList();
                 for (Projectile projectile : currentProjectiles) {
-                    if (base.getRect().pointInRectangle(projectile.position)) {
-                        removeProjectiles.add(projectile);
-                        System.out.println("hit");
-                        //Add some collision bullshit like damage IDK
-                        base.takeDamage(engine.shotDamage);
-                    }
+                    try {
+                        if (base.getRect().pointInRectangle(projectile.position)) {
+                            removeProjectiles.add(projectile);
+                            //System.out.println("hit");
+                            //Add some collision bullshit like damage IDK
+                            base.takeDamage(engine.shotDamage);
+                        }
+                    }catch(Exception e){
+                            System.out.println("hit");
+                        }
+
                 }
 
                 currentProjectiles.removeAll(removeProjectiles);

@@ -127,6 +127,7 @@ public class Alien implements IRenderable {
         } else {
             currentFireCount++;
         }
+
     }
     
     public Set<Projectile> getProjectiles() {
@@ -136,11 +137,8 @@ public class Alien implements IRenderable {
     /* Update the Alien
      * TODO: Implement (or delete)
      */
-    public void update() {
-        
-    }
+    public void update() { }
     
     public int getRange() {
-        return this.range;
-    }
+        return this.range; }
 }

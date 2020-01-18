@@ -3,24 +3,14 @@ package com.mikroysoft.game;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.HashSet;
+import com.badlogic.gdx.graphics.Texture;
 
 public class FireEngineTest {
-    Map map;
-    FireEngine truck;
-    
-//    @BeforeClass
-//    public void makeMap() {
-//        map = new Map(20, 20, "background");
-//    }
-//    
-//    @Before
-//    public void makeTruck() {
-//        truck = new FireEngine(map, new FireEngineParameters(1));
-//    }
-    
+    FireEngine truck ;
+
     @Test
     public void testStartZeroSpeed() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         assertEquals(truck.getSpeed(), 0, 0.1);
@@ -28,16 +18,17 @@ public class FireEngineTest {
     
     @Test
     public void testIncreaseSpeed() {
-        map = new Map(20, 20, "background");
+        Texture a = new Texture("background.png");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
-        
+
         truck.increaseSpeed();
         assertEquals(truck.getSpeed(), truck.getAcceleration(), 0.1);
     }
     
     @Test
     public void testResetSpeed() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         truck.increaseSpeed();
@@ -47,7 +38,7 @@ public class FireEngineTest {
     
     @Test
     public void testStartMaxVolume() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         assertEquals(truck.getVolume(), truck.getMaxVolume(), 0.1);
@@ -55,7 +46,7 @@ public class FireEngineTest {
     
     @Test
     public void testReduceVolume() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         truck.reduceVolume();
@@ -64,7 +55,7 @@ public class FireEngineTest {
     
     @Test
     public void testRefillVolume() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         truck.reduceVolume();
@@ -74,7 +65,7 @@ public class FireEngineTest {
     
     @Test
     public void testStartMaxHealth() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         assertEquals(truck.getHealth(), truck.getMaxHealth(), 0.1);
@@ -82,7 +73,7 @@ public class FireEngineTest {
     
     @Test
     public void testTakeDamage() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         FireEngine truck = new FireEngine(map, new FireEngineParameters(1));
@@ -92,7 +83,7 @@ public class FireEngineTest {
     
     @Test
     public void testRepair() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         truck.takeDamage(1);
@@ -102,7 +93,7 @@ public class FireEngineTest {
     
     @Test
     public void testStartMaxFuel() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         assertEquals(truck.getFuel(), truck.getMaxVolume(), 0.1);
@@ -110,7 +101,7 @@ public class FireEngineTest {
     
     @Test
     public void testReduceFuel() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         truck.distanceIncreased();
@@ -120,7 +111,7 @@ public class FireEngineTest {
     
     @Test
     public void testRefuel() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         truck.distanceIncreased();
@@ -131,7 +122,7 @@ public class FireEngineTest {
     
     @Test
     public void testMove() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         truck.setPosition(0, 0);
@@ -141,7 +132,7 @@ public class FireEngineTest {
     
     @Test
     public void testMoveReduceFuel() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         truck.setPosition(0, 0);
@@ -151,15 +142,15 @@ public class FireEngineTest {
     
     @Test
     public void testStartNoProjectiles() {
-        map = new Map(20, 20, "background");
+        Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
-        
+
         assertEquals(truck.getProjectileList(), new HashSet<Projectile>());
     }
     
     @Test
     public void testShootProjectile() {
-        map = new Map(20, 20, "background");
+       Map map = new Map(20, 20, "background");
         truck = new FireEngine(map, new FireEngineParameters(1));
         
         truck.setPosition(0, 0);

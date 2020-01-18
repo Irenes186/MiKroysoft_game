@@ -20,7 +20,7 @@ public class Map {
     public Coordinate fireStation = new Coordinate(0, 0);
 
     // constructor: takes map dimensions
-    public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex) throws Exception {
+    public Map(int MAPWIDTH, int MAPHEIGHT, String bgtex){
         this.bg = new Texture(bgtex + ".png");
         //Calculate tile dimensions
         TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
@@ -30,24 +30,35 @@ public class Map {
         grid = new IRenderable[MAPWIDTH][MAPHEIGHT];
         // Grid containing text description of map
         String[][] inGrid = new String[MAPWIDTH][MAPHEIGHT];
-        
+
         // import map info
         File file = new File("map_information.txt");
-        BufferedReader reader = new BufferedReader(new FileReader(file));
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            }
+        catch(Exception e){
+            System.out.println("hit");
+        }
         int row = 0;
         String fileInput;
         String[] items;
 
         // read map info into inGrid where each character is a cell
-        while ((fileInput = reader.readLine()) != null) {
-            items = fileInput.split("",MAPWIDTH);
-            for (int col = 0; col < MAPWIDTH; col++) {
-                inGrid[row][col] = items[col];
-            }
-            row++;
-        }
 
-        reader.close();
+        try {
+            while ((fileInput = reader.readLine()) != null) {
+                items = fileInput.split("",MAPWIDTH);
+                for (int col = 0; col < MAPWIDTH; col++) {
+                    inGrid[row][col] = items[col];
+                }
+                row++;
+            }
+            reader.close();
+        }
+        catch(Exception e){
+            System.out.println("hit");
+        }
         //Populate grid with class instances as described in map_information
         String fileName;
         //Variables for configuring road gfx
