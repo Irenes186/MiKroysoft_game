@@ -12,6 +12,8 @@ public abstract class BaseWeapon {
     public Coordinate position;
     // Texture for the weapon's projectile/firing method/etc
     protected Texture texture;
+    // Damage the weapon deals. E.g a projectile may deal weaponDamage on hit, or a laser may deal weaponDamage per second of contact etc.
+    protected int weaponDamage;
     
     /* Constructor.
      * cooldown - int - The number of frames to wait between weapon fires
@@ -19,13 +21,14 @@ public abstract class BaseWeapon {
      *               truck must be within in order for the weapon to fire
      * tex - String - the filename of the texture file to use with this weapon
      */
-    public BaseWeapon(int cooldown, int range, String tex, Coordinate position) {
+    public BaseWeapon(int cooldown, int range, String tex, Coordinate position, int weaponDamage) {
         this.cooldown = cooldown;
         this.cooldownCurrent = cooldown;
         this.range = range;
         // Using position by reference rather than by copy to allow dynamic positioning
         this.position = position;
         this.texture = new Texture(tex);
+        this.weaponDamage = weaponDamage;
     }
     
     /* Decrease the amount of cooldown left before the weapon can be fired

@@ -18,7 +18,8 @@ public class FireEngine {
     private float maxSpeed;
     private float acceleration;
     private int range;
-    private float deliveryRate;
+    private int shotCooldown;
+    private int deliveryRate;
     private Set < Projectile > projectiles;
     public Texture texture;
     public Coordinate position;
@@ -30,6 +31,7 @@ public class FireEngine {
     public int distanceTravelled;
     public int shotDamage;
     public float direction;
+    public boolean dead;
     Map map;
     //
     int cellX, cellY;
@@ -53,7 +55,11 @@ public class FireEngine {
         waterVolume = 100;
         this.map = map;
         range = 500;
-        this.rectangle = new Rectangle (new Coordinate (position.x + Util.TILEWIDTH / 2, position.y + Util.TILEHEIGHT / 2), Util.TILEWIDTH, Util.TILEHEIGHT, 0);
+        //this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y + map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
+        rectangle = new Rectangle (position, Util.TILEWIDTH, Util.TILEHEIGHT, 0);
+        shotDamage = parameters.shotDamage;
+        dead = false;
+        deliveryRate = parameters.deliveryRate;
     }
 
     public void increaseSpeed() {
@@ -180,10 +186,23 @@ public class FireEngine {
     }
     
     public void takeDamage(int amount) {
-        health -= amount;
+        
+        if (amount >= health) {
+            health = 0;
+            this.dead = true;
+        } else {
+            health -= amount;
+        }
+
     }
     
     public void move(Coordinate input) {
+
+        if (dead) {
+            return;
+        }
+
+        fuelReduce();
         increaseSpeed();
         float tempspeed = speed;
         if (fuel == 0) {
@@ -218,11 +237,15 @@ public class FireEngine {
 
         direction = (float) Math.toDegrees(Math.atan2((input.y - position.y) * -1, input.x - position.x)) - 90;
 
+        this.rectangle.updatePosition (new Coordinate (position.x + Util.TILEWIDTH / 2, position.y + Util.TILEHEIGHT / 2), direction);
         this.speed = tempspeed;
     }
 
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x - 40,position.invertY().y - 40,40,40,80,80,1,1,direction,0,0,16,16,false,false);
+        if (shotCooldown > 0) {
+            shotCooldown--;
+        }
 
         for (Projectile projectile : projectiles) {
             projectile.render(batch);
@@ -232,7 +255,16 @@ public class FireEngine {
     }
 
     public void shoot(Coordinate destination) {
+        if (shotCooldown > 0) {
+            return;
+        }
+        if (dead) {
+            return;
+        }
+        reduceVolume();
+
         projectiles.add(new Projectile (position, destination, false, ProjectileType.WATER, range));
+        shotCooldown = deliveryRate;
     }
 
     public Set <Projectile> getProjectileList() {
@@ -260,4 +292,9 @@ public class FireEngine {
         }
         return this.rectangle;
     }
+
+    public boolean isDead () {
+        return this.dead;
+    }
+
 }

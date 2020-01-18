@@ -2,7 +2,7 @@ package com.mikroysoft.game;
 
 public class WeaponBullet extends BaseWeapon {
     public WeaponBullet(int cooldown, int range, String tex, Coordinate position) {
-        super(cooldown, range, tex, position);
+        super(cooldown, range, tex, position, 15);
     }
     
     @Override
@@ -17,7 +17,7 @@ public class WeaponBullet extends BaseWeapon {
             
             for (FireEngine truck: fireEngines) {
                 // 
-                if (truckInRange(truck) && (currentClosestDist == -1 || position.cellDistanceTo(truck.position) < currentClosestDist)) {
+                if (truckInRange(truck) && !truck.isDead() && (currentClosestDist == -1 || position.cellDistanceTo(truck.position) < currentClosestDist)) {
                     currentClosestDist = position.cellDistanceTo(truck.position);
                     target = truck;
                 }

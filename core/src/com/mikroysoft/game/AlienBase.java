@@ -29,6 +29,8 @@ public class AlienBase implements IRenderable {
     public Texture texture;
     // Name of this base, e.g Aldi, for debugging
     public String name;
+    // Name of the texture file to populate into texture
+    public String tex;
     // Maximum number of aliens that can be alive at any time around this base
     public int maxAliens;
     // Number of aliens current alive around this base
@@ -47,7 +49,7 @@ public class AlienBase implements IRenderable {
     // Position in pixels of this base on the screen
     public Coordinate position;
     // has this base been destroyed by the player?
-    public boolean destroyed;
+    private boolean dead;
     // Things created by the BaseWeapon that need rendering and are not projectiles (i.e not using projectile collision). e.g sprites
     // WARNING: Not type checked, since Sprites and Textures do not share a super class.
     // TAKE CARE WHEN CREATING NEW BASEWEAPONS.
@@ -67,6 +69,7 @@ public class AlienBase implements IRenderable {
     public AlienBase(String name, AlienBaseParameters params, Coordinate position, String tex) {
         // Save parameters to local variables
     	texture = new Texture(tex + ".png");
+        this.tex = tex;
         this.name = name;
         this.position = position;
         maxAliens = params.maxAliens;
@@ -76,13 +79,14 @@ public class AlienBase implements IRenderable {
         health = params.floodLevel;
         attackTimeAfterFirst = params.attackTimeAfterFirst;
         spawnRate = params.spawnRate;
-        
+
         // Initialise base to wait spawnRate before spawning anything
         framesLeftUntilSpawn = this.spawnRate;
         weaponObjects = new HashSet<Object>();
         projectiles = new HashSet<Projectile>();
         rectangle = new Rectangle (new Coordinate (position.x + Util.TILEWIDTH / 2, position.y + Util.TILEHEIGHT / 2), Util.TILEWIDTH, Util.TILEHEIGHT, 0);
         aliens = new ArrayList<Alien>();
+        dead = false;
     }
 
     /* Increase aggression of base.
@@ -177,6 +181,7 @@ public class AlienBase implements IRenderable {
     public void takeDamage (int damage) {
         if (damage > health) {
             health = 0;
+            killBase();
         } else {
             health -= damage;
         }
@@ -208,5 +213,19 @@ public class AlienBase implements IRenderable {
     
     public int getHealth() {
         return health;
+    }
+
+    public void checkHealth() {
+        if (health == 0) {
+            this.texture = new Texture ("soggy-" + tex + ".png");
+        }
+    }
+    
+    public boolean isDead() {
+        return dead;
+    }
+    
+    public void killBase() {
+        dead = true;
     }
 }

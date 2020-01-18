@@ -15,7 +15,7 @@ public class WeaponLaser extends BaseWeapon {
     Sprite laserSprite;
     
     public WeaponLaser(int range, Coordinate position, float aimSpeed) {
-        super(0, range, "laser.png", position);
+        super(0, range, "laser.png", position, 5);
         currentAimAngle = 0;
         this.aimSpeed = aimSpeed;
         laserSprite = new Sprite(texture);
@@ -23,7 +23,7 @@ public class WeaponLaser extends BaseWeapon {
     }
     
     public WeaponLaser(int range, Coordinate position) {
-        super(0, range, "laser.png", position);
+        super(0, range, "laser.png", position, 5);
         currentAimAngle = 0;
         this.aimSpeed = 0.1f;
         laserSprite = new Sprite(texture);
