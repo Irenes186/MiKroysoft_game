@@ -35,9 +35,9 @@ public class Coordinate {
     	return (float) Math.sqrt(Math.pow(Math.abs(this.x-other.x), 2)+Math.pow(Math.abs(this.y-other.y), 2));
     }
     
-    public float cellDistanceTo(Coordinate other, int TILEWIDTH, int TILEHEIGHT) {
-        int xDiff = (int) Math.floor(Math.abs(this.x-other.x) / TILEWIDTH);
-        int yDiff = (int) Math.floor(Math.abs(this.y-other.y) / TILEHEIGHT);
+    public float cellDistanceTo(Coordinate other) {
+        int xDiff = (int) Math.floor(Math.abs(this.x-other.x) / Util.TILEWIDTH);
+        int yDiff = (int) Math.floor(Math.abs(this.y-other.y) / Util.TILEHEIGHT);
         return (float) Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
     }
     
@@ -53,13 +53,15 @@ public class Coordinate {
      * The angle is given with respect to the x axis, i.e:
      * 
      * | B 
-     * |_    A is this point, B is other point, n is the angle
-     * |n| 
+     * |<_   A is this point, B is other point, n is the angle (anticlockwise)
+     * |+n| 
      * A-----
      */
     public float angleTo(Coordinate other) {
-        Coordinate vectorToTarget = other.minus(this);
-        return (float) Math.acos(vectorToTarget.x/(Math.sqrt(Math.pow(vectorToTarget.x, 2) + Math.pow(vectorToTarget.y, 2))));
+        return (float) Math.toDegrees(Math.atan2(other.minus(this).y,other.minus(this).x));
+        // Old method, less accurate
+        //Coordinate vectorToTarget = other.minus(this);
+        //return (float) Math.acos(vectorToTarget.x/(Math.sqrt(Math.pow(vectorToTarget.x, 2) + Math.pow(vectorToTarget.y, 2))));
     }
     
     public Coordinate invertY() {

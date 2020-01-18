@@ -1,23 +1,13 @@
 package com.mikroysoft.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.Random;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,11 +26,6 @@ public class GameScreen implements Screen {
     boolean gameLoss;
 
     Map map;
-    int MAPWIDTH;
-    int MAPHEIGHT;
-    int TILEWIDTH;
-    int TILEHEIGHT;
-    int AMOUNT;
     FireStation fireStation;
 
     //ProgressBar icon health;
@@ -61,24 +46,23 @@ public class GameScreen implements Screen {
         //BUTTON WONT WORK AFTER GAME STARTED - worth even having??
         //Button image set up
         this.game = game;
+        
+        //TODO: Put this in a function that is called every time the window is scaled
+        Util.scaleTilesToScreen();
 
         //variables for screen size and button size
-        float screenWidth = 1024, screenHeight = 1024;
+        float screenWidth = Util.MAPWIDTH * Util.TILEWIDTH, screenHeight = Util.MAPHEIGHT * Util.TILEHEIGHT;
         float buttonWidth = screenWidth * 0.08f, buttonHeight = screenHeight * 0.08f;
 
         create();
     }
 
     public void create() {
-        MAPWIDTH = 20;
-        MAPHEIGHT = 20;
-        AMOUNT = 4;
         engineSelected = 1;
         nextAlien = 0;
-        this.game = game;
 
         try {
-            map = new Map(MAPWIDTH, MAPHEIGHT, "background");
+            map = new Map("background");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,27 +73,27 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(inputController);
 
         //Fire Engines:
-        fireEngines = new FireEngine[AMOUNT];
+        fireEngines = new FireEngine[Util.NUMFIREENGINES];
         ////health:
-        health = new ProgressBar[AMOUNT];
+        health = new ProgressBar[Util.NUMFIREENGINES];
         ////fuel:
-        fuel = new ProgressBar[AMOUNT];
+        fuel = new ProgressBar[Util.NUMFIREENGINES];
         ///volume:
-        volume = new ProgressBar[AMOUNT];
+        volume = new ProgressBar[Util.NUMFIREENGINES];
         Random randomGenerator = new Random();
         int randomValueOne = 0;
         int randomValueTwo = 0;
         //looping from 0 to amount of fire engines.
-        int[] takenValuesOne = new int[AMOUNT];
-        int[] takenValuesTwo = new int[AMOUNT];
-        for (int i = 0; i < AMOUNT; i++) {
+        int[] takenValuesOne = new int[Util.NUMFIREENGINES];
+        int[] takenValuesTwo = new int[Util.NUMFIREENGINES];
+        for (int i = 0; i < Util.NUMFIREENGINES; i++) {
 
             int index = -1;
             boolean valueTaken = true;
             while(valueTaken == true) {
                 valueTaken = false;
                 randomValueOne = randomGenerator.nextInt(3);
-                for(int j = 0; j < AMOUNT; j = j + 1) {
+                for(int j = 0; j < Util.NUMFIREENGINES; j = j + 1) {
                     if(takenValuesOne[j] == randomValueOne) {
                         valueTaken = true;
                         break;
@@ -144,7 +128,7 @@ public class GameScreen implements Screen {
             while(valueTaken == true) {
                 valueTaken = false;
                 randomValueTwo = randomGenerator.nextInt(10);
-                for(int j = 0; j < AMOUNT; j = j + 1) {
+                for(int j = 0; j < Util.NUMFIREENGINES; j = j + 1) {
                     if(takenValuesTwo[j] == randomValueTwo) {
                         valueTaken = true;
                         break;
@@ -225,13 +209,13 @@ public class GameScreen implements Screen {
 
         // Handle Alien spawning
         for (AlienBase base : this.bases) {
-            //Alien newAlien = base.defend(this.fireEngines);
+            Alien newAlien = base.doAlienSpawning(this.fireEngines);
             base.doWeaponFiring(fireEngines);
-            //if (newAlien != null) {
-            //    this.aliens[nextAlien] = newAlien;
-            //    // Theoretically, this should never overflow due to the way i instantiated aliens.
-            //    nextAlien++;
-            //}
+            if (newAlien != null) {
+                this.aliens[nextAlien] = newAlien;
+                // Theoretically, this should never overflow due to the way i instantiated aliens.
+                nextAlien++;
+            }
         }
         
         // This code is fucking awful, extract to a method
@@ -242,7 +226,7 @@ public class GameScreen implements Screen {
             for (AlienBase base : bases) {
                 currentProjectiles = base.getProjectileList();
                 for (Projectile projectile : currentProjectiles) {
-                    if (engine.getRect().pointInRectangle(projectile.position)) {
+                    if (!engine.isDead() && engine.getRect().pointInRectangle(projectile.position)) {
                         removeProjectiles.add(projectile);
                         //Add some collision bullshit like damage IDK
                         engine.takeDamage(base.weapon.weaponDamage);
@@ -280,28 +264,28 @@ public class GameScreen implements Screen {
         }
 
         if (inputController.moving) {
-            for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {
+            for (int engineIndex = 0; engineIndex < Util.NUMFIREENGINES; engineIndex++) {
                 double distance = Math.sqrt(Math.pow(inputController.position.x - fireEngines[engineIndex].position.x, 2) + Math.pow(inputController.position.y - fireEngines[engineIndex].position.y, 2));
-                if (distance < 40) {
+                if (!fireEngines[engineIndex].isDead() && distance < 40) {
                     engineSelected = engineIndex;
                     break;
                 }
             }
         }
 
-        for (int barIndex = 0; barIndex < AMOUNT; barIndex++) {
+        for (int barIndex = 0; barIndex < Util.NUMFIREENGINES; barIndex++) {
 
             health[barIndex].updateCurrent(fireEngines[barIndex].health);
             fuel[barIndex].updateCurrent(fireEngines[barIndex].fuel);
             volume[barIndex].updateCurrent(fireEngines[barIndex].getVolume());
-            health[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 10);
-            fuel[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 25);
-            volume[barIndex].setPosition(fireEngines[barIndex].position.x, Gdx.graphics.getHeight() - fireEngines[barIndex].position.y - 40);
+            health[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 10);
+            fuel[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 25);
+            volume[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 40);
 
         }
 
         //refill and repair
-        for (int i = 0; i < AMOUNT; i++) {
+        for (int i = 0; i < Util.NUMFIREENGINES; i++) {
             if (map.isInStationRange(fireEngines[i].getPosition())) {
                 if (!fireEngines[i].isMaxHealth()) {
                     fireEngines[i].repair();
@@ -326,7 +310,7 @@ public class GameScreen implements Screen {
             }
             fireEngines[engineSelected].move(inputController.getLatestPosition());
         } else {
-            for(int z = 0; z < AMOUNT; z = z + 1) {
+            for(int z = 0; z < Util.NUMFIREENGINES; z = z + 1) {
                 fireEngines[z].resetSpeed();
             }
         }
@@ -343,16 +327,16 @@ public class GameScreen implements Screen {
             engine.render(batch);
         }
         //health and fuel drawing.
-        for (int i = 0; i < AMOUNT; i = i + 1) {
+        for (int i = 0; i < Util.NUMFIREENGINES; i = i + 1) {
             if (fireEngines[i].isDead()) {
                 continue;
             }
             health[i].updateCurrent(fireEngines[i].health);
             fuel[i].updateCurrent(fireEngines[i].fuel);
             volume[i].updateCurrent(fireEngines[i].getVolume());
-            health[i].setPosition(fireEngines[i].position.x, Gdx.graphics.getHeight() - fireEngines[i].position.y - 10);
-            fuel[i].setPosition(fireEngines[i].position.x, Gdx.graphics.getHeight() - fireEngines[i].position.y - 25);
-            volume[i].setPosition(fireEngines[i].position.x, Gdx.graphics.getHeight() - fireEngines[i].position.y - 40);
+            health[i].setPosition(fireEngines[i].position.x, fireEngines[i].position.invertY().y - 10);
+            fuel[i].setPosition(fireEngines[i].position.x, fireEngines[i].position.invertY().y - 25);
+            volume[i].setPosition(fireEngines[i].position.x, fireEngines[i].position.invertY().y - 40);
             batch.draw(health[i].texture, health[i].position.x, health[i].position.y, health[i].getFill(), health[i].getHeight());
             batch.draw(healthIcon, health[i].position.x - (5 + health[i].getHeight()), health[i].position.y, health[i].getHeight(), health[i].getHeight());
             batch.draw(fuel[i].texture, fuel[i].position.x, fuel[i].position.y, fuel[i].getFill(), fuel[i].getHeight());
@@ -373,7 +357,7 @@ public class GameScreen implements Screen {
             float minimumDistance = 1000;
             int minimumIndex = -1;
             float distance;
-            for (int engineIndex = 0; engineIndex < AMOUNT; engineIndex++) {
+            for (int engineIndex = 0; engineIndex < Util.NUMFIREENGINES; engineIndex++) {
                 distance = fireEngines[engineIndex].position.distanceTo(aliens[alienIndex].position);
                 if (distance<minimumDistance) {
                     minimumDistance = distance;

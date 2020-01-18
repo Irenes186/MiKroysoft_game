@@ -1,7 +1,6 @@
 package com.mikroysoft.game;
 
 import java.lang.Math;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -44,7 +43,7 @@ public class Projectile {
     public void render(SpriteBatch batch) {
         this.position.x += directionX;
         this.position.y += directionY;
-        batch.draw(texture, this.position.x,Gdx.graphics.getHeight()-this.position.y);
+        batch.draw(texture, this.position.x,this.position.invertY().y);
     }
 
     public boolean inRange () {
