@@ -27,8 +27,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class AlienBase implements IRenderable {
 	// Texture of this base
     public Texture texture;
-    // Range in game grid cells that a fire engine must be within before the base will fire at it.
-    public int weaponRange;
     // Name of this base, e.g Aldi, for debugging
     public String name;
     // Maximum number of aliens that can be alive at any time around this base
@@ -71,21 +69,20 @@ public class AlienBase implements IRenderable {
     	texture = new Texture(tex + ".png");
         this.name = name;
         this.position = position;
-        this.weaponRange = params.weaponRange;
-        this.maxAliens = params.maxAliens;
+        maxAliens = params.maxAliens;
         //this.weapon = params.weapon;
         //this.weapon = new WeaponLaser(params.weaponRange, position);
-        this.weapon = new WeaponBullet(10, weaponRange, "laser.png", position);
-        this.health = params.floodLevel;
-        this.attackTimeAfterFirst = params.attackTimeAfterFirst;
-        this.spawnRate = params.spawnRate;
+        weapon = new WeaponBullet(10, params.weaponRange, "laser.png", position);
+        health = params.floodLevel;
+        attackTimeAfterFirst = params.attackTimeAfterFirst;
+        spawnRate = params.spawnRate;
         
         // Initialise base to wait spawnRate before spawning anything
-        this.framesLeftUntilSpawn = this.spawnRate;
+        framesLeftUntilSpawn = this.spawnRate;
         weaponObjects = new HashSet<Object>();
         projectiles = new HashSet<Projectile>();
-        this.rectangle = new Rectangle (new Coordinate (position.x + Util.TILEWIDTH / 2, position.y + Util.TILEHEIGHT / 2), Util.TILEWIDTH, Util.TILEHEIGHT, 0);
-        this.aliens = new ArrayList<Alien>();
+        rectangle = new Rectangle (new Coordinate (position.x + Util.TILEWIDTH / 2, position.y + Util.TILEHEIGHT / 2), Util.TILEWIDTH, Util.TILEHEIGHT, 0);
+        aliens = new ArrayList<Alien>();
     }
 
     /* Increase aggression of base.
@@ -132,23 +129,23 @@ public class AlienBase implements IRenderable {
      * returns an Alien instance was spawned, null otherwise
      *
      * TODO: Add progress bars for alien spawning
+     * TODO: Bugged! line 141 is reached, but no alien is spawned for some reason...
      */
     public Alien doAlienSpawning(FireEngine[] fireEngines) {
     	// Debug: # of frames until this base spawns a new alien.
-    	// System.out.println("Alien cooldown " + this.name + ": " + this.alienSpawnCountDown);
+//    	 System.out.println("Alien cooldown " + name + ": " + framesLeftUntilSpawn);
     	// Check all fire engines
-    	
     	for (FireEngine currentTruck: fireEngines) {
     		// Is the fire engine within weaponRange?
 			if (weapon.truckInRange(currentTruck)) {
 				// Has the spawning countdown passed?
-				if (this.framesLeftUntilSpawn == 0) {
+				if (framesLeftUntilSpawn == 0) {
 					// Reset the spawning cooldown
-					this.framesLeftUntilSpawn = this.spawnRate;
+					framesLeftUntilSpawn = spawnRate;
 					// spawn and return an alien
 					if (currentAliens < maxAliens) {
 					    currentAliens++;
-					    return this.spawnAlien();
+					    return spawnAlien();
 					} else {
 					    return null;
 					}
@@ -156,7 +153,7 @@ public class AlienBase implements IRenderable {
 				
 				// If cooldown has not been passed, decrease it and don't spawn anything.
 				//truckInRange = true;
-				this.framesLeftUntilSpawn--;
+				framesLeftUntilSpawn--;
 				return null;
 			}
 		}
@@ -169,20 +166,19 @@ public class AlienBase implements IRenderable {
      * returns the spawned alien object.
      */
     private Alien spawnAlien() {
-        this.framesLeftUntilSpawn = this.spawnRate;
         Float[] offset = Util.randomCoordOffset(-((float)Util.TILEWIDTH/2), ((float)Util.TILEWIDTH/2), 0.8f);
-        return new Alien(new Coordinate(this.position.x + (Util.TILEWIDTH/2) + offset[0], this.position.y + (Util.TILEHEIGHT/2) + offset[1]));
+        return new Alien(new Coordinate(position.x + (Util.TILEWIDTH/2) + offset[0], position.y + (Util.TILEHEIGHT/2) + offset[1]));
     }
-
+    
     public Set <Projectile> getProjectileList() {
         return projectiles;
     }
 
     public void takeDamage (int damage) {
-        if (damage > this.health) {
-            this.health = 0;
+        if (damage > health) {
+            health = 0;
         } else {
-            this.health -= damage;
+            health -= damage;
         }
     }
 
@@ -191,8 +187,8 @@ public class AlienBase implements IRenderable {
     }
     
     public void doWeaponFiring(FireEngine[] fireEngines) {
-        if (this.weapon != null) {
-            Object firedObject = this.weapon.fire(fireEngines);
+        if (weapon != null) {
+            Object firedObject = weapon.fire(fireEngines);
             if (firedObject != null) {
                 if (firedObject instanceof Projectile) {
                     projectiles.add((Projectile) firedObject);
@@ -204,13 +200,13 @@ public class AlienBase implements IRenderable {
     }
     
     public Rectangle getRect() {
-        if (this.rectangle == null) {
+        if (rectangle == null) {
             throw new NullPointerException("Alien base " + name + " rectangle not initialized before use in collisions");
         }
-        return this.rectangle;
+        return rectangle;
     }
     
     public int getHealth() {
-        return this.health;
+        return health;
     }
 }

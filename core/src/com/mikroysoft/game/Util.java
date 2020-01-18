@@ -53,7 +53,7 @@ public final class Util {
     	return randomCoordOffset(min, max, 0.0f);
     }
     
-    public static void scaleScreen() {
+    public static void scaleTilesToScreen() {
         TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
         TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
     }

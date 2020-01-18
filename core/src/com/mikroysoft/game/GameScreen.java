@@ -48,7 +48,7 @@ public class GameScreen implements Screen {
         this.game = game;
         
         //TODO: Put this in a function that is called every time the window is scaled
-        Util.scaleScreen();
+        Util.scaleTilesToScreen();
 
         //variables for screen size and button size
         float screenWidth = Util.MAPWIDTH * Util.TILEWIDTH, screenHeight = Util.MAPHEIGHT * Util.TILEHEIGHT;

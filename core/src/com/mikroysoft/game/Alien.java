@@ -21,16 +21,19 @@ public class Alien implements IRenderable {
     public Texture texture;
     // Position of Alien on the screen
     public Coordinate position;
+    
     // Direction the alien is currently moving
     public float direction;
+    // Alien walk speed
     private float speed;
     // Point of reference for movement
     private Coordinate basePosition;
+    
     //This is a factor of how much slower alien will shoot compared to fireengine
     private int countToFire;
     // How many frames have passed since the last projectile was fired
     private int currentFireCount;
-    private int shootOffset;
+    
     // List of spawned Projectile objects - i.e bullets - to be used in collision detection
     private Set < Projectile > projectiles;
     // The maximum distance a fireengine can be from the alien before alien begins firing at it
@@ -43,7 +46,7 @@ public class Alien implements IRenderable {
     	// Set the texture to render
         texture = new Texture("alien.png");
         // Save parameters to variables
-        this.basePosition = position;
+        basePosition = position;
         direction = 0;
         // Initialise speed to 2
         speed = 2;
@@ -51,7 +54,6 @@ public class Alien implements IRenderable {
         // by default, fire 50 times slower than the fire engine.
         countToFire = 50;
         currentFireCount = 0;
-        shootOffset = 10;
         // By default, shoot at fire engines within 300px of alien.
         range = 300;
         projectiles = new HashSet < Projectile> ();
@@ -110,7 +112,7 @@ public class Alien implements IRenderable {
     	// Check we are within the firing rate
         if (currentFireCount >= countToFire) {
         	// Spawn a new projectile
-            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.invertY().y), destination, true, ProjectileType.BULLET, range));
+            projectiles.add(new Projectile (new Coordinate(position.x + texture.getWidth() / 2, position.invertY().y), destination, true, ProjectileType.BULLET, range));
             // reset the frames-since-fired tracker
             currentFireCount = 0;
         
