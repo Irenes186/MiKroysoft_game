@@ -6,7 +6,7 @@ public class WeaponBullet extends BaseWeapon {
     }
     
     @Override
-    public Object fire(FireEngine[] fireEngines) {
+    public Projectile fire(FireEngine[] fireEngines) {
         // Check we are within the firing rate
         if (!onCooldown()) {
             if (fireEngines.length < 1) {
@@ -26,13 +26,27 @@ public class WeaponBullet extends BaseWeapon {
             if (target == null || currentClosestDist == -1) {
                 return null;
             }
-
-            resetCooldown();
             
             resetCooldown();
             
             // Spawn a new projectile
             return new Projectile (new Coordinate(position.x, position.invertY().y), target.position, true, ProjectileType.BULLET, (int) Math.round(currentClosestDist));
+            
+        
+        // If we are not within firing rate, wait another frame
+        } else {
+            doCooldown();
+        }
+        return null;
+    }
+    
+    public Projectile fire(Coordinate destination) {
+        // Check we are within the firing rate
+        if (!onCooldown()) {
+            resetCooldown();
+            
+            // Spawn a new projectile
+            return new Projectile (new Coordinate(position.x, position.y), destination, true, ProjectileType.WATER, range);
             
         
         // If we are not within firing rate, wait another frame

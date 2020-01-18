@@ -56,4 +56,11 @@ public class WeaponLaser extends BaseWeapon {
         return laserSprite;
     }
 
+    @Override
+    // TODO: IMPLEMENT
+    public Object fire(Coordinate destination) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

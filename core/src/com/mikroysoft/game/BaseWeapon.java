@@ -65,4 +65,6 @@ public abstract class BaseWeapon {
      * returns Object; the spawned object fired from the weapon (if any) to render
      */
     public abstract Object fire(FireEngine[] fireEngines);
+    
+    public abstract Object fire(Coordinate destination);
 }

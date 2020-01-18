@@ -33,8 +33,8 @@ public class BackStoryScreen implements Screen {
     private String textFileString;
 
     public BackStoryScreen(final Game game){
-        this.game = game;
         batch = new SpriteBatch();
+        this.game = game;
         font = new BitmapFont();
         
         //setting label
@@ -116,7 +116,7 @@ public class BackStoryScreen implements Screen {
     }
 
     @Override
-    public void resize(int i, int i1) { }
+    public void resize(int i, int i1) {System.out.println("resized " + i + " " + i1);}
 
     @Override
     public void pause() { }

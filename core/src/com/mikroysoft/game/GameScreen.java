@@ -15,18 +15,24 @@ public class GameScreen implements Screen {
     Game game;
     SpriteBatch batch;
     CoreLogic coreLogic;
-    FireEngine[] fireEngines;
     InputController inputController;
+    
+    FireEngine[] fireEngines;
     ProgressBar[] health;
     ProgressBar[] fuel;
     ProgressBar[] volume;
-    int engineSelected;
-
+    
+    Alien[] aliens;
+    // used to track the farthest-left empty cell in the aliens array.
+    int nextAlien;
+    AlienBase[] bases;
+    
     boolean gameWon;
     boolean gameLoss;
 
     Map map;
     FireStation fireStation;
+    int engineSelected;
 
     //ProgressBar icon health;
     Texture healthIcon;
@@ -36,24 +42,9 @@ public class GameScreen implements Screen {
     //ProgressBar icon volume;
     Texture volumeIcon;
 
-    Alien[] aliens;
-    // used to track the farthest-left empty cell in the aliens array.
-    int nextAlien;
-    AlienBase[] bases;
-
     public GameScreen(final Game game) {
-
-        //BUTTON WONT WORK AFTER GAME STARTED - worth even having??
-        //Button image set up
         this.game = game;
-        
-        //TODO: Put this in a function that is called every time the window is scaled
         Util.scaleTilesToScreen();
-
-        //variables for screen size and button size
-        float screenWidth = Util.MAPWIDTH * Util.TILEWIDTH, screenHeight = Util.MAPHEIGHT * Util.TILEHEIGHT;
-        float buttonWidth = screenWidth * 0.08f, buttonHeight = screenHeight * 0.08f;
-
         create();
     }
 
@@ -80,35 +71,36 @@ public class GameScreen implements Screen {
         fuel = new ProgressBar[Util.NUMFIREENGINES];
         ///volume:
         volume = new ProgressBar[Util.NUMFIREENGINES];
-        Random randomGenerator = new Random();
-        int randomValueOne = 0;
-        int randomValueTwo = 0;
-        //looping from 0 to amount of fire engines.
-        int[] takenValuesOne = new int[Util.NUMFIREENGINES];
-        int[] takenValuesTwo = new int[Util.NUMFIREENGINES];
-        for (int i = 0; i < Util.NUMFIREENGINES; i++) {
 
-            int index = -1;
-            boolean valueTaken = true;
-            while(valueTaken == true) {
-                valueTaken = false;
-                randomValueOne = randomGenerator.nextInt(3);
-                for(int j = 0; j < Util.NUMFIREENGINES; j = j + 1) {
-                    if(takenValuesOne[j] == randomValueOne) {
-                        valueTaken = true;
-                        break;
-                    }
-                }
-                if(valueTaken == false) {
-                    index = index + 1;
+        //health icon - next to health progress bar.
+        healthIcon = new Texture("health.png");
+
+        //fuel icon - next to fuel progress bar.
+        fuelIcon = new Texture("fuel.png");
+
+        //volume icon - next to volume progress bar.
+        volumeIcon = new Texture("water_drop.png");
+        
+        setUpFireEngines();
+        
+        // initialise aliens array size to the sum of all maxAliens counts.
+        int totalMaxAliens = 0;
+        for (IRenderable[] row : this.map.grid) {
+            for (IRenderable cell : row) {
+                if (cell instanceof AlienBase) {
+                    totalMaxAliens += ((AlienBase) cell).maxAliens;
                 }
             }
-            takenValuesOne[index] = randomValueOne;
+        }
+        aliens = new Alien[totalMaxAliens];
+        bases = this.map.getBases();
+    }
 
+    private void setUpFireEngines() {
+        Random randomGenerator = new Random();
+        for (int i = 0; i < Util.NUMFIREENGINES; i++) {
             fireEngines[i] = new FireEngine(map, new FireEngineParameters(i));
             fireEngines[i].setPosition(map.getStationX() + 50 * i, map.getStationY() + 50);
-
-            //fireEngines[i].setmaxPosition(); <-- what is this for?!
 
             //setting health stuff.
             health[i] = new ProgressBar(BarColour.YELLOW);
@@ -122,26 +114,10 @@ public class GameScreen implements Screen {
             fuel[i].setMax(fireEngines[i].maxFuel);
             fuel[i].updateCurrent(100);
 
-            //Getting max volume value for fireEngines[i].
-            valueTaken = true;
-            index = -1;
-            while(valueTaken == true) {
-                valueTaken = false;
-                randomValueTwo = randomGenerator.nextInt(10);
-                for(int j = 0; j < Util.NUMFIREENGINES; j = j + 1) {
-                    if(takenValuesTwo[j] == randomValueTwo) {
-                        valueTaken = true;
-                        break;
-                    }
-                }
-                if(valueTaken == false) {
-                    index = index + 1;
-                }
-            }
-            takenValuesTwo[index] = randomValueTwo;
-
+            int randomValue = randomGenerator.nextInt(7);
             int maxVolume = 0;
-            switch (randomValueTwo) {
+            
+            switch (randomValue) {
                 case 0:
                     maxVolume = 1;
                     break;
@@ -177,26 +153,6 @@ public class GameScreen implements Screen {
             volume[i].setMax(maxVolume);
             volume[i].updateCurrent(fireEngines[i].getVolume());
         }
-
-        //health icon - next to health progress bar.
-        healthIcon = new Texture("health.png");
-
-        //fuel icon - next to fuel progress bar.
-        fuelIcon = new Texture("fuel.png");
-
-        //volume icon - next to volume progress bar.
-        volumeIcon = new Texture("water_drop.png");
-        // initialise aliens array size to the sum of all maxAliens counts.
-        int totalMaxAliens = 0;
-        for (IRenderable[] row : this.map.grid) {
-            for (IRenderable cell : row) {
-                if (cell instanceof AlienBase) {
-                    totalMaxAliens += ((AlienBase) cell).maxAliens;
-                }
-            }
-        }
-        aliens = new Alien[totalMaxAliens];
-        bases = this.map.getBases();
     }
 
     @Override
@@ -205,56 +161,9 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-
-        // Handle Alien spawning
-        for (AlienBase base : this.bases) {
-            Alien newAlien = base.doAlienSpawning(this.fireEngines);
-            base.doWeaponFiring(fireEngines);
-            if (newAlien != null) {
-                this.aliens[nextAlien] = newAlien;
-                // Theoretically, this should never overflow due to the way i instantiated aliens.
-                nextAlien++;
-            }
-        }
-        
-        // This code is fucking awful, extract to a method
-        Set <Projectile> currentProjectiles;
-        Set <Projectile> removeProjectiles = new HashSet <Projectile>();
-
-        for (FireEngine engine : fireEngines) {
-            for (AlienBase base : bases) {
-                currentProjectiles = base.getProjectileList();
-                for (Projectile projectile : currentProjectiles) {
-                    if (!engine.isDead() && engine.getRect().pointInRectangle(projectile.position)) {
-                        removeProjectiles.add(projectile);
-                        //Add some collision bullshit like damage IDK
-                        engine.takeDamage(base.weapon.weaponDamage);
-                    }
-                }
-
-                currentProjectiles.removeAll(removeProjectiles);
-                base.setProjectiles(currentProjectiles);
-            }
-        }
-
-        removeProjectiles.clear();
-
-        for (AlienBase base : bases) {
-            for (FireEngine engine : fireEngines) {
-                currentProjectiles = engine.getProjectileList();
-                for (Projectile projectile : currentProjectiles) {
-                    if (base.getRect().pointInRectangle(projectile.position)) {
-                        removeProjectiles.add(projectile);
-                        //Add some collision bullshit like damage IDK
-                        base.takeDamage(engine.shotDamage);
-                    }
-                }
-
-                currentProjectiles.removeAll(removeProjectiles);
-                engine.setProjectiles(currentProjectiles);
-            }
-        }
+        defendBases();
+        doProjectileCollision(bases, fireEngines);
+        doProjectileCollision(fireEngines, bases);
 
         batch.begin();
         map.render(batch);
@@ -299,7 +208,7 @@ public class GameScreen implements Screen {
 
         if (inputController.getShotsFired()) {
             if(fireEngines[engineSelected].getVolume() > 0) {
-                fireEngines[engineSelected].shoot(inputController.getLatestPosition());
+                fireEngines[engineSelected].doWeaponFiring(inputController.getLatestPosition());
             }
         }
 
@@ -402,11 +311,46 @@ public class GameScreen implements Screen {
         }
     }
 
+    // TODO: change GameScreen.fireEngines[] and GameScreen.bases[] into HashSets, then remove from sets when dead
+    private void doProjectileCollision(Killable[] shooters, Killable[] targets) {
+        Set <Projectile> currentProjectiles;
+        Set <Projectile> removeProjectiles = new HashSet <Projectile>();
+
+        for (Killable target : targets) {
+            for (Killable shooter : shooters) {
+                currentProjectiles = shooter.getProjectiles();
+                for (Projectile projectile : currentProjectiles) {
+                    if (!target.isDead() && target.getRect().pointInRectangle(projectile.position)) {
+                        removeProjectiles.add(projectile);
+                        target.takeDamage(shooter.weapon.weaponDamage);
+                    }
+                }
+
+                currentProjectiles.removeAll(removeProjectiles);
+                shooter.setProjectiles(currentProjectiles);
+            }
+        }
+    }
+
+    // Alien spawning minorly bugged currently. See AlienBase.doAlienSpawning()
+    private void defendBases() {
+     // Handle Alien spawning
+        for (AlienBase base : this.bases) {
+            Alien newAlien = base.doAlienSpawning(this.fireEngines);
+            base.doWeaponFiring(fireEngines);
+            if (newAlien != null) {
+                this.aliens[nextAlien] = newAlien;
+                // Theoretically, this should never overflow due to the way i instantiated aliens.
+                nextAlien++;
+            }
+        }
+    }
+
     @Override
     public void show() { }
 
     @Override
-    public void resize(int i, int i1) { }
+    public void resize(int i, int i1) {Util.scaleTilesToScreen();}
 
     @Override
     public void pause() { }
