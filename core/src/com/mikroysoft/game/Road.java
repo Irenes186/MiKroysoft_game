@@ -7,19 +7,16 @@ public class Road implements IRenderable {
 
     private Texture texture;
     public Coordinate position;
-    private int TILEWIDTH, TILEHEIGHT;
 
-    public Road (Coordinate position, int TILEWIDTH, int TILEHEIGHT, String roadString) {
+    public Road (Coordinate position, String roadString) {
         this.position = position;
         this.texture = new Texture(roadString + ".png");
-        this.TILEWIDTH = TILEWIDTH;
-        this.TILEHEIGHT = TILEHEIGHT;
     }
     public void update() { }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x, position.y, TILEWIDTH, TILEHEIGHT);
+        batch.draw(texture, position.x, position.y, Util.TILEWIDTH, Util.TILEHEIGHT);
     }
 
 }

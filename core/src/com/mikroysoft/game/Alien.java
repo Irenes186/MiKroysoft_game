@@ -1,13 +1,10 @@
 package com.mikroysoft.game;
 
 // LibGDX Imports
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 // Java Imports
 import java.lang.Math;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -24,8 +21,6 @@ public class Alien implements IRenderable {
     public Texture texture;
     // Position of Alien on the screen
     public Coordinate position;
-    // Game grid cell dimensions
-    private int TILEWIDTH, TILEHEIGHT;
     // Direction the alien is currently moving
     public float direction;
     private float speed;
@@ -43,15 +38,11 @@ public class Alien implements IRenderable {
 
     /* Constructor.
      * Position - Coordinate - spawn location of Alien
-     * TILEWIDTH, TILEHEIGHT - int - game grid tile dimentions
      */
-    public Alien(Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
+    public Alien(Coordinate position) {
     	// Set the texture to render
         texture = new Texture("alien.png");
         // Save parameters to variables
-        this.position = new Coordinate(position);
-        this.TILEHEIGHT = TILEHEIGHT;
-        this.TILEWIDTH = TILEWIDTH;
         this.basePosition = position;
         direction = 0;
         // Initialise speed to 2
@@ -105,7 +96,7 @@ public class Alien implements IRenderable {
     @Override
     public void render(SpriteBatch batch) {
     	// Draw the alien
-        batch.draw(texture,position.x,position.y,TILEWIDTH/2,TILEHEIGHT/2);
+        batch.draw(texture,position.x,position.y,Util.TILEWIDTH/2,Util.TILEHEIGHT/2);
         // Loop over all fired bullets, and render each one
         for (Projectile currentBullet: this.projectiles) {
         	currentBullet.render(batch);
@@ -119,7 +110,7 @@ public class Alien implements IRenderable {
     	// Check we are within the firing rate
         if (currentFireCount >= countToFire) {
         	// Spawn a new projectile
-            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, Gdx.graphics.getHeight() - position.y), destination, true, ProjectileType.BULLET, range));
+            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, position.invertY().y), destination, true, ProjectileType.BULLET, range));
             // reset the frames-since-fired tracker
             currentFireCount = 0;
         

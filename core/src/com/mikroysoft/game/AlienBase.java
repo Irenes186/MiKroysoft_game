@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.ArrayList;
 
-//LibGDX Imports
 import com.badlogic.gdx.Gdx;
+//LibGDX Imports
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -49,8 +48,6 @@ public class AlienBase implements IRenderable {
     public int attackTimeAfterFirst;
     // Position in pixels of this base on the screen
     public Coordinate position;
-    // game grid cell dimensions
-    private int TILEWIDTH, TILEHEIGHT;
     // has this base been destroyed by the player?
     public boolean destroyed;
     // Things created by the BaseWeapon that need rendering and are not projectiles (i.e not using projectile collision). e.g sprites
@@ -67,10 +64,9 @@ public class AlienBase implements IRenderable {
      * name - String - name of the base for debugging purposes
      * params - AlienBaseParameters - various properties and behaviour of this base
      * position - Coordinate - position in pixels of this base. TODO: Shouldnt this be in grid cells?
-     * TILEWIDTH, TILEHEIGHT - int - game grid cell dimensions
      * tex - String - name of the texture file in assets folder to use with this base
      */
-    public AlienBase(String name, AlienBaseParameters params, Coordinate position, int TILEWIDTH, int TILEHEIGHT, String tex) {
+    public AlienBase(String name, AlienBaseParameters params, Coordinate position, String tex) {
         // Save parameters to local variables
     	texture = new Texture(tex + ".png");
         this.name = name;
@@ -78,19 +74,17 @@ public class AlienBase implements IRenderable {
         this.weaponRange = params.weaponRange;
         this.maxAliens = params.maxAliens;
         //this.weapon = params.weapon;
-        //this.weapon = new WeaponLaser(params.weaponRange, position, TILEWIDTH, TILEHEIGHT);
-        this.weapon = new WeaponBullet(10, weaponRange, "laser.png", position, TILEWIDTH, TILEHEIGHT);
+        //this.weapon = new WeaponLaser(params.weaponRange, position);
+        this.weapon = new WeaponBullet(10, weaponRange, "laser.png", position);
         this.health = params.floodLevel;
         this.attackTimeAfterFirst = params.attackTimeAfterFirst;
-        this.TILEWIDTH = TILEWIDTH;
-        this.TILEHEIGHT = TILEHEIGHT;
         this.spawnRate = params.spawnRate;
         
         // Initialise base to wait spawnRate before spawning anything
         this.framesLeftUntilSpawn = this.spawnRate;
         weaponObjects = new HashSet<Object>();
         projectiles = new HashSet<Projectile>();
-        this.rectangle = new Rectangle (new Coordinate (position.x + TILEWIDTH / 2, position.y + TILEHEIGHT / 2), TILEWIDTH, TILEHEIGHT, 0);
+        this.rectangle = new Rectangle (new Coordinate (position.x + Util.TILEWIDTH / 2, position.y + Util.TILEHEIGHT / 2), Util.TILEWIDTH, Util.TILEHEIGHT, 0);
         this.aliens = new ArrayList<Alien>();
     }
 
@@ -106,9 +100,10 @@ public class AlienBase implements IRenderable {
      * batch - SpriteBatch - the batch rendering the current frame
      */
     public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x, position.y, TILEWIDTH, TILEHEIGHT);
+        batch.draw(texture, position.x, position.y, Util.TILEWIDTH, Util.TILEHEIGHT);
         for (Object weaponObj: weaponObjects) {
             if (weaponObj instanceof Sprite) {
+                //((Sprite) weaponObj).setScale(Util.TILEWIDTH, Util.TILEHEIGHT);
                 ((Sprite) weaponObj).draw(batch);
             } else if (weaponObj instanceof Projectile) {
                 ((Projectile) weaponObj).render(batch);
@@ -175,8 +170,8 @@ public class AlienBase implements IRenderable {
      */
     private Alien spawnAlien() {
         this.framesLeftUntilSpawn = this.spawnRate;
-        Float[] offset = Util.randomCoordOffset(-((float)TILEWIDTH/2), ((float)TILEWIDTH/2), 0.8f);
-        return new Alien(new Coordinate(this.position.x + (TILEWIDTH/2) + offset[0], this.position.y + (TILEHEIGHT/2) + offset[1]), this.TILEWIDTH, this.TILEHEIGHT);
+        Float[] offset = Util.randomCoordOffset(-((float)Util.TILEWIDTH/2), ((float)Util.TILEWIDTH/2), 0.8f);
+        return new Alien(new Coordinate(this.position.x + (Util.TILEWIDTH/2) + offset[0], this.position.y + (Util.TILEHEIGHT/2) + offset[1]));
     }
 
     public Set <Projectile> getProjectileList() {

@@ -77,7 +77,7 @@ public class LoserScreen implements Screen {
         });
 
         //variables for screen size and button size
-        float screenWidth = 1024, screenHeight = 1024;
+        float screenWidth = Util.MAPWIDTH * Util.TILEWIDTH, screenHeight = Util.MAPHEIGHT * Util.TILEHEIGHT;
         float buttonWidth = screenWidth * 0.1f, buttonHeight = screenHeight * 0.1f;
         //playButton position ans size
         exitButton.setSize(buttonWidth,buttonHeight);

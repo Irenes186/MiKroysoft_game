@@ -3,13 +3,9 @@ package com.mikroysoft.game;
 // LibGDX Imports
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.Gdx;
 // Java Imports
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.Enumeration;
 import java.lang.Math;
 
 /* This class represents the player-controlled Fire Engines.
@@ -57,7 +53,7 @@ public class FireEngine {
         waterVolume = 100;
         this.map = map;
         range = 500;
-        this.rectangle = new Rectangle (new Coordinate (position.x + map.TILEWIDTH / 2, position.y + map.TILEHEIGHT / 2), map.TILEWIDTH, map.TILEHEIGHT, 0);
+        this.rectangle = new Rectangle (new Coordinate (position.x + Util.TILEWIDTH / 2, position.y + Util.TILEHEIGHT / 2), Util.TILEWIDTH, Util.TILEHEIGHT, 0);
     }
 
     public void increaseSpeed() {
@@ -210,9 +206,9 @@ public class FireEngine {
             return;
         }
 
-        cellX = (int) Math.floor(position.x / map.TILEWIDTH);
-        cellY = (int) Math.floor(position.y / map.TILEHEIGHT) + 1;
-        if (cellX < 0 || cellY < 0 || map.MAPWIDTH <= cellX || map.MAPHEIGHT <= cellY || !(map.grid[cellY][cellX] instanceof Road)) {
+        cellX = (int) Math.floor(position.x / Util.TILEWIDTH);
+        cellY = (int) Math.floor(position.y / Util.TILEHEIGHT) + 1;
+        if (cellX < 0 || cellY < 0 || Util.MAPWIDTH <= cellX || Util.MAPHEIGHT <= cellY || !(map.grid[cellY][cellX] instanceof Road)) {
             position.x += xSign * (speed / 2);
             position.y += ySign * (speed / 2);
         } else {
@@ -226,7 +222,7 @@ public class FireEngine {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, position.x - 40,Gdx.graphics.getHeight()-position.y - 40,40,40,80,80,1,1,direction,0,0,16,16,false,false);
+        batch.draw(texture, position.x - 40,position.invertY().y - 40,40,40,80,80,1,1,direction,0,0,16,16,false,false);
 
         for (Projectile projectile : projectiles) {
             projectile.render(batch);

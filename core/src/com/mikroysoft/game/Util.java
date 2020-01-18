@@ -1,8 +1,17 @@
 package com.mikroysoft.game;
 import java.util.Random;
+
+import com.badlogic.gdx.Gdx;
+
 import java.lang.Math;
 
 public final class Util {
+    public static int MAPWIDTH = 20;
+    public static int MAPHEIGHT = 20;
+    public static int TILEWIDTH = 51;
+    public static int TILEHEIGHT = 42;
+    public static int NUMFIREENGINES = 2;
+    
 	/* Generates two random floats representing coordinates, each between min and max.
      * the coordinate cannot be within the middle (percentDistFromCenter * 100) percent area of
      * the possible square of coordinates. E.g: randomCoordOffset(0.0f, 4.0f, 0.5f)
@@ -42,5 +51,10 @@ public final class Util {
     // Returns two random numbers, each between min and max.
     public static Float[] randomCoordOffset (float min, float max) {
     	return randomCoordOffset(min, max, 0.0f);
+    }
+    
+    public static void scaleScreen() {
+        TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
+        TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;
     }
 }

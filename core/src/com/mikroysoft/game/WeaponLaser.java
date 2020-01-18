@@ -14,16 +14,16 @@ public class WeaponLaser extends BaseWeapon {
     // Texture sprite to render the laser with
     Sprite laserSprite;
     
-    public WeaponLaser(int range, Coordinate position, int TILEWIDTH, int TILEHEIGHT, float aimSpeed) {
-        super(0, range, "laser.png", position, TILEWIDTH, TILEHEIGHT);
+    public WeaponLaser(int range, Coordinate position, float aimSpeed) {
+        super(0, range, "laser.png", position);
         currentAimAngle = 0;
         this.aimSpeed = aimSpeed;
         laserSprite = new Sprite(texture);
         laserSprite.setPosition(position.x, position.y);
     }
     
-    public WeaponLaser(int range, Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
-        super(0, range, "laser.png", position, TILEWIDTH, TILEHEIGHT);
+    public WeaponLaser(int range, Coordinate position) {
+        super(0, range, "laser.png", position);
         currentAimAngle = 0;
         this.aimSpeed = 0.1f;
         laserSprite = new Sprite(texture);
@@ -41,8 +41,8 @@ public class WeaponLaser extends BaseWeapon {
         float currentClosestDist = -1;
         
         for (FireEngine truck: fireEngines) {
-            if (currentClosestDist == -1 || position.cellDistanceTo(truck.position, TILEWIDTH, TILEHEIGHT) < currentClosestDist) {
-                currentClosestDist = position.cellDistanceTo(truck.position, TILEWIDTH, TILEHEIGHT);
+            if (currentClosestDist == -1 || position.cellDistanceTo(truck.position) < currentClosestDist) {
+                currentClosestDist = position.cellDistanceTo(truck.position);
                 target = truck;
             }
         }
