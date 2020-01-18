@@ -130,11 +130,11 @@ public class FireEngine {
     }
     
     public void refillFuel() {
-        this.fuel += 1;
+        this.fuel++;
     }
     
     public void refillVolume() {
-        this.waterVolume += 1;
+        this.waterVolume++;
     }
 
     public boolean isMaxHealth() {
