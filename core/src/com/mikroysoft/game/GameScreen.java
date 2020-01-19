@@ -11,7 +11,8 @@ import java.util.Random;
 import java.util.HashSet;
 import java.util.Set;
 
-/* A screen that hosts the game and runs its behaviour.
+/* This is the main screen of the game. It displays the map and handles rendering of objects on the
+ * map. The majority of the other classes are called from here
  */
 public class GameScreen implements Screen {
     // A new screen for holding game results
@@ -45,12 +46,22 @@ public class GameScreen implements Screen {
     //ProgressBar icon volume;
     Texture volumeIcon;
 
+    /**
+     * This Constructor takes the game object as an argument to allow the changing of screens. This
+     * method also calls the create method
+     *
+     * @param game - This is an instance of the main game class to allow switching of screens
+     */
     public GameScreen(final Game game) {
         this.game = game;
         Util.scaleTilesToScreen();
         create();
     }
 
+    /**
+     * This method sets the default values for the class and initializes any other classes that are
+     * needed
+     */
     public void create() {
         engineSelected = 1;
         nextAlien = 0;
@@ -98,6 +109,9 @@ public class GameScreen implements Screen {
         bases = this.map.getBases();
     }
 
+    /**
+     * This sets up all of the fire engines and their status bars in the game
+     */
     private void setUpFireEngines() {
         Random randomGenerator = new Random();
         for (int i = 0; i < Util.NUMFIREENGINES; i++) {
@@ -119,6 +133,7 @@ public class GameScreen implements Screen {
             int randomValue = randomGenerator.nextInt(7);
             int maxVolume = 0;
             
+            //TODO: Move this switch logic to FireEngine parameters
             switch (randomValue) {
                 case 0:
                     maxVolume = 1;
@@ -157,6 +172,15 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * This render function draws everything to the map object. This includes calling the render
+     * methods of the objects that are being drawn to the map. This also switches the screen to
+     * either the win screen or lose screen depending on whether the game has reach certain
+     * conditions.
+     *
+     * @param delta - This is a float that represents the last time that the render function was
+     * called
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -251,6 +275,12 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * This checks if all the alien bases are dead. If they are then the win condition has been met
+     * and this function will return true, otherwise false.
+     *
+     * @return boolean - Returns false if anyone of the alien bases are still alive, otherwise false
+     */
     private boolean checkGameWon() {
         for (AlienBase base : bases) {
             if (!base.isDead()) {
@@ -260,6 +290,12 @@ public class GameScreen implements Screen {
         return true;
     }
 
+    /**
+     * This checks if all the fire engines are dead. If they are then the lose condition has been
+     * met and this function will return true, otherwise false.
+     *
+     * @return boolean - Returns true if all of the fire engines are dead otherwise false
+     */
     private boolean checkGameLost() {
         for (FireEngine engine : fireEngines) {
             if (!engine.isDead()) {
@@ -269,6 +305,12 @@ public class GameScreen implements Screen {
         return true;
     }
 
+    /**
+     * This changes the values of the bars to the correct value so they are kept up to date
+     *
+     * @param barIndex - This is an index to select a progress bar from the arrays of progress bars
+     * to update there values
+     */
     private void updateBars(int barIndex) {        
         health[barIndex].updateCurrent(fireEngines[barIndex].health);
         fuel[barIndex].updateCurrent(fireEngines[barIndex].fuel);
@@ -279,6 +321,10 @@ public class GameScreen implements Screen {
         volume[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 40);
     }
 
+    /**
+     * This function is used to allow the user to change what fire engine they can shoot and move
+     *
+     */
     private void selectFireEngine() {
         for (int engineIndex = 0; engineIndex < Util.NUMFIREENGINES; engineIndex++) {
             double distance = Math.sqrt(Math.pow(inputController.position.x - fireEngines[engineIndex].position.x, 2) + Math.pow(inputController.position.y - fireEngines[engineIndex].position.y, 2));
@@ -289,6 +335,15 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * This method is to check for any colision that are occuring in the game.
+     *
+     * @param shooters - This is an array of killable objects. The function checks the projectiles
+     * of all of these objects to check whether a colision has occured
+     * @param targets - This is another array of killable objects. This function checks whether any
+     * of the projectiles are in the rectangle of the killable object, if it is a colision has
+     * occured
+     */
     // TODO: change GameScreen.fireEngines[] and GameScreen.bases[] into HashSets, then remove from sets when dead
     private void doProjectileCollision(Killable[] shooters, Killable[] targets) {
         Set <Projectile> currentProjectiles;
@@ -314,6 +369,9 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * This method spawns aliens next to the bases to defend the bases from the fire engines
+     */
     // Alien spawning minorly bugged currently. See AlienBase.doAlienSpawning()
     private void defendBases() {
      // Handle Alien spawning

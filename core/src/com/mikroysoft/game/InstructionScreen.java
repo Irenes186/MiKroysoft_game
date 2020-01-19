@@ -18,6 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/**
+ * This class creates a screen to show the instructions to the user when they click on the
+ * instruction button from the menu.
+ */
 public class InstructionScreen implements Screen {
     Game game;
     Texture buttonTexture;
