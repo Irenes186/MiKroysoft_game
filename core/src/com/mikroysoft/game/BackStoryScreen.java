@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  * button from the main menu.
  */
 public class BackStoryScreen implements Screen {
+    //This is the batch that will draw everything to the back story screen
     SpriteBatch batch;
     Game game;
     Texture buttonTexture;
@@ -45,7 +46,7 @@ public class BackStoryScreen implements Screen {
         batch = new SpriteBatch();
         this.game = game;
         font = new BitmapFont();
-        
+
         //setting label
         Label.LabelStyle labelStyle = makeLabelStyle(Color.WHITE);
         //alternative text style
@@ -65,17 +66,17 @@ public class BackStoryScreen implements Screen {
         buttonTexture = new Texture("planet_button_0.png");
         textureRegion = new TextureRegion(buttonTexture);
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
-        
+
         //add different buttons
         backMenuButton = new ImageButton(textureRegionDrawable);
-        
+
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         stage.addActor(backMenuButton);
         stage.addActor(backStoryTitle);
         stage.addActor(menuButtonLabel);
         Gdx.input.setInputProcessor(stage);
-        
+
         //if instructionButton clicked go to instruction
         backMenuButton.addListener(new ClickListener() {
 
@@ -85,15 +86,16 @@ public class BackStoryScreen implements Screen {
                 game.setScreen(new Menu(game));
             }
         });
-        
+
         //playButton position and size
         scaleButtonToScreen(backMenuButton, 0.1f, 0.1f);
         backMenuButton.setPosition(800,20);
         backMenuButton.getImage().setFillParent(true);
 
+        //lore.txt contains the text of the backstory
         textFileString = Gdx.files.internal("lore.txt").readString();
     }
-    
+
     /**
      * This is a private function that returns a new label style with the font field set in the
      * constructor and the text colour set through a parameter.
@@ -108,7 +110,7 @@ public class BackStoryScreen implements Screen {
         labelStyle.fontColor = textColour;
         return labelStyle;
     }
-    
+
     /**
      * This is a method that resizes the button with the screen so that they always appear the right
      * size.
@@ -141,11 +143,11 @@ public class BackStoryScreen implements Screen {
         //Background
         Gdx.gl.glClearColor(0.2f,0,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
         //draw stage with actors
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-        
+
         batch.begin();
         font.draw(batch, textFileString,(Gdx.graphics.getWidth()/2) - 455,(Gdx.graphics.getHeight()/2) + 150);
         batch.end();

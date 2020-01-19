@@ -14,26 +14,26 @@ import java.util.HashSet;
  * Aliens will die in one hit from a fire engine projectile TODO: To be implemented
  */
 public class Alien extends Killable implements IRenderable {
-	// Does This Alien know where the FireStation is?
-	// TODO: Shouldn't this be handled in Game?
+    // Does This Alien know where the FireStation is?
+    // TODO: Shouldn't this be handled in Game?
     public boolean LocationKnowlegde;
     // The rendered Alien texture
     public Texture texture;
     // Position of Alien on the screen
     public Coordinate position;
-    
+
     // Direction the alien is currently moving
     public float direction;
     // Alien walk speed
     private float speed;
     // Point of reference for movement
     private Coordinate basePosition;
-    
+
     //This is a factor of how much slower alien will shoot compared to fireengine
     private int countToFire;
     // How many frames have passed since the last projectile was fired
     private int currentFireCount;
-    
+
     public AlienBase base;
 
     /* Constructor.
@@ -43,18 +43,18 @@ public class Alien extends Killable implements IRenderable {
         health = 1;
         maxHealth = 1;
         this.base = base;
-        
-    	// Set the texture to render
+
+        // Set the texture to render
         texture = new Texture("alien.png");
         rectangle = new Rectangle(new Coordinate(position.x + texture.getWidth()/2, position.y + texture.getHeight()/2), texture.getWidth(), texture.getHeight(), 0);
-        
+
         // Save parameters to variables
         basePosition = position;
         direction = 0;
         // Initialise speed to 2
         speed = 2;
         this.position = position;
-        
+
         // by default, fire 50 times slower than the fire engine.
         countToFire = 50;
         currentFireCount = 0;
@@ -70,15 +70,15 @@ public class Alien extends Killable implements IRenderable {
     public Coordinate getLatestPosition() {
         return this.position;
     }
-    
+
     /* Move the alien in a random direction
      * TODO: Does not take speed into account. Also why does it move in a random direction?
      */
     public void move(){
-    	// Move by a random amount along each axis, from 0 to 5 px
+        // Move by a random amount along each axis, from 0 to 5 px
         position.x += (int)((Math.random()*10)-5); 
         position.y += (int)((Math.random()*10)-5);
-        
+
         // clamp the maximum distance from spawn position to 100 px in any direction
         // clamp in +ve x direction
         if (position.x>basePosition.x+100)
@@ -92,8 +92,8 @@ public class Alien extends Killable implements IRenderable {
         // clamp in +ve y direction
         if (position.y<basePosition.y-100)
             position.y+=5;
-        
-    //    direction = (float) Math.toDegrees(Math.atan2((position.y +(Math.random()* 10 + 1)) * -1,  position.x - (Math.random()* 10 + 1))) +45;
+
+        //    direction = (float) Math.toDegrees(Math.atan2((position.y +(Math.random()* 10 + 1)) * -1,  position.x - (Math.random()* 10 + 1))) +45;
     }
 
     /* Render the alien and all of its fired projectiles onto the screen
@@ -101,11 +101,11 @@ public class Alien extends Killable implements IRenderable {
      */
     @Override
     public void render(SpriteBatch batch) {
-    	// Draw the alien
+        // Draw the alien
         batch.draw(texture,position.x,position.y,Util.TILEWIDTH/2,Util.TILEHEIGHT/2);
         // Loop over all fired bullets, and render each one
         for (Projectile currentBullet: projectiles) {
-        	currentBullet.render(batch);
+            currentBullet.render(batch);
         }
     }
 
@@ -113,25 +113,25 @@ public class Alien extends Killable implements IRenderable {
      * destination - Coordinate - the coordinate to aim the projectile at
      */
     public void shoot(Coordinate destination) {
-    	// Check we are within the firing rate
+        // Check we are within the firing rate
         if (currentFireCount >= countToFire) {
-        	// Spawn a new projectile
+            // Spawn a new projectile
             projectiles.add(new Projectile (new Coordinate(position.x + texture.getWidth() / 2, position.invertY().y), destination, ProjectileType.BULLET, range));
             // reset the frames-since-fired tracker
             currentFireCount = 0;
-        
-        // If we are not within firing rate, wait another frame
+
+            // If we are not within firing rate, wait another frame
         } else {
             currentFireCount++;
         }
 
     }
-    
+
     /* Update the Alien
      * TODO: Implement (or delete)
      */
     public void update() { }
-    
+
     public int getRange() {
         return this.range; }
 
@@ -145,7 +145,7 @@ public class Alien extends Killable implements IRenderable {
             }
         }
     }
-    
+
     @Override
     public void kill() {
         dead = true;

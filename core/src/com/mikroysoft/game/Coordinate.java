@@ -31,7 +31,7 @@ public class Coordinate {
         this.x = (float) x;
         this.y = (float) y;
     }
-	
+
     /**
      * This is a copy construtor that creates a coordinate object from another coordinate object
      * parameters and then setting the x and y fields to the appropiate argument.
@@ -61,7 +61,7 @@ public class Coordinate {
         this.x = x;
         this.y = y;
     }
-    
+
     // Get distance from point to point
     /**
      * This calculates the distance to another coordinate in terms of pixels.
@@ -70,9 +70,9 @@ public class Coordinate {
      * @return float - the distance between the two points
      */
     public float distanceTo(Coordinate other) {
-    	return (float) Math.sqrt(Math.pow(Math.abs(this.x-other.x), 2)+Math.pow(Math.abs(this.y-other.y), 2));
+        return (float) Math.sqrt(Math.pow(Math.abs(this.x-other.x), 2)+Math.pow(Math.abs(this.y-other.y), 2));
     }
-    
+
     /**
      * This calculates the distance between this coordinate and another cooridnate in terms of cells
      * @param other - This is the coordinate to calculate the distance too from the coordinate this
@@ -84,7 +84,7 @@ public class Coordinate {
         int yDiff = (int) Math.floor(Math.abs(this.y-other.y) / Util.TILEHEIGHT);
         return (float) Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
     }
-    
+
     /**
      * Adds two coordinated together and returns the result
      * @param other - This is the coordinate to add to the current calling instance of coordinate
@@ -93,7 +93,7 @@ public class Coordinate {
     public Coordinate plus(Coordinate other) {
         return new Coordinate(x + other.x, y + other.y);
     }
-    
+
     /**
      * Takes away the input coordinates x and y values from the calling coordinates x and y values
      * @param other - This is the coordinate to take away from the calling instance of coordinate
@@ -102,7 +102,7 @@ public class Coordinate {
     public Coordinate minus(Coordinate other) {
         return new Coordinate(x - other.x, y - other.y);
     }
-    
+
     /* Calculates the angle in degrees from this point to point other
      * The angle is given with respect to the x axis, i.e:
      * 
@@ -122,7 +122,7 @@ public class Coordinate {
         //Coordinate vectorToTarget = other.minus(this);
         //return (float) Math.acos(vectorToTarget.x/(Math.sqrt(Math.pow(vectorToTarget.x, 2) + Math.pow(vectorToTarget.y, 2))));
     }
-    
+
     /**
      * Takes the y value away from the height of the screen to invert it
      * @return Coordinate - the angle in degrees

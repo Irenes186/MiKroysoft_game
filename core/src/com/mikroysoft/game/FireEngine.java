@@ -22,7 +22,7 @@ public class FireEngine extends Killable {
     public Coordinate position;
     public int fuel;
     public int maxFuel;
-    public int maxVolume;
+    public int maxVolume; //this is set in GameScreen
     public int distanceTravelled;
     public int shotDamage;
     public float direction;
@@ -74,7 +74,7 @@ public class FireEngine extends Killable {
             this.speed = this.maxSpeed;
         }
     }
-    
+
     /**
      * Sets the speed of the fire engine back to zero
      * @return void
@@ -82,7 +82,7 @@ public class FireEngine extends Killable {
     public void resetSpeed() {
         this.speed = 0;
     }
-    
+
     /**
      * Sets the maximum speed of the fire engine
      * @param s - this is the value to set maxSpeed too
@@ -91,7 +91,7 @@ public class FireEngine extends Killable {
     public void setSpeed(float s) {
         this.maxSpeed = s;
     }
-    
+
     /**
      * Returns the current speed of the fire engine
      *
@@ -110,7 +110,7 @@ public class FireEngine extends Killable {
     public void setAcceleration(float a) {
         this.acceleration = a;
     }
-    
+
     /**
      * Returns the current accleration of the fire engine
      *
@@ -119,7 +119,7 @@ public class FireEngine extends Killable {
     public float getAcceleration() {
         return acceleration;
     }
-    
+
     /**
      * Sets the position of the fire engine to the x and y values provided
      *
@@ -139,7 +139,7 @@ public class FireEngine extends Killable {
     public void setMaxVolume(int v) {
         maxVolume = v;
     }
-    
+
     /**
      * Sets the volume of water the fire engine currently holds
      *
@@ -148,7 +148,7 @@ public class FireEngine extends Killable {
     public void setVolume(int v) {
         this.waterVolume = v;
     }
-    
+
     /**
      * Returns the maximum volume of water the fire engine can hold
      *
@@ -157,7 +157,7 @@ public class FireEngine extends Killable {
     public int getMaxVolume() {
         return this.maxVolume;
     }
-    
+
     /**
      * Returns the volume of water the fire engine currently holds
      *
@@ -166,7 +166,7 @@ public class FireEngine extends Killable {
     public int getVolume() {
         return this.waterVolume;
     }
-    
+
     /**
      * Checks if the current volume of water is greater than zero, if it is it decrements it
      *
@@ -176,7 +176,7 @@ public class FireEngine extends Killable {
             waterVolume--;
         }
     }
-    
+
     /**
      * Checks if the current health is smaller than the maximum health, if it is it increments it
      */
@@ -185,7 +185,7 @@ public class FireEngine extends Killable {
             health++;
         }
     }
-    
+
     /**
      * Checks if the fuel is smaller than the maximum fuel, if it is it increments it
      */
@@ -194,7 +194,7 @@ public class FireEngine extends Killable {
             fuel++;
         }
     }
-    
+
     /**
      * Checks if the current water volume is smaller than the maximum volume, if it is it increments
      * it
@@ -240,14 +240,14 @@ public class FireEngine extends Killable {
     public int getFuel() {
         return this.fuel;
     }
-    
+
     /**
      * Increments the distance that the fire engine has traveled
      */
     public void distanceIncreased() {
         distanceTravelled++;
     }
-    
+
     /**
      * Reduces the fuel the fire engine holds if a certain amount of distance has beed travelled
      */
@@ -256,7 +256,7 @@ public class FireEngine extends Killable {
             fuel--;
         }
     }
-    
+
     /**
      * Returns the maximum amount of fuel that the fire engine can hold
      *
@@ -274,7 +274,7 @@ public class FireEngine extends Killable {
     public Coordinate getPosition() {
         return position;
     }
-    
+
     /**
      * Moves the fire engine in the direction of the input coordinate
      *

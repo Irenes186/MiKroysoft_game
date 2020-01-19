@@ -24,7 +24,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * 
  */
 public class AlienBase extends Killable implements IRenderable {
-	// Texture of this base
+    // Texture of this base
     public Texture texture;
     // Name of this base, e.g Aldi, for debugging
     public String name;
@@ -47,7 +47,7 @@ public class AlienBase extends Killable implements IRenderable {
     // WARNING: Not type checked, since Sprites and Textures do not share a super class.
     // TAKE CARE WHEN CREATING NEW BASEWEAPONS.
     private HashSet<Object> weaponObjects;
-    
+
     public List <Alien> aliens;
 
     /**
@@ -59,24 +59,24 @@ public class AlienBase extends Killable implements IRenderable {
      */
     public AlienBase(String name, AlienBaseParameters params, Coordinate position, String tex) {
         // Save parameters to local variables
-    	texture = new Texture(tex + ".png");
+        texture = new Texture(tex + ".png");
         this.tex = tex;
         this.name = name;
         this.position = position;
         currentAliens = 0;
         maxAliens = params.maxAliens;
-        
+
         switch (params.weaponType) {
-//            case BULLET:
-//                weapon = new WeaponBullet(10, params.weaponRange, "bullet.png", position);
-//            case LASER:
-//                weapon = new WeaponLaser(params.weaponRange, position);
-//            default:
-//                weapon = null;
+            //            case BULLET:
+            //                weapon = new WeaponBullet(10, params.weaponRange, "bullet.png", position);
+            //            case LASER:
+            //                weapon = new WeaponLaser(params.weaponRange, position);
+            //            default:
+            //                weapon = null;
             default:
                 weapon = new WeaponBullet(10, params.weaponRange, "bullet.png", position);
         }
-        
+
         health = params.floodLevel;
         attackTimeAfterFirst = params.attackTimeAfterFirst;
         spawnRate = params.spawnRate;
@@ -116,7 +116,7 @@ public class AlienBase extends Killable implements IRenderable {
                 throw new IllegalArgumentException("Base " + name + " attempted to render unrecognised BaseWeapon object");
             }
         }
-        
+
         for (Projectile proj: projectiles) {
             proj.render(batch);
         }
@@ -124,6 +124,9 @@ public class AlienBase extends Killable implements IRenderable {
 
     /* Update the base
      * TODO: Implement
+     */
+    /**
+     * This is a method overriden from IRendable. This needs to be here or java breaks. Fun times.
      */
     public void update() {
 
@@ -138,34 +141,34 @@ public class AlienBase extends Killable implements IRenderable {
      */
     //@Override
     public Alien doAlienSpawning(FireEngine[] fireEngines) {
-    	// Check all fire engines
-    	for (FireEngine currentTruck: fireEngines) {
-    		// Is the fire engine within weaponRange?
-			if (weapon.truckInRange(currentTruck)) {
-			    // Debug: # of frames until this base spawns a new alien.
-			    // System.out.println("Alien cooldown " + name + ": " + framesLeftUntilSpawn);
-				// Has the spawning countdown passed?
-				if (framesLeftUntilSpawn == 0) {
-					// Reset the spawning cooldown
-					framesLeftUntilSpawn = spawnRate;
-					// spawn and return an alien
-					if (currentAliens < maxAliens) {
-					    currentAliens++;
-					    return spawnAlien();
-					} else {
-					    return null;
-					}
-				}
-				
-				// If cooldown has not been passed, decrease it and don't spawn anything.
-				//truckInRange = true;
-				framesLeftUntilSpawn--;
-				return null;
-			}
-		}
-    	
-    	// If no FireEngines were found in range, dont't spawn anything.
-    	return null;
+        // Check all fire engines
+        for (FireEngine currentTruck: fireEngines) {
+            // Is the fire engine within weaponRange?
+            if (weapon.truckInRange(currentTruck)) {
+                // Debug: # of frames until this base spawns a new alien.
+                // System.out.println("Alien cooldown " + name + ": " + framesLeftUntilSpawn);
+                // Has the spawning countdown passed?
+                if (framesLeftUntilSpawn == 0) {
+                    // Reset the spawning cooldown
+                    framesLeftUntilSpawn = spawnRate;
+                    // spawn and return an alien
+                    if (currentAliens < maxAliens) {
+                        currentAliens++;
+                        return spawnAlien();
+                    } else {
+                        return null;
+                    }
+                }
+
+                // If cooldown has not been passed, decrease it and don't spawn anything.
+                //truckInRange = true;
+                framesLeftUntilSpawn--;
+                return null;
+            }
+        }
+
+        // If no FireEngines were found in range, dont't spawn anything.
+        return null;
     }
 
     /** spawns an alien around the base (but not on top of it)
@@ -175,8 +178,8 @@ public class AlienBase extends Killable implements IRenderable {
         Float[] offset = Util.randomCoordOffset(-((float)Util.TILEWIDTH/2), ((float)Util.TILEWIDTH/2), 0.8f);
         return new Alien(new Coordinate(position.x + (Util.TILEWIDTH/2) + offset[0], position.y + (Util.TILEHEIGHT/2) + offset[1]), this);
     }
-    
-    
+
+
     /** Fires the weapon that is asscociated with each fire engine in the fireEngines argument
      * @param fireEngines - This is an array of fireEngines
      * @return void
