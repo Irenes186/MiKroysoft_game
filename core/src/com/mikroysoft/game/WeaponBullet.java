@@ -1,10 +1,29 @@
 package com.mikroysoft.game;
 
+/**
+ * Fires all the projectiles by extending the abstract weapon
+ */
 public class WeaponBullet extends Weapon {
+
+    /**
+     * Class Constructor.
+     * 
+     * @param cooldown Passed to the weapon Constructor.
+     * @param range Passed to the weapon Constructor.
+     * @param tex Passed to the weapon Constructor.
+     * @param position Passed to the weapon Constructor.
+     */
     public WeaponBullet(int cooldown, int range, String tex, Coordinate position) {
         super(cooldown, range, tex, position, 15);
     }
     
+    /**
+     * Creates a projectile to fire at the closest fireEngine.
+     * 
+     * @param fireEngines An array of fire engine objects.
+     * 
+     * @return A projectile that is firing at the nearest fire engine.
+     */
     @Override
     public Projectile fire(FireEngine[] fireEngines) {
         // Check we are within the firing rate
@@ -40,6 +59,14 @@ public class WeaponBullet extends Weapon {
         return null;
     }
     
+    /**
+     * Creates a projectile that fires at the provided destination.
+     * 
+     * @param destination The coordiante of a projectile to be created.
+     * 
+     * @return a projectile that is aimed at the provided destination
+     * and starts at this objects position.
+     */
     public Projectile fire(Coordinate destination) {
         // Check we are within the firing rate
         if (!onCooldown()) {
