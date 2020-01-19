@@ -1,7 +1,7 @@
 package com.mikroysoft.game;
 import com.badlogic.gdx.graphics.Texture;
 
-public abstract class BaseWeapon {
+public abstract class Weapon {
     // The number of frames to wait between weapon fires
     private int cooldown;
     // The number of frames since the last weapon fire
@@ -21,7 +21,7 @@ public abstract class BaseWeapon {
      *               truck must be within in order for the weapon to fire
      * tex - String - the filename of the texture file to use with this weapon
      */
-    public BaseWeapon(int cooldown, int range, String tex, Coordinate position, int weaponDamage) {
+    public Weapon(int cooldown, int range, String tex, Coordinate position, int weaponDamage) {
         this.cooldown = cooldown;
         this.cooldownCurrent = cooldown;
         this.range = range;

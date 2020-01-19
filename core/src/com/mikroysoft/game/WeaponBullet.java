@@ -1,6 +1,6 @@
 package com.mikroysoft.game;
 
-public class WeaponBullet extends BaseWeapon {
+public class WeaponBullet extends Weapon {
     public WeaponBullet(int cooldown, int range, String tex, Coordinate position) {
         super(cooldown, range, tex, position, 15);
     }

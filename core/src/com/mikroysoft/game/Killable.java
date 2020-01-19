@@ -12,7 +12,7 @@ public abstract class Killable {
     protected boolean dead;
     protected Rectangle rectangle;
     protected int range;
-    public BaseWeapon weapon;
+    public Weapon weapon;
     
     public Set<Projectile> getProjectiles() {
         return projectiles;

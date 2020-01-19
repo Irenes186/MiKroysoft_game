@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * 
  * WARNING: CLASS NOT CURRENTLY FUNCTIONAL
  */
-public class WeaponLaser extends BaseWeapon {
+public class WeaponLaser extends Weapon {
     // The angle in which the weapon is currently facing.
     private float currentAimAngle;
     // The speed at which currentAimAngle will be altered towards a target
