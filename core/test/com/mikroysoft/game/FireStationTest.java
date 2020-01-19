@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import de.tomgrill.gdxtesting.GdxTestRunner;
+import org.junit.runner.RunWith;
+
+@RunWith(GdxTestRunner.class)
 public class FireStationTest {
     
     @Test

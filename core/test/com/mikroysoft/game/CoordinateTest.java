@@ -17,7 +17,7 @@ public class CoordinateTest {
     public void testCellDistanceTo() {
         Coordinate pointOne = new Coordinate(20, 20);
         Coordinate pointTwo = new Coordinate(80, 20);
-        assertEquals(pointOne.cellDistanceTo(pointTwo, 20, 20), 3, 0.1);
+        assertEquals(pointOne.cellDistanceTo(pointTwo), 1, 0.1);
     }
 
     @Test
@@ -45,6 +45,6 @@ public class CoordinateTest {
     public void testAngle() {
         Coordinate point = new Coordinate(1, 2);
         Coordinate newPoint = new Coordinate(1, 1);
-        assertEquals(point.angleTo(newPoint), 45.0f, 0.1);
+        assertEquals(point.angleTo(newPoint), -90, 0.1);
     }
 }

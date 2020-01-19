@@ -54,6 +54,7 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java-library"
 
+    sourceSets.main.resources.srcDirs = [ "../core/assets/" ]
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
