@@ -5,6 +5,9 @@ import com.badlogic.gdx.Gdx;
 
 import java.lang.Math;
 
+/**
+ * 
+ */
 public final class Util {
     public static int MAPWIDTH = 20;
     public static int MAPHEIGHT = 20;
@@ -12,7 +15,8 @@ public final class Util {
     public static int TILEHEIGHT = 42;
     public static int NUMFIREENGINES = 2;
     
-	/* Generates two random floats representing coordinates, each between min and max.
+	/**
+     * Generates two random floats representing coordinates, each between min and max.
      * the coordinate cannot be within the middle (percentDistFromCenter * 100) percent area of
      * the possible square of coordinates. E.g: randomCoordOffset(0.0f, 4.0f, 0.5f)
      * 
@@ -29,6 +33,10 @@ public final class Util {
      * 
      * Negative numbers are accepted for min and max.
      * The coordinate is returned as a Float[2] in the format [x, y].
+     * 
+     * @param min The first coordinate for the generation square.
+     * @param min The second coordinate for the generation square.
+     * @param percentDistFromCenter The area that is excluded from the generation square.
      */
     public static Float[] randomCoordOffset (float min, float max, float percentDistFromCenter) {
     	Random randomGen = new Random();
@@ -48,11 +56,21 @@ public final class Util {
     	return offsets;
     }
     
-    // Returns two random numbers, each between min and max.
+    /**
+     * Returns two random numbers, each between min and max.
+     * acts as a Wrapper method for randomCoordOffset
+     * 
+     * @param min The position to pass to RCO
+     * @param max The postition to pass to RCO
+     */ 
     public static Float[] randomCoordOffset (float min, float max) {
     	return randomCoordOffset(min, max, 0.0f);
     }
     
+    /**
+     * Changes the internal knowledge of the sizes of the game to
+     * match the size of the screen.
+     */
     public static void scaleTilesToScreen() {
         TILEWIDTH = Gdx.graphics.getWidth() / MAPWIDTH;
         TILEHEIGHT = Gdx.graphics.getHeight() / MAPHEIGHT;

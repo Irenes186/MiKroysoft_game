@@ -6,17 +6,26 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+/** 
+ * Container class for all map elements
+ * I.e includes roads and alien bases
+ * but does not include GUI or fire engines
+ */
 public class Map {
-    /* Container class for all map elements
-     * I.e includes roads and alien bases
-     * but does not include GUI or fire engines
-     */
+    
     Texture bg;
     public Coordinate fireStation;
     IRenderable[][] grid;
     String[][] inGrid;
 
-    // constructor: takes background image name
+    /**
+     * Class Constructor.
+     * Puts all the values from the map-information file into
+     * the grid of IRenderables.
+     * 
+     * @param bgtex The string of the name for the background file,
+     * without the .png suffix
+     */
     public Map(String bgtex) throws Exception {
         this.bg = new Texture(bgtex + ".png");
         grid = new IRenderable[Util.MAPWIDTH][Util.MAPHEIGHT];
@@ -160,6 +169,12 @@ public class Map {
         }
     }
 
+    /**
+     * Reads the file map-information.txt and returns each character
+     * from the file in a 2D array.
+     * 
+     * @return A 2D string array of characters.
+     */
     private String[][] readMapInfoFile() throws IOException {
         // import map info
         File file = new File("map_information.txt");
@@ -183,9 +198,11 @@ public class Map {
         return grid;
     }
 
-    /* Returns all currently active alien bases
-    * TODO: Inefficient! Runs in O(2n) time :/
-    */
+    /**
+     * Returns all alien base object, from the grid, in an array.
+     * 
+     * @return An array of alien bases in the grid.
+     */
     public AlienBase[] getBases() {
         AlienBase[] bases;
         int numBases = 0;
@@ -208,7 +225,13 @@ public class Map {
         }
         return bases;
     }
-    //Renders map elements onto the screen
+
+    /**
+     * Renders map elements onto the screen.
+     * 
+     * @param batch The spritebatch object that the map elements
+     * should be rendered on.
+     */
     public void render(SpriteBatch batch) {
         batch.draw (this.bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //Iterates through grid and call each object's render method
@@ -219,6 +242,15 @@ public class Map {
             }
         }
     }
+
+    /**
+     * Checks and returns whether or not the fire station is within a game tile
+     * of the coordinates provided, typically fireengine coordinates
+     * 
+     * @param engineCoordinates The Coordinate that the range is checked against.
+     * @return true if the coordinate is within a tile of the firestation 
+     * object, otherwise false.
+     */
     public boolean isInStationRange(Coordinate engineCoordinates) {
         float tempX = engineCoordinates.x - fireStation.x;
         float tempY = engineCoordinates.y - ((Util.MAPHEIGHT * Util.TILEHEIGHT) - fireStation.y);
@@ -234,7 +266,19 @@ public class Map {
             return false;
         }
     }
+
+    /**
+     * Returns the x coordinate of the firestation object in the grid array.
+     * 
+     * @return the station x coordinate as an int.
+     */
     public int getStationX() { return (int)fireStation.x;}
+
+    /**
+     * Returns the y coordinate of the firestation object in the grid array.
+     * 
+     * @return the station y coordinate as an int.
+     */
     public int getStationY() {
     	return (Util.MAPHEIGHT * Util.TILEHEIGHT) - (int)fireStation.y;
     }

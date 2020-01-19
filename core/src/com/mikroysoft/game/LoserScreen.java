@@ -16,6 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+
+/**
+ * The screen that that tells the user that they have lost the game.
+ */
 public class LoserScreen implements Screen {
     private Game game;
     private Texture buttonTexture;
@@ -27,6 +31,13 @@ public class LoserScreen implements Screen {
     private Label outcomeTitle;
     private Label menuButtonLabel;
 
+
+    /**
+     * Class Constructor.
+     * Creates the buttons on the screen and adds text to each button.
+     * 
+     * @param game The game object that the screen should be displayed on.
+     */
     public LoserScreen(final Game game){
         this.game = game;
         font = new BitmapFont();
@@ -78,6 +89,13 @@ public class LoserScreen implements Screen {
         exitButton.getImage().setFillParent(true);
     }
 
+    /**
+     * Helper function that return a LabelStyle object with the 
+     * provided colour and font.
+     * 
+     * @param textColour The Color object that the LabelStyle should take.
+     * @return A LabelStyle object that contains the specified requirements
+     */
     private Label.LabelStyle makeLabelStyle(Color textColour) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
@@ -85,9 +103,17 @@ public class LoserScreen implements Screen {
         return labelStyle;
     }
     
+    /**
+     * Changes the size of the provided button object by the factors provided.
+     * 
+     * @param button The ImageButton object that is to be scaled.
+     * @param widthFactor Factor to scale the x direction of the button by.
+     * @param heightFactor Factor to scale the y direction of the button by.
+     */
     private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
         button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
     }
+    
     
     @Override
     public void show() {

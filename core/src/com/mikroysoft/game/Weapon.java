@@ -1,6 +1,9 @@
 package com.mikroysoft.game;
 import com.badlogic.gdx.graphics.Texture;
 
+/**
+ * 
+ */
 public abstract class Weapon {
     // The number of frames to wait between weapon fires
     private int cooldown;

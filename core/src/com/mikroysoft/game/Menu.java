@@ -15,6 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/**
+ * This screen creates a menu to access the information for the game as
+ * well as start the game.
+ */
 public class Menu implements Screen {
     Game game;
     Texture buttonTexture;
@@ -35,6 +39,13 @@ public class Menu implements Screen {
     Stage stage;
     BitmapFont font;
 
+    /**
+     * Class Constructor.
+     * Adds all the buttons to the screen as well as the text for each button
+     * also creates listeners for the button so that click detection can take place.
+     * 
+     * @param game The game object that the screen will be displayed on.
+     */
     public Menu(final Game game){
         this.game = game;
         font = new BitmapFont();
