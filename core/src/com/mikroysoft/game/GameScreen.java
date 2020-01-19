@@ -14,7 +14,6 @@ import java.util.Set;
 public class GameScreen implements Screen {
     Game game;
     SpriteBatch batch;
-    CoreLogic coreLogic;
     InputController inputController;
     
     FireEngine[] fireEngines;
@@ -56,7 +55,6 @@ public class GameScreen implements Screen {
         }
 
         batch = new SpriteBatch();
-        coreLogic = new CoreLogic();
         inputController = new InputController();
         Gdx.input.setInputProcessor(inputController);
 
@@ -154,7 +152,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        coreLogic.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
