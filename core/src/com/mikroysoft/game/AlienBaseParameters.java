@@ -33,7 +33,7 @@ public class AlienBaseParameters {
                 break;
             case 2:
                 weaponRange = 1;
-                maxAliens = 0;
+                maxAliens = 1;
                 weaponType = "laser";
                 floodLevel = 20;
                 attackTimeAfterFirst = 300;

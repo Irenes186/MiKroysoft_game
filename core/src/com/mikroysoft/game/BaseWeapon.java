@@ -10,27 +10,25 @@ public abstract class BaseWeapon {
     protected int range;
     // Position of the weapon (usually inherited from a base, though it COULD be mounted to a FireEngine... hmm...)
     public Coordinate position;
-    // The dimensions of game grid cells in pixels, to be used during range calculation
-    protected int TILEWIDTH, TILEHEIGHT;
     // Texture for the weapon's projectile/firing method/etc
     protected Texture texture;
+    // Damage the weapon deals. E.g a projectile may deal weaponDamage on hit, or a laser may deal weaponDamage per second of contact etc.
+    protected int weaponDamage;
     
     /* Constructor.
      * cooldown - int - The number of frames to wait between weapon fires
      * range - int - The range, in grid cells, around the weapon that a
      *               truck must be within in order for the weapon to fire
      * tex - String - the filename of the texture file to use with this weapon
-     * TILEWIDTH, TILEHEIGHT - int - dimensions of the game grid cells in pixels
      */
-    public BaseWeapon(int cooldown, int range, String tex, Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
+    public BaseWeapon(int cooldown, int range, String tex, Coordinate position, int weaponDamage) {
         this.cooldown = cooldown;
         this.cooldownCurrent = cooldown;
         this.range = range;
         // Using position by reference rather than by copy to allow dynamic positioning
         this.position = position;
-        this.TILEWIDTH = TILEWIDTH;
-        this.TILEHEIGHT = TILEHEIGHT;
         this.texture = new Texture(tex);
+        this.weaponDamage = weaponDamage;
     }
     
     /* Decrease the amount of cooldown left before the weapon can be fired
@@ -59,7 +57,7 @@ public abstract class BaseWeapon {
      * returns bool; true if truck is within weapon range, false otherwise
      */
     protected boolean truckInRange(FireEngine truck) {
-        return Math.abs(position.cellDistanceTo(truck.position.invertY(), TILEWIDTH, TILEHEIGHT)) <= range;
+        return Math.abs(position.cellDistanceTo(truck.position.invertY())) <= range;
     }
     
     /* Fire the weapon.
@@ -67,4 +65,6 @@ public abstract class BaseWeapon {
      * returns Object; the spawned object fired from the weapon (if any) to render
      */
     public abstract Object fire(FireEngine[] fireEngines);
+    
+    public abstract Object fire(Coordinate destination);
 }

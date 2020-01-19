@@ -1,14 +1,12 @@
 package com.mikroysoft.game;
 
-import com.badlogic.gdx.Gdx;
-
 public class WeaponBullet extends BaseWeapon {
-    public WeaponBullet(int cooldown, int range, String tex, Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
-        super(cooldown, range, tex, position, TILEWIDTH, TILEHEIGHT);
+    public WeaponBullet(int cooldown, int range, String tex, Coordinate position) {
+        super(cooldown, range, tex, position, 15);
     }
     
     @Override
-    public Object fire(FireEngine[] fireEngines) {
+    public Projectile fire(FireEngine[] fireEngines) {
         // Check we are within the firing rate
         if (!onCooldown()) {
             if (fireEngines.length < 1) {
@@ -19,8 +17,8 @@ public class WeaponBullet extends BaseWeapon {
             
             for (FireEngine truck: fireEngines) {
                 // 
-                if (truckInRange(truck) && (currentClosestDist == -1 || position.cellDistanceTo(truck.position, TILEWIDTH, TILEHEIGHT) < currentClosestDist)) {
-                    currentClosestDist = position.cellDistanceTo(truck.position, TILEWIDTH, TILEHEIGHT);
+                if (truckInRange(truck) && !truck.isDead() && (currentClosestDist == -1 || position.cellDistanceTo(truck.position) < currentClosestDist)) {
+                    currentClosestDist = position.cellDistanceTo(truck.position);
                     target = truck;
                 }
             }
@@ -28,13 +26,27 @@ public class WeaponBullet extends BaseWeapon {
             if (target == null || currentClosestDist == -1) {
                 return null;
             }
-
-            resetCooldown();
             
             resetCooldown();
             
             // Spawn a new projectile
-            return new Projectile (new Coordinate(position.x, position.invertY().y), target.position, true, ProjectileType.BULLET, (int) Math.round(currentClosestDist));
+            return new Projectile (new Coordinate(position.x, position.invertY().y), target.position, ProjectileType.BULLET, (int) Math.round(currentClosestDist));
+            
+        
+        // If we are not within firing rate, wait another frame
+        } else {
+            doCooldown();
+        }
+        return null;
+    }
+    
+    public Projectile fire(Coordinate destination) {
+        // Check we are within the firing rate
+        if (!onCooldown()) {
+            resetCooldown();
+            
+            // Spawn a new projectile
+            return new Projectile (new Coordinate(position.x, position.y), destination, ProjectileType.WATER, range);
             
         
         // If we are not within firing rate, wait another frame

@@ -1,13 +1,10 @@
 package com.mikroysoft.game;
 
 // LibGDX Imports
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 // Java Imports
 import java.lang.Math;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -16,7 +13,7 @@ import java.util.HashSet;
  * Aliens can move in a random direction, and fire towards the nearest fire engine when it is in range.
  * Aliens will die in one hit from a fire engine projectile TODO: To be implemented
  */
-public class Alien implements IRenderable {
+public class Alien extends Killable implements IRenderable {
 	// Does This Alien know where the FireStation is?
 	// TODO: Shouldn't this be handled in Game?
     public boolean LocationKnowlegde;
@@ -24,46 +21,47 @@ public class Alien implements IRenderable {
     public Texture texture;
     // Position of Alien on the screen
     public Coordinate position;
-    // Game grid cell dimensions
-    private int TILEWIDTH, TILEHEIGHT;
+    
     // Direction the alien is currently moving
     public float direction;
+    // Alien walk speed
     private float speed;
     // Point of reference for movement
     private Coordinate basePosition;
+    
     //This is a factor of how much slower alien will shoot compared to fireengine
     private int countToFire;
     // How many frames have passed since the last projectile was fired
     private int currentFireCount;
-    private int shootOffset;
-    // List of spawned Projectile objects - i.e bullets - to be used in collision detection
-    private Set < Projectile > projectiles;
-    // The maximum distance a fireengine can be from the alien before alien begins firing at it
-    private int range;
+    
+    public AlienBase base;
 
     /* Constructor.
      * Position - Coordinate - spawn location of Alien
-     * TILEWIDTH, TILEHEIGHT - int - game grid tile dimentions
      */
-    public Alien(Coordinate position, int TILEWIDTH, int TILEHEIGHT) {
+    public Alien(Coordinate position, AlienBase base) {
+        health = 1;
+        maxHealth = 1;
+        this.base = base;
+        
     	// Set the texture to render
         texture = new Texture("alien.png");
+        rectangle = new Rectangle(new Coordinate(position.x + texture.getWidth()/2, position.y + texture.getHeight()/2), texture.getWidth(), texture.getHeight(), 0);
+        
         // Save parameters to variables
-        this.position = new Coordinate(position);
-        this.TILEHEIGHT = TILEHEIGHT;
-        this.TILEWIDTH = TILEWIDTH;
-        this.basePosition = position;
+        basePosition = position;
         direction = 0;
         // Initialise speed to 2
         speed = 2;
+        this.position = position;
         
         // by default, fire 50 times slower than the fire engine.
         countToFire = 50;
         currentFireCount = 0;
-        shootOffset = 10;
         // By default, shoot at fire engines within 300px of alien.
-        range = 300;
+        range = 1;
         projectiles = new HashSet < Projectile> ();
+        weapon = new WeaponBullet(countToFire, range, "bullet.png", position);
     }
 
     /* Get the position of the alien
@@ -95,7 +93,6 @@ public class Alien implements IRenderable {
         if (position.y<basePosition.y-100)
             position.y+=5;
         
-        // TODO: Can we delete this?
     //    direction = (float) Math.toDegrees(Math.atan2((position.y +(Math.random()* 10 + 1)) * -1,  position.x - (Math.random()* 10 + 1))) +45;
     }
 
@@ -105,7 +102,7 @@ public class Alien implements IRenderable {
     @Override
     public void render(SpriteBatch batch) {
     	// Draw the alien
-        batch.draw(texture,position.x,position.y,TILEWIDTH/2,TILEHEIGHT/2);
+        batch.draw(texture,position.x,position.y,Util.TILEWIDTH/2,Util.TILEHEIGHT/2);
         // Loop over all fired bullets, and render each one
         for (Projectile currentBullet: this.projectiles) {
         	currentBullet.render(batch);
@@ -119,7 +116,7 @@ public class Alien implements IRenderable {
     	// Check we are within the firing rate
         if (currentFireCount >= countToFire) {
         	// Spawn a new projectile
-            projectiles.add(new Projectile (new Coordinate(position.x + shootOffset, Gdx.graphics.getHeight() - position.y), destination, true, ProjectileType.BULLET, range));
+            projectiles.add(new Projectile (new Coordinate(position.x + texture.getWidth() / 2, position.invertY().y), destination, ProjectileType.BULLET, range));
             // reset the frames-since-fired tracker
             currentFireCount = 0;
         
@@ -128,10 +125,6 @@ public class Alien implements IRenderable {
             currentFireCount++;
         }
 
-    }
-    
-    public Set<Projectile> getProjectiles() {
-        return this.projectiles;
     }
     
     /* Update the Alien
