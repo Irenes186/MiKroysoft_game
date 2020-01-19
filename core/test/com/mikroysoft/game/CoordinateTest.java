@@ -22,7 +22,7 @@ public class CoordinateTest {
 
     @Test
     public void testtoString(){
-        Coordinate point = new Coordinate((float)10, (float)20);
+        Coordinate point = new Coordinate(10,20);
         String test = point.toString();
         assertEquals("(10.0, 20.0)", test);
     }
