@@ -2,9 +2,11 @@ To move the fire engine left click in the direction you wish to move in.
 
 To shoot water from the fire engine right click in the direction you want to shoot in.
 
-To replenish health, fuel and water; move to the fire station
+To replenish health, fuel and water; move to the fire station.
 
-Your health, fuel and water is displayed by the bars underneath the fire engine
+To exit the game press the escape key.
+
+Your health, fuel and water is displayed by the bars underneath the fire engine.
 
 You can select a different fire engine by left clicking on it.
 

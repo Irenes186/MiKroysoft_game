@@ -1,16 +1,12 @@
 package com.mikroysoft.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -20,9 +16,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Menu implements Screen {
-    SpriteBatch batch;
-    CoreLogic coreLogic;
-    InputController inputController;
     Game game;
     Texture buttonTexture;
     TextureRegion textureRegion;
@@ -44,37 +37,37 @@ public class Menu implements Screen {
 
     public Menu(final Game game){
         this.game = game;
-
-        //LABEL
-        //setting label
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
         font = new BitmapFont();
-        labelStyle.font = font;
-        labelStyle.fontColor = Color.WHITE;
+        
+        //setting label
+        Label.LabelStyle labelStyle = makeLabelStyle(Color.WHITE);
         //alternative text style
-        Label.LabelStyle labelStyle2 = new Label.LabelStyle();
-        labelStyle2.font = font;
-        labelStyle2.fontColor = Color.BLACK;
+        Label.LabelStyle labelStyle2 = makeLabelStyle(Color.BLACK);
+
         //play button text
         playLabel = new Label("Play!",labelStyle2);
         playLabel.setFontScale(3.0f, 3.0f);
-        playLabel.setPosition(495,415);
+        playLabel.setPosition(495,400);
         playLabel.setAlignment(Align.center);
+        
         //instruction button text
         instructionLabel = new Label("Instructions",labelStyle2);
         instructionLabel.setFontScale(1.2f, 1.5f);
         instructionLabel.setPosition(200,305);
         instructionLabel.setAlignment(Align.center);
+        
         //story button text
         backStoryLabel = new Label("Story",labelStyle2);
         backStoryLabel.setFontScale(2.0f, 2.0f);
         backStoryLabel.setPosition(485,155);
         backStoryLabel.setAlignment(Align.center);
+        
         //exit button text
         exitLabel = new Label("Exit",labelStyle2);
         exitLabel.setFontScale(2.0f, 2.0f);
         exitLabel.setPosition(750,305);
         exitLabel.setAlignment(Align.center);
+        
         //Main title
         mainTitle = new Label("KROY! (by MiKroysoft)",labelStyle);
         mainTitle.setFontScale(3.0f, 5.0f);
@@ -86,10 +79,12 @@ public class Menu implements Screen {
         buttonTexture = new Texture("planet_button_0.png");
         textureRegion = new TextureRegion(buttonTexture);
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
+        
         //set another texture
         buttonTexture2 = new Texture("planet_button_1.png");
         textureRegion2 = new TextureRegion(buttonTexture2);
         textureRegionDrawable2 = new TextureRegionDrawable(textureRegion2);
+        
         //add different buttons
         playButton = new ImageButton(textureRegionDrawable);
         instructionButton = new ImageButton(textureRegionDrawable);
@@ -97,7 +92,7 @@ public class Menu implements Screen {
         exitButton = new ImageButton(textureRegionDrawable);
 
 
-        //If playButton clicked go to game screen
+      //If playButton clicked go to game screen
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -127,31 +122,30 @@ public class Menu implements Screen {
                 //super.clicked(event, x, y);
             }
         });
-
-        Button.ButtonStyle style = new Button.ButtonStyle(); //???
-
-        //variables for screen size and button size
-        float screenWidth = 1024, screenHeight = 1024;
-        float buttonWidth = screenWidth * 0.1f, buttonHeight = screenHeight * 0.1f;
+                
         //playButton position and size
-        playButton.setSize(buttonWidth * 1.8f,buttonHeight * 1.8f);
+        scaleButtonToScreen(playButton, 0.18f, 0.18f);
         playButton.setPosition(335, 250);
         playButton.getImage().setFillParent(true);
+        
         //instructionButton position and size
-        instructionButton.setSize(buttonWidth * 1.2f,buttonHeight * 1.2f);
+        scaleButtonToScreen(instructionButton, 0.12f, 0.12f);
         instructionButton.setPosition(120,200);
         instructionButton.getImage().setFillParent(true);
+        
         //backStoryButton position and size
-        backStoryButton.setSize(buttonWidth * 1.2f,buttonHeight * 1.2f);
+        scaleButtonToScreen(backStoryButton, 0.12f, 0.12f);
         backStoryButton.setPosition(390, 50);
         backStoryButton.getImage().setFillParent(true);
+        
         //exitButton position and size
-        exitButton.setSize(buttonWidth * 1.2f,buttonHeight * 1.2f);
+        scaleButtonToScreen(exitButton, 0.12f, 0.12f);
         exitButton.setPosition(650, 200);
         exitButton.getImage().setFillParent(true);
 
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
+        
         //add buttons to stage on menu stage
         stage.addActor(playButton);
         stage.addActor(instructionButton);
@@ -165,10 +159,19 @@ public class Menu implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    private Label.LabelStyle makeLabelStyle(Color textColour) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+        labelStyle.fontColor = textColour;
+        return labelStyle;
+    }
+    
+    private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
+        button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
+    }
+    
     @Override
     public void show() {
-        //Gdx.input.setInputProcessor((InputProcessor) this);
-        //this.game.setScreen(new GameScreen(this.game));
     }
 
     @Override
@@ -180,11 +183,6 @@ public class Menu implements Screen {
         //draw stage with actors
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-
-        /*//add writing //DOES NOT WORK
-        this.batch.begin();
-        this.font.draw(this.batch, "Play", this.playButton.getOriginX(), this.playButton.getOriginY());
-*/
     }
 
     @Override

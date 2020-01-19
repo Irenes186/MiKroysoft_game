@@ -7,7 +7,7 @@ public class AlienBaseParameters {
     // maximum number of aliens that can be alive around this base at any one time
     public int maxAliens;
     // Type of weapon this base uses to defend itself
-    public String weaponType;
+    public WeaponType weaponType;
     // health
     public int floodLevel;
     // TODO: Is this a duplicate of weaponRange?
@@ -24,33 +24,33 @@ public class AlienBaseParameters {
     public AlienBaseParameters(int baseIndex) {
         switch(baseIndex){
             case 1:
-                weaponRange = 4;
+                weaponRange = 1;
                 maxAliens = 3;
-                weaponType = "laser";
+                weaponType = WeaponType.BULLET;
                 floodLevel = 20;
                 attackTimeAfterFirst = 300;
                 spawnRate = 500;
                 break;
             case 2:
-                weaponRange = 4;
-                maxAliens = 3;
-                weaponType = "laser";
+                weaponRange = 1;
+                maxAliens = 1;
+                weaponType = WeaponType.LASER;
                 floodLevel = 20;
                 attackTimeAfterFirst = 300;
                 spawnRate = 500;
                 break;
             case 3:
-                weaponRange = 4;
-                maxAliens = 3;
-                weaponType = "laser";
+                weaponRange = 2;
+                maxAliens = 1;
+                weaponType = WeaponType.BULLET;
                 floodLevel = 20;
                 attackTimeAfterFirst = 300;
                 spawnRate = 500;
                 break;
             default:
                 weaponRange = 1;
-                maxAliens = 3;
-                weaponType = "laser";
+                maxAliens = 2;
+                weaponType = WeaponType.BULLET;
                 floodLevel = 20;
                 attackRange = 1;
                 attackTimeAfterFirst = 300;

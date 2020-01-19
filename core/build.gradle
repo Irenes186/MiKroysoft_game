@@ -9,4 +9,5 @@ dependencies {
     compile files('libs/mnist-tools.jar', 'libs/gson-2.2.4.jar')
     runtime fileTree(dir: 'libs', include: '*.jar')
     testImplementation "junit:junit:4.11"
+    testImplementation 'org.hamcrest:hamcrest-library:1.3'
 }
