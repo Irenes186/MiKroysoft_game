@@ -129,7 +129,7 @@ public class ProgressBar {
             this.visible = false;
         }
     }
-    
+
     /**
      * Renders the bar and the icon provided for the bar, at the
      * coordinate of the this object.

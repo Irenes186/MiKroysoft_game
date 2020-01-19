@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
  * but does not include GUI or fire engines
  */
 public class Map {
-    
+
     Texture bg;
     public Coordinate fireStation;
     IRenderable[][] grid;
@@ -30,7 +30,7 @@ public class Map {
         this.bg = new Texture(bgtex + ".png");
         grid = new IRenderable[Util.MAPWIDTH][Util.MAPHEIGHT];
         fireStation = new Coordinate(0, 0);
-        
+
         // Grid containing text description of map
         inGrid = null;
 
@@ -41,14 +41,14 @@ public class Map {
         catch(Exception e){
             System.out.println("Failed to read map_information.txt");
         }
-        
+
         //Populate grid with class instances as described in map_information
         String fileName;
         //Variables for configuring road gfx
         boolean hasRoadAbove, hasRoadBelow, hasRoadLeft, hasRoadRight;
         AlienBaseParameters params;
         int row = 0;
-        
+
         // iterate through inGrid
         for (row = 0; row < Util.MAPHEIGHT; row++) {
             for (int col = 0; col < Util.MAPWIDTH; col++) {
@@ -134,36 +134,36 @@ public class Map {
                         // instance road with the required gfx
                         grid[row][col] = new Road(new Coordinate(col * Util.TILEWIDTH, (Util.MAPHEIGHT-row) * Util.TILEHEIGHT), fileName);
                         break;
-                    // Clifford's tower
+                        // Clifford's tower
                     case "2":
                         params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                         grid[row][col] = new AlienBase("Cliffords's Tower", params, new Coordinate(col * Util.TILEWIDTH, (Util.MAPHEIGHT-row) * Util.TILEHEIGHT), "cliffords-tower");
                         break;
-                    // Aldi
+                        // Aldi
                     case "3":
                         params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                         grid[row][col] = new AlienBase("Aldi", params, new Coordinate(col * Util.TILEWIDTH, (Util.MAPHEIGHT-row) * Util.TILEHEIGHT), "aldi");
                         break;
-                    // Holgate Windmill
+                        // Holgate Windmill
                     case "4":
                         params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                         grid[row][col] = new AlienBase("Holgate Windmill", params, new Coordinate(col * Util.TILEWIDTH, (Util.MAPHEIGHT-row) * Util.TILEHEIGHT), "Holgate-Windmill");
                         break;
-                    //Jorvik Viking Centre
+                        //Jorvik Viking Centre
                     case "5":
                         params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
                         grid[row][col] = new AlienBase("Jorvik Viking Centre", params, new Coordinate(col * Util.TILEWIDTH, (Util.MAPHEIGHT-row) * Util.TILEHEIGHT), "viking");
                         break;
-                    //York train station
+                        //York train station
                     case "6":
                         params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
-                    	grid[row][col] = new AlienBase("York Station", params, new Coordinate(col * Util.TILEWIDTH, (Util.MAPHEIGHT-row) * Util.TILEHEIGHT), "york_station");
-                    	break;
-                   //York City FC stadium
+                        grid[row][col] = new AlienBase("York Station", params, new Coordinate(col * Util.TILEWIDTH, (Util.MAPHEIGHT-row) * Util.TILEHEIGHT), "york_station");
+                        break;
+                        //York City FC stadium
                     case "7":
                         params = new AlienBaseParameters(Integer.parseInt(inGrid[row][col]));
-                    	grid[row][col] = new AlienBase("York City FC", params, new Coordinate(col * Util.TILEWIDTH, (Util.MAPHEIGHT-row) * Util.TILEHEIGHT), "york_city_fc");
-                    	break;
+                        grid[row][col] = new AlienBase("York City FC", params, new Coordinate(col * Util.TILEWIDTH, (Util.MAPHEIGHT-row) * Util.TILEHEIGHT), "york_city_fc");
+                        break;
                 }
             }
         }
@@ -180,7 +180,7 @@ public class Map {
         File file = new File("map_information.txt");
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String[][] grid = new String[Util.MAPWIDTH][Util.MAPHEIGHT];
-        
+
         int row = 0;
         String fileInput;
         String[] items;
@@ -280,7 +280,7 @@ public class Map {
      * @return the station y coordinate as an int.
      */
     public int getStationY() {
-    	return (Util.MAPHEIGHT * Util.TILEHEIGHT) - (int)fireStation.y;
+        return (Util.MAPHEIGHT * Util.TILEHEIGHT) - (int)fireStation.y;
     }
 }
 

@@ -21,14 +21,14 @@ public class GameScreen implements Screen {
     SpriteBatch batch;
     // Handles peripheral input to the game
     InputController inputController;
-    
+
     // All currently alive fire engines
     FireEngine[] fireEngines;
     // All bars associated with the fire engines
     ProgressBar[] health;
     ProgressBar[] fuel;
     ProgressBar[] volume;
-    
+
     Alien[] aliens;
     // used to track the farthest-left empty cell in the aliens array.
     int nextAlien;
@@ -93,9 +93,9 @@ public class GameScreen implements Screen {
 
         //volume icon - next to volume progress bar.
         volumeIcon = new Texture("water_drop.png");
-        
+
         setUpFireEngines();
-        
+
         // initialise aliens array size to the sum of all maxAliens counts.
         int totalMaxAliens = 0;
         for (IRenderable[] row : this.map.grid) {
@@ -132,7 +132,7 @@ public class GameScreen implements Screen {
 
             int randomValue = randomGenerator.nextInt(7);
             int maxVolume = 0;
-            
+
             //TODO: Move this switch logic to FireEngine parameters
             switch (randomValue) {
                 case 0:
@@ -201,18 +201,18 @@ public class GameScreen implements Screen {
 
         if (inputController.moving) {
             selectFireEngine();
-            
+
             if (fireEngines[engineSelected].getFuel() > 0) {
                 fireEngines[engineSelected].distanceIncreased();
             }
             fireEngines[engineSelected].move(inputController.getLatestPosition());
-            
+
         } else {
             for(int z = 0; z < Util.NUMFIREENGINES; z = z + 1) {
                 fireEngines[z].resetSpeed();
             }
         }
-        
+
         if (inputController.getShotsFired()) {
             if(fireEngines[engineSelected].getVolume() > 0) {
                 fireEngines[engineSelected].doWeaponFiring(inputController.getLatestPosition());
@@ -230,9 +230,9 @@ public class GameScreen implements Screen {
                     fireEngines[truckIndex].refillVolume();
                 }
             }
-            
+
             fireEngines[truckIndex].render(batch);
-            
+
             // Update bars
             updateBars(truckIndex);
             // Draw bars
@@ -241,7 +241,7 @@ public class GameScreen implements Screen {
                 fuel[truckIndex].render(batch, fuelIcon);
                 volume[truckIndex].render(batch, volumeIcon);
             }
-            
+
         }
 
         for (int alienIndex = 0; alienIndex<nextAlien; alienIndex++) {
@@ -315,7 +315,7 @@ public class GameScreen implements Screen {
         health[barIndex].updateCurrent(fireEngines[barIndex].health);
         fuel[barIndex].updateCurrent(fireEngines[barIndex].fuel);
         volume[barIndex].updateCurrent(fireEngines[barIndex].getVolume());
-        
+
         health[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 10);
         fuel[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 25);
         volume[barIndex].setPosition(fireEngines[barIndex].position.x, fireEngines[barIndex].position.invertY().y - 40);
@@ -374,7 +374,7 @@ public class GameScreen implements Screen {
      */
     // Alien spawning minorly bugged currently. See AlienBase.doAlienSpawning()
     private void defendBases() {
-     // Handle Alien spawning
+        // Handle Alien spawning
         for (AlienBase base : this.bases) {
             Alien newAlien = base.doAlienSpawning(this.fireEngines);
             base.doWeaponFiring(fireEngines);

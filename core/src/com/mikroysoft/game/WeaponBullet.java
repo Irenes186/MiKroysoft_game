@@ -16,7 +16,7 @@ public class WeaponBullet extends Weapon {
     public WeaponBullet(int cooldown, int range, String tex, Coordinate position) {
         super(cooldown, range, tex, position, 15);
     }
-    
+
     /**
      * Creates a projectile to fire at the closest fireEngine.
      * 
@@ -33,7 +33,7 @@ public class WeaponBullet extends Weapon {
             }
             FireEngine target = null;
             float currentClosestDist = -1;
-            
+
             for (FireEngine truck: fireEngines) {
                 // 
                 if (truckInRange(truck) && !truck.isDead() && (currentClosestDist == -1 || position.cellDistanceTo(truck.position) < currentClosestDist)) {
@@ -41,24 +41,24 @@ public class WeaponBullet extends Weapon {
                     target = truck;
                 }
             }
-            
+
             if (target == null || currentClosestDist == -1) {
                 return null;
             }
-            
+
             resetCooldown();
-            
+
             // Spawn a new projectile
             return new Projectile (new Coordinate(position.x, position.invertY().y), target.position, ProjectileType.BULLET, (int) Math.round(currentClosestDist));
-            
-        
-        // If we are not within firing rate, wait another frame
+
+
+            // If we are not within firing rate, wait another frame
         } else {
             doCooldown();
         }
         return null;
     }
-    
+
     /**
      * Creates a projectile that fires at the provided destination.
      * 
@@ -71,12 +71,12 @@ public class WeaponBullet extends Weapon {
         // Check we are within the firing rate
         if (!onCooldown()) {
             resetCooldown();
-            
+
             // Spawn a new projectile
             return new Projectile (new Coordinate(position.x, position.y), destination, ProjectileType.WATER, range);
-            
-        
-        // If we are not within firing rate, wait another frame
+
+
+            // If we are not within firing rate, wait another frame
         } else {
             doCooldown();
         }

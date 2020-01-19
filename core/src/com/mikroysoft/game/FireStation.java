@@ -43,7 +43,7 @@ public class FireStation implements IRenderable {
     public void destroy() {
         destroyed = true;
     }
-    
+
     /**
      * The function returns the destroyed property
      *
@@ -52,7 +52,7 @@ public class FireStation implements IRenderable {
     public boolean isDestroyed() {
         return this.destroyed;
     }
-    
+
     public void update() { }
 
     /**

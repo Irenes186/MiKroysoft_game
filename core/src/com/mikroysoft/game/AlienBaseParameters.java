@@ -7,7 +7,7 @@ package com.mikroysoft.game;
 
 public class AlienBaseParameters {
     // Distance from the base in px that a FireEngine must be within in order to trigger
-	// weapon firing and alien spawning
+    // weapon firing and alien spawning
     public int weaponRange;
     // maximum number of aliens that can be alive around this base at any one time
     public int maxAliens;
@@ -30,7 +30,6 @@ public class AlienBaseParameters {
      * outside of this range the default config will be used.
      * @param baseIndex - This is an integer that will be used to select a certain config
      */
-
     public AlienBaseParameters(int baseIndex) {
         switch(baseIndex){
             case 1:
