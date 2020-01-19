@@ -67,7 +67,7 @@ public class InputController implements InputProcessor {
         }
         return false;
     }
-    
+
     public boolean isEscaped () {
         if (escaped) {
             escaped = false;

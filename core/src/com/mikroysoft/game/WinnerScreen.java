@@ -34,7 +34,7 @@ public class WinnerScreen implements Screen {
         this.game = game;
         font = new BitmapFont();
 
-       //setting label
+        //setting label
         Label.LabelStyle labelStyle = makeLabelStyle(Color.WHITE);
         //alternative text style
         Label.LabelStyle labelStyle2 = makeLabelStyle(Color.BLACK);
@@ -53,7 +53,7 @@ public class WinnerScreen implements Screen {
         buttonTexture = new Texture("planet_button_0.png");
         textureRegion = new TextureRegion(buttonTexture);
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
-        
+
         //add different buttons
         exitButton = new ImageButton(textureRegionDrawable);
 
@@ -80,14 +80,14 @@ public class WinnerScreen implements Screen {
         exitButton.setPosition(400,150);
         exitButton.getImage().setFillParent(true);
     }
-    
+
     private Label.LabelStyle makeLabelStyle(Color textColour) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
         labelStyle.fontColor = textColour;
         return labelStyle;
     }
-    
+
     private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
         button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
     }

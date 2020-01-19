@@ -5,6 +5,6 @@ package com.mikroysoft.game;
  * is a water droplet or a bullet.
  */
 public enum ProjectileType {
-	WATER,
-	BULLET
+    WATER,
+    BULLET
 }

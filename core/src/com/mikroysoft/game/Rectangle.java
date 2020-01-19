@@ -50,7 +50,7 @@ public class Rectangle {
         if (point.x < midPoints[0] && point.x > midPoints[2]
                 && point.invertY().y < midPoints[1] && point.invertY().y > midPoints[3]) {
             return true;
-        }
+                }
         return false;
     }
 
@@ -62,10 +62,10 @@ public class Rectangle {
      */
     float[] getMidPoints() {
         float[] points =  {
-                this.centrePoint.x + width / 2,
-                this.centrePoint.y + height / 2,
-                this.centrePoint.x - width / 2,
-                this.centrePoint.y - height /2};
+            this.centrePoint.x + width / 2,
+            this.centrePoint.y + height / 2,
+            this.centrePoint.x - width / 2,
+            this.centrePoint.y - height /2};
         return points;
     }
 
@@ -82,7 +82,7 @@ public class Rectangle {
         this.angle = direction;
         this.centrePoint = this.centrePoint.invertY();
     }
-    
+
     /**
      * Returns the angle the the rectangle points, measured in degrees.
      * 

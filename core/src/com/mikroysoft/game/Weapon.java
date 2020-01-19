@@ -18,7 +18,7 @@ public abstract class Weapon {
     protected Texture texture;
     // Damage the weapon deals. E.g a projectile may deal weaponDamage on hit, or a laser may deal weaponDamage per second of contact etc.
     protected int weaponDamage;
-    
+
     /**
      * Constructor.
      * @param cooldown - int - The number of frames to wait between weapon fires
@@ -35,7 +35,7 @@ public abstract class Weapon {
         this.texture = new Texture(tex);
         this.weaponDamage = weaponDamage;
     }
-    
+
     /**
      * Decrease the amount of cooldown left before the weapon can be fired
      */
@@ -44,7 +44,7 @@ public abstract class Weapon {
             cooldownCurrent--;
         }
     }
-    
+
     /**
      * Is the weapon on cooldown?
      * @return bool; true if the weapon still has to cool down before firing, false if it is ready to fire
@@ -52,14 +52,14 @@ public abstract class Weapon {
     public boolean onCooldown() {
         return cooldownCurrent > 0;
     }
-    
+
     /**
      * Resets the cooldown before this weapon can fire again.
      */
     public void resetCooldown() {
         cooldownCurrent = cooldown;
     }
-    
+
     /**
      * Is the given fire engine within range of the weapon?
      * truck - FireEngine - The FireEngine to test
@@ -69,7 +69,7 @@ public abstract class Weapon {
     protected boolean truckInRange(FireEngine truck) {
         return Math.abs(position.cellDistanceTo(truck.position.invertY())) <= range;
     }
-    
+
     /**
      * Fire the weapon.
      * fireEngines - FireEngine[] - An array containing all currently alive FireEngines
@@ -77,6 +77,6 @@ public abstract class Weapon {
      * @return Object; the spawned object fired from the weapon (if any) to render
      */
     public abstract Object fire(FireEngine[] fireEngines);
-    
+
     public abstract Object fire(Coordinate destination);
 }

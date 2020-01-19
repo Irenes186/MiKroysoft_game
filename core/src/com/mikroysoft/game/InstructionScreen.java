@@ -51,7 +51,7 @@ public class InstructionScreen implements Screen {
         instructionTitle.setFontScale(3.0f, 5.0f);
         instructionTitle.setPosition(475, 650);
         instructionTitle.setAlignment(Align.center);
-        
+
         //Button text
         menuButtonLabel = new Label("Menu",labelStyle2);
         menuButtonLabel.setFontScale(1.5f, 1.5f);
@@ -62,10 +62,10 @@ public class InstructionScreen implements Screen {
         buttonTexture = new Texture("planet_button_0.png");
         textureRegion = new TextureRegion(buttonTexture);
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
-        
+
         //add different buttons
         backMenuButton = new ImageButton(textureRegionDrawable);
-        
+
         //set stage with actors
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
         stage.addActor(backMenuButton);
@@ -91,14 +91,14 @@ public class InstructionScreen implements Screen {
 
         textFileString = Gdx.files.internal("instructions.txt").readString();
     }
-    
+
     private Label.LabelStyle makeLabelStyle(Color textColour) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
         labelStyle.fontColor = textColour;
         return labelStyle;
     }
-    
+
     private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
         button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
     }
@@ -112,11 +112,11 @@ public class InstructionScreen implements Screen {
         //Background
         Gdx.gl.glClearColor(0,0.2f,0.2f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
         //draw stage with actors
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-        
+
         batch.begin();
         font.draw(batch, textFileString,(Gdx.graphics.getWidth()/2) - 300,(Gdx.graphics.getHeight()/2) + 150);
         batch.end();

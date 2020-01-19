@@ -61,7 +61,7 @@ public class LoserScreen implements Screen {
         buttonTexture = new Texture("planet_button_0.png");
         textureRegion = new TextureRegion(buttonTexture);
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
-        
+
         //add different buttons
         exitButton = new ImageButton(textureRegionDrawable);
 
@@ -102,7 +102,7 @@ public class LoserScreen implements Screen {
         labelStyle.fontColor = textColour;
         return labelStyle;
     }
-    
+
     /**
      * Changes the size of the provided button object by the factors provided.
      * 
@@ -113,8 +113,8 @@ public class LoserScreen implements Screen {
     private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
         button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
     }
-    
-    
+
+
     @Override
     public void show() {
 

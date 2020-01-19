@@ -30,22 +30,22 @@ public class Projectile {
         float length = source.distanceTo(destination);
         speed = 5;
         length /= speed;
-        
+
         switch (type) {
-        	case WATER:
-        		texture = new Texture("water_drop.png");
-        		break;
-        	case BULLET:
-        		texture = new Texture("bullet.png");
-        		break;
-        	default:
-        		throw new IllegalArgumentException("Requested projectile type '" + type + "' which has not yet been implemeneted");
+            case WATER:
+                texture = new Texture("water_drop.png");
+                break;
+            case BULLET:
+                texture = new Texture("bullet.png");
+                break;
+            default:
+                throw new IllegalArgumentException("Requested projectile type '" + type + "' which has not yet been implemeneted");
         }
 
         directionX = (destination.x - source.x)/length; 
         directionY = (destination.y - source.y)/length;
         position = new Coordinate(source.x, source.y);
-        
+
         start = new Coordinate (source.x, source.y);
         this.range = range;
         this.type = type;
@@ -73,7 +73,7 @@ public class Projectile {
     public boolean inRange () {
         return (start.distanceTo(position) < range);
     }
-    
+
     /**
      * Checks and returns if two projectiles are equivalent.
      * i.e. if all their attributes are the same.
@@ -84,8 +84,8 @@ public class Projectile {
      */
     public boolean equals(Projectile other) {
         return directionX == other.directionX && directionY == other.directionY && speed == other.speed && 
-                position == other.position && damage == other.damage && 
-                start == other.start && range == other.range && type == other.type; 
+            position == other.position && damage == other.damage && 
+            start == other.start && range == other.range && type == other.type; 
     }
 
 }

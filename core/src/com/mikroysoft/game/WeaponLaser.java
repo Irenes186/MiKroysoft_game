@@ -15,7 +15,7 @@ public class WeaponLaser extends Weapon {
     private float aimSpeed;
     // Texture sprite to render the laser with
     Sprite laserSprite;
-    
+
     public WeaponLaser(int range, Coordinate position, float aimSpeed) {
         super(0, range, "laser.png", position, 5);
         currentAimAngle = 0;
@@ -23,7 +23,7 @@ public class WeaponLaser extends Weapon {
         laserSprite = new Sprite(texture);
         laserSprite.setPosition(position.x, position.y);
     }
-    
+
     public WeaponLaser(int range, Coordinate position) {
         super(0, range, "laser.png", position, 5);
         currentAimAngle = 0;
@@ -31,28 +31,28 @@ public class WeaponLaser extends Weapon {
         laserSprite = new Sprite(texture);
         laserSprite.setPosition(position.x, position.y);
     }
-    
+
     @Override
     /* IM A FIRIN MY LASER
-     */
+    */
     public Object fire(FireEngine[] fireEngines) {
         if (fireEngines.length < 1) {
             return null;
         }
         FireEngine target = null;
         float currentClosestDist = -1;
-        
+
         for (FireEngine truck: fireEngines) {
             if (currentClosestDist == -1 || position.cellDistanceTo(truck.position) < currentClosestDist) {
                 currentClosestDist = position.cellDistanceTo(truck.position);
                 target = truck;
             }
         }
-        
+
         if (target == null || currentClosestDist == -1) {
             return null;
         }
-        
+
         laserSprite.setSize(currentClosestDist, texture.getHeight());
         laserSprite.rotate(position.angleTo(target.position));
         return laserSprite;

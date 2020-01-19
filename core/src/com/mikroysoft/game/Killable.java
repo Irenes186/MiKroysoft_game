@@ -78,14 +78,14 @@ public abstract class Killable {
     public boolean isDead() {
         return dead;
     }
-    
+
     /** 
      * Sets the dead variable to true 
      */
     public void kill() {
         dead = true;
     }
-    
+
     /**
      * Causes the object to take the provided amount of damage
      * Prevents the object being on less than 0 health
@@ -102,7 +102,7 @@ public abstract class Killable {
             health -= damage;
         }
     }
-    
+
     /**
      * Returns the range that the object can fire projectiles at.
      * 
@@ -111,7 +111,7 @@ public abstract class Killable {
     public int getRange() {
         return range;
     }
-    
+
     /**
      * Removes all the projectiles from this objects Set of Projectile objects
      * if the projectile has travelled outside the preset range of the object.

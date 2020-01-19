@@ -49,7 +49,7 @@ public class Menu implements Screen {
     public Menu(final Game game){
         this.game = game;
         font = new BitmapFont();
-        
+
         //setting label
         Label.LabelStyle labelStyle = makeLabelStyle(Color.WHITE);
         //alternative text style
@@ -60,25 +60,25 @@ public class Menu implements Screen {
         playLabel.setFontScale(3.0f, 3.0f);
         playLabel.setPosition(495,400);
         playLabel.setAlignment(Align.center);
-        
+
         //instruction button text
         instructionLabel = new Label("Instructions",labelStyle2);
         instructionLabel.setFontScale(1.2f, 1.5f);
         instructionLabel.setPosition(200,305);
         instructionLabel.setAlignment(Align.center);
-        
+
         //story button text
         backStoryLabel = new Label("Story",labelStyle2);
         backStoryLabel.setFontScale(2.0f, 2.0f);
         backStoryLabel.setPosition(485,155);
         backStoryLabel.setAlignment(Align.center);
-        
+
         //exit button text
         exitLabel = new Label("Exit",labelStyle2);
         exitLabel.setFontScale(2.0f, 2.0f);
         exitLabel.setPosition(750,305);
         exitLabel.setAlignment(Align.center);
-        
+
         //Main title
         mainTitle = new Label("KROY! (by MiKroysoft)",labelStyle);
         mainTitle.setFontScale(3.0f, 5.0f);
@@ -90,12 +90,12 @@ public class Menu implements Screen {
         buttonTexture = new Texture("planet_button_0.png");
         textureRegion = new TextureRegion(buttonTexture);
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
-        
+
         //set another texture
         buttonTexture2 = new Texture("planet_button_1.png");
         textureRegion2 = new TextureRegion(buttonTexture2);
         textureRegionDrawable2 = new TextureRegionDrawable(textureRegion2);
-        
+
         //add different buttons
         playButton = new ImageButton(textureRegionDrawable);
         instructionButton = new ImageButton(textureRegionDrawable);
@@ -103,7 +103,7 @@ public class Menu implements Screen {
         exitButton = new ImageButton(textureRegionDrawable);
 
 
-      //If playButton clicked go to game screen
+        //If playButton clicked go to game screen
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -133,22 +133,22 @@ public class Menu implements Screen {
                 //super.clicked(event, x, y);
             }
         });
-                
+
         //playButton position and size
         scaleButtonToScreen(playButton, 0.18f, 0.18f);
         playButton.setPosition(335, 250);
         playButton.getImage().setFillParent(true);
-        
+
         //instructionButton position and size
         scaleButtonToScreen(instructionButton, 0.12f, 0.12f);
         instructionButton.setPosition(120,200);
         instructionButton.getImage().setFillParent(true);
-        
+
         //backStoryButton position and size
         scaleButtonToScreen(backStoryButton, 0.12f, 0.12f);
         backStoryButton.setPosition(390, 50);
         backStoryButton.getImage().setFillParent(true);
-        
+
         //exitButton position and size
         scaleButtonToScreen(exitButton, 0.12f, 0.12f);
         exitButton.setPosition(650, 200);
@@ -156,7 +156,7 @@ public class Menu implements Screen {
 
         //set stage
         stage = new Stage(new ScreenViewport()); //Set up a stage for the ui
-        
+
         //add buttons to stage on menu stage
         stage.addActor(playButton);
         stage.addActor(instructionButton);
@@ -176,11 +176,11 @@ public class Menu implements Screen {
         labelStyle.fontColor = textColour;
         return labelStyle;
     }
-    
+
     private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
         button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
     }
-    
+
     @Override
     public void show() {
     }
