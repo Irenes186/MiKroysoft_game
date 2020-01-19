@@ -47,7 +47,7 @@ public class Menu implements Screen {
         //play button text
         playLabel = new Label("Play!",labelStyle2);
         playLabel.setFontScale(3.0f, 3.0f);
-        playLabel.setPosition(495,415);
+        playLabel.setPosition(495,400);
         playLabel.setAlignment(Align.center);
         
         //instruction button text
