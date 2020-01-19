@@ -10,7 +10,6 @@ public class CoordinateTest {
         Coordinate pointTwo = new Coordinate((float)30, (float)40);
         float result = pointOne.distanceTo(pointTwo);
         assertEquals(Math.sqrt(800), result, 0.2);
-        assertEquals(Math.sqrt(800), result, 0.2);
     }
     
     @Test
