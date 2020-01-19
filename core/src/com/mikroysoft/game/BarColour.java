@@ -1,6 +1,7 @@
 package com.mikroysoft.game;
 
-/* Used when creating a ProgressBar to set its colour.
+/** 
+ * A enum with all the different colours of progress bars
  */
 public enum BarColour {
 	YELLOW,
