@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
-/* This class represents the buildings found throughout the map that the player must
+/** This class represents the buildings found throughout the map that the player must
  * destroy in order to win the game.
  * FireStations have a finite amount of health, which is depleted using the FireEngine's
  * water projectiles.
@@ -22,7 +22,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * and bounded by weaponRange.
  * FireStations can occasionally spawn new Aliens, which will defend the base.
  * 
- * TODO: ADD HEALTH BARS
  */
 public class AlienBase extends Killable implements IRenderable {
 	// Texture of this base
@@ -51,11 +50,12 @@ public class AlienBase extends Killable implements IRenderable {
     
     public List <Alien> aliens;
 
-    /* Constructor.
-     * name - String - name of the base for debugging purposes
-     * params - AlienBaseParameters - various properties and behaviour of this base
-     * position - Coordinate - position in pixels of this base. TODO: Shouldnt this be in grid cells?
-     * tex - String - name of the texture file in assets folder to use with this base
+    /**
+     * @param name - String - name of the base for debugging purposes
+     * @param params - AlienBaseParameters - various properties and behaviour of this base
+     * @param position - Coordinate - position in pixels of this base. TODO: Shouldnt this be in grid cells?
+     * @param tex - String - name of the texture file in assets folder to use with this base
+     * @return void
      */
     public AlienBase(String name, AlienBaseParameters params, Coordinate position, String tex) {
         // Save parameters to local variables
@@ -90,16 +90,19 @@ public class AlienBase extends Killable implements IRenderable {
         dead = false;
     }
 
-    /* Increase aggression of base.
-     * TODO: Implement. Could increase spawn rate, max aliens (may not be possible), or fire rate of base's weapon
+    /** Increases the aggression of the base, currently it returns a constant of 3 as increase
+     * aggression has not yet been implemented.
+     * @return int - The constant factor to increase the difficulty by.
      */
     public int increaseDefense () {
         return 3;
     }
 
     @Override
-    /* Render the base's texture onto the screen.
-     * batch - SpriteBatch - the batch rendering the current frame
+    /**
+     * @param Render the base's texture onto the screen.
+     * @param batch - SpriteBatch - the batch rendering the current frame
+     * @return void
      */
     public void render(SpriteBatch batch) {
         batch.draw(texture, position.x, position.y, Util.TILEWIDTH, Util.TILEHEIGHT);
@@ -126,15 +129,12 @@ public class AlienBase extends Killable implements IRenderable {
 
     }
 
-    /* Test fire truck presence. Decrease alien spawning counter
+    /** Test fire truck presence. Decrease alien spawning counter
      * and spawn aliens as appropriate. Returns the spawned alien instance
      * Alien spawning counter is only decreased while a fire truck is in range.
      * 
-     * fireEngines - FireEngine[] - array containing all currently alive fire engines
-     * returns an Alien instance was spawned, null otherwise
-     *
-     * TODO: Add progress bars for alien spawning
-     * TODO: Bugged! line 141 is reached, but no alien is spawned for some reason...
+     *@param fireEngines - FireEngine[] - array containing all currently alive fire engines
+     *@return returns an Alien instance was spawned, null otherwise
      */
     //@Override
     public Alien doAlienSpawning(FireEngine[] fireEngines) {
@@ -168,8 +168,8 @@ public class AlienBase extends Killable implements IRenderable {
     	return null;
     }
 
-    /* spawns an alien around the base (but not on top of it)
-     * returns the spawned alien object.
+    /** spawns an alien around the base (but not on top of it)
+     * @return returns the spawned alien object.
      */
     private Alien spawnAlien() {
         Float[] offset = Util.randomCoordOffset(-((float)Util.TILEWIDTH/2), ((float)Util.TILEWIDTH/2), 0.8f);
@@ -177,6 +177,10 @@ public class AlienBase extends Killable implements IRenderable {
     }
     
     
+    /** Fires the weapon that is asscociated with each fire engine in the fireEngines argument
+     * @param fireEngines - This is an array of fireEngines
+     * @return void
+     */
     public void doWeaponFiring(FireEngine[] fireEngines) {
         if (!dead && weapon != null) {
             Object firedObject = weapon.fire(fireEngines);
@@ -189,7 +193,9 @@ public class AlienBase extends Killable implements IRenderable {
             }
         }
     }
-
+    /** This checks whether the health is 0 and sets the texture to a flooded version if it is 0.
+     * @return void
+     */
     public void checkHealth() {
         if (health == 0) {
             this.texture = new Texture ("soggy-" + tex + ".png");

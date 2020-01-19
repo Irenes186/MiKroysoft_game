@@ -1,5 +1,10 @@
 package com.mikroysoft.game;
 
+/**
+ * This class only contains fields and is used to configure the alien bases, it accepts an int which
+ * is used to select a different config using a switch statement
+ */
+
 public class AlienBaseParameters {
     // Distance from the base in px that a FireEngine must be within in order to trigger
 	// weapon firing and alien spawning
@@ -20,6 +25,11 @@ public class AlienBaseParameters {
 
     // DEFAULTS
     // UPDATE AS NEEDED
+    /**
+     * This is the constructor for the class that accepts and int from values 1 to 3, if the int is
+     * outside of this range the default config will be used.
+     * @param baseIndex - This is an integer that will be used to select a certain config
+     */
 
     public AlienBaseParameters(int baseIndex) {
         switch(baseIndex){

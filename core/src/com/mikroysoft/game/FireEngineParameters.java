@@ -1,5 +1,8 @@
 package com.mikroysoft.game;
 
+/**
+ * This class is use to store configuration about the different fire engines that we will be using
+ */
 public class FireEngineParameters{
     // changed from float, since range can be handled on a per-cell basis
     public float acceleration;
@@ -9,6 +12,14 @@ public class FireEngineParameters{
 
     // DEFAULTS
     // UPDATE AS NEEDED
+    /**
+     * This constructor takes an int as an input and sets the configuration of the fire engine to
+     * the associate values that are shown in the switch statement
+     *
+     * @param baseIndex - This is a integer value that is used to select a certain configuration, if
+     * there is not associate configuration with the inputted value then the default value is chosen
+     * instead.
+     */
     public FireEngineParameters(int baseIndex) {
         switch(baseIndex) {
             case 0:
