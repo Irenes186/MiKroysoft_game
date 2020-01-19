@@ -103,10 +103,21 @@ public class InstructionScreen implements Screen {
         button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
     }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void show() {
     }
 
+    /**
+     * This is the render function that is called on every frame to draw things onto the screen.
+     * 
+     * @param v - This is the time inbetween each called to this function.
+     */
     @Override
     public void render(float v) {
         //Background
@@ -122,18 +133,48 @@ public class InstructionScreen implements Screen {
         batch.end();
     }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void resize(int i, int i1) { }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void pause() { }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void resume() { }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void hide() { }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void dispose() { }
 }

@@ -81,6 +81,14 @@ public class WinnerScreen implements Screen {
         exitButton.getImage().setFillParent(true);
     }
     
+    /**
+     * This is a private function that returns a new label style with the font field set in the
+     * constructor and the text colour set through a parameter.
+     * @param textColour - The colour to make the label sytle in
+     * @return Label.LabelStyle - In built libgdx class of label styles, more information is
+     * referenced in see also 
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/scenes/scene2d/ui/Label.LabelStyle.html
+     */
     private Label.LabelStyle makeLabelStyle(Color textColour) {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
@@ -88,16 +96,35 @@ public class WinnerScreen implements Screen {
         return labelStyle;
     }
     
+    /**
+     * This is a method that resizes the button with the screen so that they always appear the right
+     * size.
+     * @param button - This is an ImageButton that you wish to resize
+     * @param widthFactor - This a factor by how much you wish to scale the button in a value of 1
+     * would keep it at the same width
+     * @param heightFactor - This is factor exactly like widthFactor but for the height
+     * @return void
+     */
     private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
         button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
     }
 
-
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void show() {
 
     }
 
+    /**
+     * This is the render function that is called on every frame to draw things onto the screen.
+     * 
+     * @param v - This is the time inbetween each called to this function.
+     */
     @Override
     public void render(float v) {
         //Background
@@ -110,26 +137,58 @@ public class WinnerScreen implements Screen {
 
     }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @param width - What width to resize the screen too
+     * @param height - What height to resize the screen too
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void resize(int i, int i1) {
 
     }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void pause() {
 
     }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void resume() {
 
     }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void hide() {
 
     }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void dispose() {
 

@@ -386,21 +386,57 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void show() { }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void resize(int i, int i1) {Util.scaleTilesToScreen();}
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void pause() { }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void resume() { }
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void hide() {}
 
+    /**
+     * This is a function that comes from the parent class screen, in this class no alterations are
+     * made to this function
+     * @return void
+     * @see https://libgdx.badlogicgames.com/ci/nightlies/docs/api/com/badlogic/gdx/Screen.html
+     */
     @Override
     public void dispose() {
         batch.dispose();
