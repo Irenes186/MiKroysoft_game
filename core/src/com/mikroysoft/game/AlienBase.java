@@ -65,9 +65,18 @@ public class AlienBase extends Killable implements IRenderable {
         this.position = position;
         currentAliens = 0;
         maxAliens = params.maxAliens;
-        //this.weapon = params.weapon;
-        //this.weapon = new WeaponLaser(params.weaponRange, position);
-        weapon = new WeaponBullet(10, params.weaponRange, "laser.png", position);
+        
+        switch (params.weaponType) {
+//            case BULLET:
+//                weapon = new WeaponBullet(10, params.weaponRange, "bullet.png", position);
+//            case LASER:
+//                weapon = new WeaponLaser(params.weaponRange, position);
+//            default:
+//                weapon = null;
+            default:
+                weapon = new WeaponBullet(10, params.weaponRange, "bullet.png", position);
+        }
+        
         health = params.floodLevel;
         attackTimeAfterFirst = params.attackTimeAfterFirst;
         spawnRate = params.spawnRate;

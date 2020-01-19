@@ -18,7 +18,6 @@ public class FireEngine extends Killable {
     private float maxSpeed;
     private float acceleration;
     private int shotCooldown;
-    private int deliveryRate;
     public Texture texture;
     public Coordinate position;
     public int fuel;
@@ -28,7 +27,6 @@ public class FireEngine extends Killable {
     public int shotDamage;
     public float direction;
     Map map;
-    //
     int cellX, cellY;
 
 
@@ -53,7 +51,6 @@ public class FireEngine extends Killable {
         rectangle = new Rectangle (position, Util.TILEWIDTH, Util.TILEHEIGHT, 0);
         shotDamage = parameters.shotDamage;
         dead = false;
-        deliveryRate = parameters.deliveryRate;
         weapon = new WeaponBullet(shotCooldown, range, "water_drop.png", position);
     }
 
@@ -228,16 +225,6 @@ public class FireEngine extends Killable {
 
     //@Override
     public void doWeaponFiring(Coordinate destination) {
-//        if (shotCooldown > 0) {
-//            return;
-//        }
-//        if (dead) {
-//            return;
-//        }
-//        reduceVolume();
-//
-//        projectiles.add(new Projectile (position, destination, false, ProjectileType.WATER, range));
-//        shotCooldown = deliveryRate;
         if (!dead && !weapon.onCooldown()) {
             reduceVolume();
             projectiles.add((Projectile) weapon.fire(destination));
