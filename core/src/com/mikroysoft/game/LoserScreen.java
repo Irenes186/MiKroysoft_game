@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class LoserScreen implements Screen {
-
     private Game game;
     private Texture buttonTexture;
     private TextureRegion textureRegion;
@@ -30,16 +29,12 @@ public class LoserScreen implements Screen {
 
     public LoserScreen(final Game game){
         this.game = game;
+        font = new BitmapFont();
 
         //setting label
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        font = new BitmapFont();
-        labelStyle.font = font;
-        labelStyle.fontColor = Color.WHITE;
+        Label.LabelStyle labelStyle = makeLabelStyle(Color.WHITE);
         //alternative text style
-        Label.LabelStyle labelStyle2 = new Label.LabelStyle();
-        labelStyle2.font = font;
-        labelStyle2.fontColor = Color.BLACK;
+        Label.LabelStyle labelStyle2 = makeLabelStyle(Color.BLACK);
 
         outcomeTitle = new Label("you lose :(",labelStyle);
         outcomeTitle.setFontScale(3.0f, 5.0f);
@@ -55,6 +50,7 @@ public class LoserScreen implements Screen {
         buttonTexture = new Texture("planet_button_0.png");
         textureRegion = new TextureRegion(buttonTexture);
         textureRegionDrawable = new TextureRegionDrawable(textureRegion);
+        
         //add different buttons
         exitButton = new ImageButton(textureRegionDrawable);
 
@@ -76,17 +72,23 @@ public class LoserScreen implements Screen {
             }
         });
 
-        //variables for screen size and button size
-        float screenWidth = 1024, screenHeight = 1024;
-        float buttonWidth = screenWidth * 0.1f, buttonHeight = screenHeight * 0.1f;
-        //playButton position ans size
-        exitButton.setSize(buttonWidth,buttonHeight);
+        //playButton position and size
+        scaleButtonToScreen(exitButton, 0.1f, 0.1f);
         exitButton.setPosition(400,150);
         exitButton.getImage().setFillParent(true);
-
     }
 
-
+    private Label.LabelStyle makeLabelStyle(Color textColour) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = font;
+        labelStyle.fontColor = textColour;
+        return labelStyle;
+    }
+    
+    private void scaleButtonToScreen(ImageButton button, float widthFactor, float heightFactor) {
+        button.setSize(Gdx.graphics.getWidth() * widthFactor, Gdx.graphics.getHeight() * heightFactor);
+    }
+    
     @Override
     public void show() {
 

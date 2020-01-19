@@ -5,16 +5,23 @@ public class InputController implements InputProcessor {
     public Coordinate position;
     public boolean moving;
     private boolean shotsFired;
+    private boolean escaped;
 
     public InputController() {
         position = new Coordinate(-1,-1);
         shotsFired = false;
+        escaped = false;
     }
 
     public void setMoveFalse() {
         this.moving = false;
     }
     public boolean keyDown (int keycode) {
+        switch (keycode) {
+            case 131:
+                escaped = true;
+                break;
+        }
         return false;
     }
     public boolean keyUp (int keycode) {
@@ -59,5 +66,14 @@ public class InputController implements InputProcessor {
             return true;
         }
         return false;
+    }
+    
+    public boolean isEscaped () {
+        if (escaped) {
+            escaped = false;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

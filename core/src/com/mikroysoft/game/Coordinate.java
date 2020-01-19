@@ -35,9 +35,9 @@ public class Coordinate {
     	return (float) Math.sqrt(Math.pow(Math.abs(this.x-other.x), 2)+Math.pow(Math.abs(this.y-other.y), 2));
     }
     
-    public float cellDistanceTo(Coordinate other, int TILEWIDTH, int TILEHEIGHT) {
-        int xDiff = (int) Math.floor(Math.abs(this.x-other.x) / TILEWIDTH);
-        int yDiff = (int) Math.floor(Math.abs(this.y-other.y) / TILEHEIGHT);
+    public float cellDistanceTo(Coordinate other) {
+        int xDiff = (int) Math.floor(Math.abs(this.x-other.x) / Util.TILEWIDTH);
+        int yDiff = (int) Math.floor(Math.abs(this.y-other.y) / Util.TILEHEIGHT);
         return (float) Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
     }
     

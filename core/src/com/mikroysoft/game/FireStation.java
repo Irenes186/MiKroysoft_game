@@ -8,15 +8,12 @@ public class FireStation implements IRenderable {
     private int fillSpeed;
     public Texture texture;
     private Coordinate position;
-    private int TILEWIDTH, TILEHEIGHT;
 
-    public FireStation(int fillSpeed, Coordinate position, int TILEWIDTH, int TILEHEIGHT){
+    public FireStation(int fillSpeed, Coordinate position){
         destroyed = false;
         this.fillSpeed = fillSpeed;
         this.position = position;
         texture = new Texture("station.png");
-        this.TILEHEIGHT = TILEHEIGHT;
-        this.TILEWIDTH = TILEWIDTH;
     }
 
     public Coordinate getPosition() {
@@ -27,10 +24,14 @@ public class FireStation implements IRenderable {
         destroyed = true;
     }
     
+    public boolean isDestroyed() {
+        return this.destroyed;
+    }
+    
     public void update() { }
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw (texture, position.x, position.y, TILEWIDTH * 8, TILEHEIGHT * 3);
+        batch.draw (texture, position.x, position.y, Util.TILEWIDTH * 2, Util.TILEHEIGHT);
     }
 }
