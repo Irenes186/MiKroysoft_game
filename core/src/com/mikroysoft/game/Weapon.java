@@ -2,7 +2,8 @@ package com.mikroysoft.game;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
- * 
+ * Weapon class holds all the information for
+ * the a weapon that can fire projectiles
  */
 public abstract class Weapon {
     // The number of frames to wait between weapon fires
@@ -18,11 +19,12 @@ public abstract class Weapon {
     // Damage the weapon deals. E.g a projectile may deal weaponDamage on hit, or a laser may deal weaponDamage per second of contact etc.
     protected int weaponDamage;
     
-    /* Constructor.
-     * cooldown - int - The number of frames to wait between weapon fires
-     * range - int - The range, in grid cells, around the weapon that a
+    /**
+     * Constructor.
+     * @param cooldown - int - The number of frames to wait between weapon fires
+     * @param range - int - The range, in grid cells, around the weapon that a
      *               truck must be within in order for the weapon to fire
-     * tex - String - the filename of the texture file to use with this weapon
+     * @param tex - String - the filename of the texture file to use with this weapon
      */
     public Weapon(int cooldown, int range, String tex, Coordinate position, int weaponDamage) {
         this.cooldown = cooldown;
@@ -34,7 +36,8 @@ public abstract class Weapon {
         this.weaponDamage = weaponDamage;
     }
     
-    /* Decrease the amount of cooldown left before the weapon can be fired
+    /**
+     * Decrease the amount of cooldown left before the weapon can be fired
      */
     public void doCooldown() {
         if (cooldownCurrent > 0) {
@@ -42,30 +45,36 @@ public abstract class Weapon {
         }
     }
     
-    /* Is the weapon on cooldown?
-     * returns bool; true if the weapon still has to cool down before firing, false if it is ready to fire
+    /**
+     * Is the weapon on cooldown?
+     * @return bool; true if the weapon still has to cool down before firing, false if it is ready to fire
      */
     public boolean onCooldown() {
         return cooldownCurrent > 0;
     }
     
-    /* Resets the cooldown before this weapon can fire again.
+    /**
+     * Resets the cooldown before this weapon can fire again.
      */
     public void resetCooldown() {
         cooldownCurrent = cooldown;
     }
     
-    /* Is the given fire engine within range of the weapon?
+    /**
+     * Is the given fire engine within range of the weapon?
      * truck - FireEngine - The FireEngine to test
-     * returns bool; true if truck is within weapon range, false otherwise
+     * 
+     * @return bool; true if truck is within weapon range, false otherwise
      */
     protected boolean truckInRange(FireEngine truck) {
         return Math.abs(position.cellDistanceTo(truck.position.invertY())) <= range;
     }
     
-    /* Fire the weapon.
+    /**
+     * Fire the weapon.
      * fireEngines - FireEngine[] - An array containing all currently alive FireEngines
-     * returns Object; the spawned object fired from the weapon (if any) to render
+     * 
+     * @return Object; the spawned object fired from the weapon (if any) to render
      */
     public abstract Object fire(FireEngine[] fireEngines);
     
