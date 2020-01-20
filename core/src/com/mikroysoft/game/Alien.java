@@ -8,10 +8,9 @@ import java.lang.Math;
 import java.util.Set;
 import java.util.HashSet;
 
-/* This class represents the small, walking and shooting aliens
+/** This class represents the small, walking and shooting aliens
  * that are spawned by AlienBases.
  * Aliens can move in a random direction, and fire towards the nearest fire engine when it is in range.
- * Aliens will die in one hit from a fire engine projectile TODO: To be implemented
  */
 public class Alien extends Killable implements IRenderable {
     // Does This Alien know where the FireStation is?
@@ -36,8 +35,11 @@ public class Alien extends Killable implements IRenderable {
 
     public AlienBase base;
 
-    /* Constructor.
-     * Position - Coordinate - spawn location of Alien
+    /** This is the constructor to make an alien. The alien base you pass as the second coordinate
+     * is the alien base that the alien will be associated with
+     *
+     * @param position - spawn location of Alien
+     * @param base - The alien base that the alien will be associated with
      */
     public Alien(Coordinate position, AlienBase base) {
         health = 1;
@@ -64,8 +66,9 @@ public class Alien extends Killable implements IRenderable {
         weapon = new WeaponBullet(countToFire, range, "bullet.png", position);
     }
 
-    /* Get the position of the alien
-     * returns Coordinate
+    /** Returns the position of the alien within Map
+     *
+     * @return Coordinate - The position field of the alien
      */
     public Coordinate getLatestPosition() {
         return this.position;
@@ -96,8 +99,10 @@ public class Alien extends Killable implements IRenderable {
         //    direction = (float) Math.toDegrees(Math.atan2((position.y +(Math.random()* 10 + 1)) * -1,  position.x - (Math.random()* 10 + 1))) +45;
     }
 
-    /* Render the alien and all of its fired projectiles onto the screen
-     * batch - SpriteBatch - the batch rendering the current frame
+    /** This function renders the alien as well as all of the projectiles that are shot by 
+     * the alien. This function is called every frame.
+     *
+     * @param batch - the batch rendering the current frame
      */
     @Override
     public void render(SpriteBatch batch) {
@@ -109,8 +114,9 @@ public class Alien extends Killable implements IRenderable {
         }
     }
 
-    /* Fire a new projectile in a linear path towards a given coordinate.
-     * destination - Coordinate - the coordinate to aim the projectile at
+    /** Fire a new projectile in a linear path towards a given coordinate.
+     * 
+     * @param  Coordinate - the coordinate to aim the projectile at
      */
     public void shoot(Coordinate destination) {
         // Check we are within the firing rate
@@ -127,14 +133,24 @@ public class Alien extends Killable implements IRenderable {
 
     }
 
-    /* Update the Alien
-     * TODO: Implement (or delete)
+    /** This overrides the IRendable update function. There are no changes to this function in this
+     * class, this is purely here to keep java happy.
      */
     public void update() { }
 
+    /** This returns the shooting range of the alien
+     *
+     * @return int - The range field of the alien
+     */
     public int getRange() {
-        return this.range; }
+        return this.range; 
+    }
 
+    /** This method shoots the alien weapon to the nereast fire engine. It needs an array of all the
+     * fire engines to shoot the nearest one.
+     *
+     * @param fireEngines - An array of all of the fire engines
+     */
     public void doWeaponFiring(FireEngine[] fireEngines) {
         if (!dead && weapon != null) {
             Object firedObject = weapon.fire(fireEngines);
@@ -146,6 +162,10 @@ public class Alien extends Killable implements IRenderable {
         }
     }
 
+    /** This method will change the alien to a dead state and remove it from whatever alien base
+     * that it is asscociated with.
+     *
+     */
     @Override
     public void kill() {
         dead = true;
